@@ -1,0 +1,103 @@
+{
+  "autos": [
+    {
+      "marca": "Chevrolet",
+      "modelo": "Onix",
+      "version": "Joy",
+      "anioDesde": null,
+      "anioHasta": null,
+      "medidaLabel": "185/70 R14",
+      "medidaSlug": "185-70-r14",
+      "fuente": "Club Onix Prisma (foro) + ficha Neumáticos Center",
+      "estado": "verificado_parcial"
+    },
+    {
+      "marca": "Chevrolet",
+      "modelo": "Prisma",
+      "version": null,
+      "anioDesde": null,
+      "anioHasta": null,
+      "medidaLabel": "185/70 R14",
+      "medidaSlug": "185-70-r14",
+      "fuente": "ficha Neumáticos Center (compatibilidad)",
+      "estado": "verificar"
+    },
+    {
+      "marca": "Chevrolet",
+      "modelo": "Cobalt",
+      "version": null,
+      "anioDesde": null,
+      "anioHasta": null,
+      "medidaLabel": "185/70 R14",
+      "medidaSlug": "185-70-r14",
+      "fuente": "ficha Neumáticos Center (compatibilidad)",
+      "estado": "verificar"
+    },
+    {
+      "marca": "Chevrolet",
+      "modelo": "Spin",
+      "version": null,
+      "anioDesde": null,
+      "anioHasta": null,
+      "medidaLabel": "185/70 R14",
+      "medidaSlug": "185-70-r14",
+      "fuente": "ficha Neumáticos Center (compatibilidad)",
+      "estado": "verificar"
+    },
+    {
+      "marca": "Renault",
+      "modelo": "Logan",
+      "version": null,
+      "anioDesde": null,
+      "anioHasta": null,
+      "medidaLabel": "185/70 R14",
+      "medidaSlug": "185-70-r14",
+      "fuente": "ficha Neumáticos Center (compatibilidad)",
+      "estado": "verificar"
+    },
+    {
+      "marca": "Renault",
+      "modelo": "Sandero",
+      "version": null,
+      "anioDesde": null,
+      "anioHasta": null,
+      "medidaLabel": "185/70 R14",
+      "medidaSlug": "185-70-r14",
+      "fuente": "ficha Neumáticos Center (compatibilidad)",
+      "estado": "verificar"
+    },
+    {
+      "marca": "Fiat",
+      "modelo": "Siena",
+      "version": null,
+      "anioDesde": null,
+      "anioHasta": null,
+      "medidaLabel": "175/65 R14",
+      "medidaSlug": "175-65-r14",
+      "fuente": "listado Llantazo (Sportrak Berlingo Siena)",
+      "estado": "verificar"
+    },
+    {
+      "marca": "Citroen",
+      "modelo": "Berlingo",
+      "version": null,
+      "anioDesde": null,
+      "anioHasta": null,
+      "medidaLabel": "175/65 R14",
+      "medidaSlug": "175-65-r14",
+      "fuente": "listado Llantazo (Sportrak Berlingo Siena)",
+      "estado": "verificar"
+    },
+    {
+      "marca": "Ford",
+      "modelo": "EcoSport",
+      "version": null,
+      "anioDesde": null,
+      "anioHasta": null,
+      "medidaLabel": "205/65 R15",
+      "medidaSlug": "205-65-r15",
+      "fuente": "autocompletado Google (cubiertas para ecosport 205 65 15)",
+      "estado": "verificar"
+    }
+  ]
+}

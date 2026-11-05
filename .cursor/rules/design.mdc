@@ -1,0 +1,16 @@
+---
+description: Reglas de diseño obligatorias para toda la UI del comparador de cubiertas
+globs: ["**/*.tsx", "**/*.css", "tailwind.config.*"]
+alwaysApply: true
+---
+# Diseño (prioridad máxima)
+- Seguí SIEMPRE `01-diseno/design-system.md`. Si algo no está definido ahí, elegí lo más sobrio y consistente con él.
+- Usá SOLO los tokens definidos (colores asfalto/grafito/niebla/papel/ambar/verde/rojo/azul, radios sm/md/lg/xl, sombras sm/md/lg). Prohibido usar colores arbitrarios de Tailwind (`blue-500`, `gray-300`, hex sueltos).
+- Fuentes: Inter Tight (títulos), Inter (texto), JetBrains Mono (medidas y precios) con `next/font/google`.
+- Medidas y precios SIEMPRE en mono con números tabulares. Precios con `formatARS()` (es-AR, sin decimales).
+- Mobile-first: diseñá primero a 375px; probá 375, 768, 1280. Nada de scroll horizontal salvo tablas a propósito.
+- Nada de "look plantilla": no gradientes violetas, no hero genérico con stock photo, no emojis en UI, no sombras pesadas. Usá la textura de banda de rodadura y la medida como héroe.
+- Textos en español rioplatense, de vos, cortos y concretos. Sin signos de exclamación en UI.
+- Accesibilidad AA: foco visible, labels reales, targets ≥44px, nunca solo color.
+- Animaciones 150–250ms, respetar `prefers-reduced-motion`.
+- Antes de dar una tarea por terminada, revisá visualmente la página en mobile y desktop y describí qué verificaste.

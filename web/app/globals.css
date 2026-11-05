@@ -1,0 +1,203 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* Tokens del design system → utilidades Tailwind */
+@theme inline {
+  --color-asfalto-950: var(--asfalto-950);
+  --color-asfalto-800: var(--asfalto-800);
+  --color-asfalto-600: var(--asfalto-600);
+  --color-grafito-400: var(--grafito-400);
+  --color-niebla-200: var(--niebla-200);
+  --color-niebla-100: var(--niebla-100);
+  --color-papel: var(--papel);
+  --color-ambar-500: var(--ambar-500);
+  --color-ambar-100: var(--ambar-100);
+  --color-verde-600: var(--verde-600);
+  --color-verde-50: var(--verde-50);
+  --color-rojo-600: var(--rojo-600);
+  --color-rojo-50: var(--rojo-50);
+  --color-azul-600: var(--azul-600);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  --font-display: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-mono), ui-monospace, monospace;
+  --font-heading: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+
+  --shadow-sm: 0 1px 2px rgba(11, 15, 20, 0.06);
+  --shadow-md: 0 4px 16px -4px rgba(11, 15, 20, 0.1);
+  --shadow-lg: 0 16px 40px -12px rgba(11, 15, 20, 0.18);
+}
+
+:root {
+  /* Paleta "Banda de rodadura" */
+  --asfalto-950: #0b0f14;
+  --asfalto-800: #1c232c;
+  --asfalto-600: #3a4552;
+  --grafito-400: #8a96a3;
+  --niebla-200: #e3e7eb;
+  --niebla-100: #f1f3f5;
+  --papel: #fafaf7;
+  --ambar-500: #f5a524;
+  --ambar-100: #fef3dc;
+  --verde-600: #0f8a5f;
+  --verde-50: #e7f6ef;
+  --rojo-600: #d1432f;
+  --rojo-50: #fcece9;
+  --azul-600: #2457d6;
+
+  /* shadcn mapeado a tokens de marca */
+  --background: var(--papel);
+  --foreground: var(--asfalto-950);
+  --card: #ffffff;
+  --card-foreground: var(--asfalto-950);
+  --popover: #ffffff;
+  --popover-foreground: var(--asfalto-950);
+  --primary: var(--azul-600);
+  --primary-foreground: #ffffff;
+  --secondary: var(--niebla-100);
+  --secondary-foreground: var(--asfalto-950);
+  --muted: var(--niebla-100);
+  --muted-foreground: var(--asfalto-600);
+  --accent: var(--ambar-100);
+  --accent-foreground: var(--asfalto-950);
+  --destructive: var(--rojo-600);
+  --border: var(--niebla-200);
+  --input: var(--niebla-200);
+  --ring: var(--azul-600);
+  --chart-1: var(--azul-600);
+  --chart-2: var(--verde-600);
+  --chart-3: var(--ambar-500);
+  --chart-4: var(--asfalto-600);
+  --chart-5: var(--grafito-400);
+  --radius: 12px;
+
+  --ease-brand: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.dark {
+  --background: var(--asfalto-950);
+  --foreground: var(--papel);
+  --card: var(--asfalto-800);
+  --card-foreground: var(--papel);
+  --popover: var(--asfalto-800);
+  --popover-foreground: var(--papel);
+  --primary: var(--azul-600);
+  --primary-foreground: #ffffff;
+  --secondary: var(--asfalto-800);
+  --secondary-foreground: var(--papel);
+  --muted: var(--asfalto-800);
+  --muted-foreground: var(--grafito-400);
+  --accent: var(--asfalto-800);
+  --accent-foreground: var(--papel);
+  --destructive: var(--rojo-600);
+  --border: rgb(255 255 255 / 10%);
+  --input: rgb(255 255 255 / 15%);
+  --ring: var(--azul-600);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    @apply font-sans;
+  }
+
+  body {
+    @apply bg-papel text-asfalto-950 antialiased;
+    font-feature-settings: "tnum";
+    line-height: 1.55;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--azul-600);
+    outline-offset: 2px;
+  }
+
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* Textura banda de rodadura (líneas diagonales ~5%) */
+.tread-texture {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 6px,
+    rgb(255 255 255 / 0.05) 6px,
+    rgb(255 255 255 / 0.05) 7px
+  );
+}
+
+.container-site {
+  width: 100%;
+  max-width: 1120px;
+  margin-inline: auto;
+  padding-inline: 16px;
+}
+
+@media (min-width: 768px) {
+  .container-site {
+    padding-inline: 24px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container-site {
+    padding-inline: 32px;
+  }
+}

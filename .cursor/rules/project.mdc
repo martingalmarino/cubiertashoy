@@ -1,0 +1,17 @@
+---
+description: Estándares de código y arquitectura del proyecto
+alwaysApply: true
+---
+# Proyecto
+- Stack: Next.js (App Router) + TypeScript estricto + Tailwind + shadcn/ui + Recharts. Deploy en Vercel. DB Neon Postgres (Fase 2). Scrapers en Python 3.11 con Scrapling en `/scrapers`.
+- Estructura: `app/` rutas, `components/` UI (un componente por archivo, PascalCase), `lib/` utilidades y acceso a datos, `data/` seeds JSON, `scrapers/` Python.
+- Server Components por defecto; `"use client"` solo donde haga falta (selects, chart).
+- Toda lectura de datos pasa por `lib/data.ts` (así cambiar de JSON a DB es tocar un solo archivo).
+- Slugs de medida: `175-65-r14` (minúsculas). Parser central en `lib/medida.ts` con tests.
+- Precios: enteros en pesos (ARS), siempre POR UNIDAD (dividir kits x2/x4).
+- SEO: cada página con `generateMetadata`, canonical, OpenGraph, JSON-LD cuando corresponda.
+- No inventar datos como si fueran reales: datos de ejemplo llevan `"ejemplo": true` y la UI muestra el banner de ejemplo.
+- Secrets solo en variables de entorno (`.env.local`, nunca commitear). Agregar `.env.example`.
+- Scrapers: respetar robots.txt, User-Agent identificable, 1 request cada 2–3 s por tienda, reintentos con backoff, nunca saturar.
+- Commits chicos; `npm run lint` y `npm run build` deben pasar antes de cerrar una tarea.
+- Responder y comentar en español.

@@ -1,0 +1,17 @@
+.DS_Store
+**/.DS_Store
+node_modules/
+.next/
+.vercel/
+.env
+.env.local
+.env.*.local
+*.pem
+npm-debug.log*
+.lighthouse*
+web/.next/
+web/node_modules/
+web/out/
+web/coverage/
+web/*.tsbuildinfo
+web/next-env.d.ts
