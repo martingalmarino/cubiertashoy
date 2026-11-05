@@ -1,4 +1,4 @@
-# Prompt 05c — Medidas populares + sacar cards “Tres pasos”
+# Prompt 05c — Medidas populares + sacar cards “Tres pasos” + tiendas sin flecha
 
 > Pegalo entero en Cursor (modo Agent) después de 05a/05b.
 
@@ -6,7 +6,7 @@
 
 ## PROMPT PARA CURSOR
 
-Vas a hacer dos ajustes de UI en la home de cubiertashoy. **No toques scrapers, datos, rutas, SEO ni JSON-LD.**
+Vas a hacer tres ajustes de UI en la home de cubiertashoy. **No toques scrapers, datos, rutas, SEO ni JSON-LD.**
 
 ### A — Bloque “Medidas populares” (mobile)
 
@@ -38,8 +38,16 @@ En el lugar de esas cards, **una sola línea de trust** debajo del buscador / ar
 - Si `n_ofertas === 0`, ocultá la línea (`return null`); nunca muestres “0 ofertas”.
 - Sin cards, sin iconos, sin flechas.
 
+### D — “Tiendas que comparamos” sin destino falso
+
+Las cards (logo + “X ofertas” + flecha) **no llevan a ningún lado**.
+- Sacá el círculo/flecha y cualquier `cursor-pointer` / hover que sugiera link.
+- Dejá logo + conteo real de ofertas.
+- No crees `/tienda/[slug]` ahora.
+- Mobile: grilla `grid-cols-2 gap-3`, sin scroll horizontal.
+
 ### Cierre
 
 1. `npm run build` y `npm run lint` OK.
-2. Capturas mobile 390 de la home: antes/después del bloque Medidas populares y de la zona donde estaban las cards.
+2. Capturas mobile 390 de la home: Medidas populares, zona donde estaban las cards de pasos, y Tiendas que comparamos.
 3. Lista de archivos tocados.
