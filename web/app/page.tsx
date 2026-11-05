@@ -8,7 +8,6 @@ import { TiendasRow, type TiendaResumen } from "@/components/TiendasRow";
 import { TrustRow } from "@/components/TrustRow";
 import { ValuePastelCards } from "@/components/ValuePastelCards";
 import { FadeIn, Stagger, StaggerItem } from "@/components/motion/FadeIn";
-import { SidewallArc } from "@/components/visual/SidewallArc";
 import { HoyUnderline } from "@/components/visual/HoyUnderline";
 import {
   getHistorial,
@@ -64,52 +63,46 @@ export default function Home() {
     <>
       <ExampleDataBanner />
 
-      <section className="relative overflow-hidden grad-suave">
-        <SidewallArc className="pointer-events-none absolute -right-16 bottom-0 h-[55%] w-[70%] max-w-3xl md:h-[70%]" />
-        <div className="container-site relative py-16 md:py-24">
-          <FadeIn className="mx-auto max-w-3xl text-center">
-            <h1 className="font-sans text-[40px] font-semibold leading-[1.05] tracking-[-0.03em] text-tinta-900 md:text-[64px]">
-              El mejor precio de tu cubierta, <HoyUnderline />.
-            </h1>
-            <p className="mt-4 text-base text-tinta-500 md:text-lg">
-              Comparamos{" "}
-              <strong className="font-semibold text-tinta-900">
-                {tiendas.length}
-              </strong>{" "}
-              tiendas de Argentina. Elegí tu medida y listo.
-            </p>
-          </FadeIn>
+      <section id="hero" className="grad-suave">
+        <div className="mx-auto max-w-3xl px-4 pb-14 pt-16 text-center md:pb-20 md:pt-24">
+          <h1 className="font-sans text-[40px] font-semibold leading-[1.05] tracking-[-0.03em] text-tinta-900 md:text-[64px]">
+            El mejor precio de tu cubierta, <HoyUnderline />.
+          </h1>
+          <p className="mt-4 text-base text-tinta-500 md:text-lg">
+            Comparamos{" "}
+            <strong className="font-semibold text-tinta-900">
+              {tiendas.length}
+            </strong>{" "}
+            tiendas de Argentina. Elegí tu medida y listo.
+          </p>
 
-          <div
-            id="medidas"
-            className="mx-auto mt-10 max-w-4xl scroll-mt-24 md:mt-12"
-          >
+          <div id="medidas" className="scroll-mt-24">
             <MedidaSearch medidas={medidas} />
           </div>
 
-          <FadeIn className="mx-auto mt-10 max-w-3xl md:mt-12">
+          <div className="mt-10">
             <TrustRow tiendas={tiendas.length} />
-          </FadeIn>
+          </div>
         </div>
       </section>
 
-      <section className="py-10 md:py-14">
+      <section className="py-12 md:py-16">
         <div className="container-site">
           <PopularesBand medidas={populares} />
         </div>
       </section>
 
-      <section id="buscadas" className="scroll-mt-24 py-16 md:py-24">
+      <section id="buscadas" className="scroll-mt-24 py-12 md:py-16">
         <div className="container-site">
-          <FadeIn className="mb-8 max-w-2xl">
+          <div className="max-w-2xl">
             <h2 className="text-xl font-semibold tracking-[-0.02em] text-tinta-900 md:text-2xl">
               Medidas más buscadas
             </h2>
             <p className="mt-2 text-tinta-500">
               Precio desde por unidad, con la variación de la última semana.
             </p>
-          </FadeIn>
-          <Stagger className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4">
+          </div>
+          <Stagger className="mt-6 grid grid-cols-2 gap-4 md:grid-cols-4">
             {masBuscadas.map((m) => {
               const spark = getHistorial(m.slug)
                 .slice(-30)
@@ -131,46 +124,52 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="como" className="scroll-mt-24 bg-fondo py-16 md:py-24">
+      <section id="como" className="scroll-mt-24 py-12 md:py-16">
         <div className="container-site">
-          <FadeIn className="mb-8 max-w-xl">
+          <div className="max-w-xl">
             <h2 className="text-xl font-semibold tracking-[-0.02em] text-tinta-900 md:text-2xl">
               Cómo funciona
             </h2>
             <p className="mt-2 text-tinta-500">
               Tres pasos. Sin cuentas ni vueltas.
             </p>
-          </FadeIn>
-          <ValuePastelCards
-            ofertasConDescuentoReal={ofertasConDescuentoReal}
-          />
+          </div>
+          <div className="mt-6">
+            <ValuePastelCards
+              ofertasConDescuentoReal={ofertasConDescuentoReal}
+            />
+          </div>
         </div>
       </section>
 
-      <section id="tiendas" className="scroll-mt-24 py-16 md:py-24">
+      <section id="tiendas" className="scroll-mt-24 py-12 md:py-16">
         <div className="container-site">
-          <FadeIn className="mb-8 max-w-xl">
+          <div className="max-w-xl">
             <h2 className="text-xl font-semibold tracking-[-0.02em] text-tinta-900 md:text-2xl">
               Tiendas que comparamos
             </h2>
             <p className="mt-2 text-tinta-500">
               Solo las que ya tienen ofertas en nuestros datos.
             </p>
-          </FadeIn>
-          <TiendasRow tiendas={tiendas} />
+          </div>
+          <div className="mt-6">
+            <TiendasRow tiendas={tiendas} />
+          </div>
         </div>
       </section>
 
       <section
         id="autos"
-        className="scroll-mt-24 border-t border-borde py-16 md:py-24"
+        className="scroll-mt-24 border-t border-borde py-12 md:py-16"
       >
         <div className="container-site max-w-3xl">
           <FadeIn>
-            <h2 className="mb-6 text-xl font-semibold tracking-[-0.02em] text-tinta-900 md:text-2xl">
+            <h2 className="text-xl font-semibold tracking-[-0.02em] text-tinta-900 md:text-2xl">
               Preguntas frecuentes
             </h2>
-            <HomeFaq />
+            <div className="mt-6">
+              <HomeFaq />
+            </div>
           </FadeIn>
         </div>
       </section>

@@ -21,7 +21,7 @@ export function PriceCard({ oferta, destacada }: PriceCardProps) {
   return (
     <article
       className={cn(
-        "rounded-xl border bg-superficie p-4 shadow-card",
+        "flex flex-col gap-3 rounded-xl border bg-superficie p-4 shadow-card",
         destacada ? "border-ahorro-600 border-l-[3px]" : "border-borde"
       )}
     >
@@ -54,11 +54,11 @@ export function PriceCard({ oferta, destacada }: PriceCardProps) {
         </a>
       </div>
 
-      <p className="mt-3 font-mono text-2xl font-bold tabular-nums text-tinta-900">
+      <p className="font-mono text-xl font-bold tabular-nums text-tinta-900">
         {formatARS(oferta.precioEfectivo)}
       </p>
 
-      <div className="mt-3 flex flex-wrap gap-2">
+      <div className="flex flex-wrap gap-2">
         <CuotasChip
           cuotas={oferta.cuotas}
           sinInteres={oferta.cuotasSinInteres}

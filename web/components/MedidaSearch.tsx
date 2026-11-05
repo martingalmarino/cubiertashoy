@@ -4,18 +4,86 @@ import { useMemo, useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { Search } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
-import { MedidaOdometer } from "@/components/visual/MedidaOdometer";
-import { SidewallDiagram } from "@/components/visual/SidewallDiagram";
 import { cn } from "@/lib/utils";
 import { toSlug } from "@/lib/medida";
 import type { Medida } from "@/lib/types";
 
 type MedidaSearchProps = {
   medidas: Medida[];
-  /** Compacto para header sticky */
   variant?: "hero" | "compact";
   className?: string;
 };
+
+type SegmentProps = {
+  id: string;
+  label: string;
+  value: number | "";
+  placeholder: string;
+  disabled?: boolean;
+  onChange: (v: string) => void;
+  options: number[];
+  selectRef?: React.RefObject<HTMLSelectElement | null>;
+  compact?: boolean;
+  mobileCard?: boolean;
+};
+
+function SegmentSelect({
+  id,
+  label,
+  value,
+  placeholder,
+  disabled,
+  onChange,
+  options,
+  selectRef,
+  compact,
+  mobileCard,
+}: SegmentProps) {
+  const empty = value === "";
+  return (
+    <div
+      className={cn(
+        "min-w-0 text-left",
+        mobileCard &&
+          "flex h-14 flex-col justify-center rounded-xl bg-fondo px-2 py-1.5",
+        !mobileCard && !compact && "min-w-[88px] md:min-w-[120px]",
+        compact && "min-w-[52px]"
+      )}
+    >
+      <label
+        htmlFor={id}
+        className={cn(
+          "mb-0.5 block text-[11px] font-medium uppercase tracking-[0.08em] text-tinta-500",
+          compact && "sr-only"
+        )}
+      >
+        {label}
+      </label>
+      <select
+        id={id}
+        name={id}
+        ref={selectRef}
+        value={empty ? "" : String(value)}
+        onChange={(e) => onChange(e.target.value)}
+        disabled={disabled}
+        required
+        className={cn(
+          "w-full appearance-none bg-transparent font-mono font-semibold tabular-nums",
+          "focus-visible:outline-none disabled:cursor-not-allowed",
+          compact ? "min-h-8 text-sm" : "text-xl leading-none md:text-2xl",
+          empty || disabled ? "text-tinta-400" : "text-tinta-900"
+        )}
+      >
+        <option value="">{placeholder}</option>
+        {options.map((opt) => (
+          <option key={opt} value={opt}>
+            {opt}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
+}
 
 export function MedidaSearch({
   medidas,
@@ -64,11 +132,6 @@ export function MedidaSearch({
       ? toSlug(ancho, perfil, rodado)
       : null;
 
-  const labelPreview =
-    ancho !== "" && perfil !== "" && rodado !== ""
-      ? `${ancho}/${perfil} R${rodado}`
-      : "175/65 R14";
-
   function onAnchoChange(value: string) {
     const next = value === "" ? "" : Number(value);
     setAncho(next);
@@ -101,177 +164,95 @@ export function MedidaSearch({
     });
   }
 
-  const selectClass = cn(
-    "min-h-11 w-full appearance-none bg-transparent",
-    "px-1 font-mono text-base font-semibold tabular-nums text-tinta-900",
-    "focus-visible:outline-none disabled:cursor-not-allowed disabled:text-tinta-400",
-    variant === "compact" && "min-h-9 text-sm"
+  const isCompact = variant === "compact";
+  const isHero = variant === "hero";
+
+  const submitBtn = (
+    <motion.button
+      type="submit"
+      disabled={!slugCompleto}
+      whileTap={reduce || !slugCompleto ? undefined : { scale: 0.97 }}
+      title={!slugCompleto ? "Elegí ancho, perfil y rodado" : "Ver precios"}
+      aria-label={!slugCompleto ? "Elegí ancho, perfil y rodado" : "Ver precios"}
+      className={cn(
+        "inline-flex items-center justify-center gap-2 rounded-full bg-accion-600 font-medium text-white",
+        "transition-colors duration-200 hover:bg-accion-700",
+        "focus-visible:ring-2 focus-visible:ring-accion-600 focus-visible:ring-offset-2",
+        !slugCompleto && "cursor-not-allowed opacity-60",
+        isHero &&
+          "h-12 w-full px-5 text-sm sm:ml-2 sm:h-12 sm:w-auto md:h-14 md:px-6",
+        isCompact && "ml-1 h-8 shrink-0 gap-1 px-2.5 text-xs",
+        pulse && slugCompleto && "ring-2 ring-ambar-500 ring-offset-2"
+      )}
+    >
+      <Search className={isCompact ? "size-3.5" : "size-4"} aria-hidden />
+      <span className={cn(isCompact && "hidden lg:inline")}>Ver precios</span>
+    </motion.button>
   );
 
-  const searchForm = (
-    <form onSubmit={onSubmit} className="w-full">
-      <div
-        className={cn(
-          "border border-accion-600/40 bg-superficie shadow-hero",
-          variant === "hero" &&
-            "rounded-2xl p-3 md:flex md:h-16 md:items-center md:rounded-full md:p-2 md:pl-5",
-          variant === "compact" &&
-            "flex h-11 items-center rounded-full p-1 pl-3"
-        )}
-        role="group"
-        aria-label="Medida de cubierta"
-      >
+  if (isCompact) {
+    return (
+      <form onSubmit={onSubmit} className={cn("w-full", className)}>
         <div
-          className={cn(
-            "grid grid-cols-[1fr_auto_1fr_auto_1fr] items-end gap-1",
-            variant === "hero" && "md:flex md:flex-1 md:items-center md:gap-2",
-            variant === "compact" && "flex flex-1 items-center gap-1"
-          )}
+          className="flex h-10 max-w-md items-center gap-1 rounded-full border border-borde bg-white pl-3 pr-1 shadow-card focus-within:border-accion-600 dark:bg-superficie"
+          role="group"
+          aria-label="Medida de cubierta"
         >
-          <div className="min-w-0">
-            <label
-              htmlFor={`ancho-${variant}`}
-              className={cn(
-                "mb-1 block text-[11px] font-medium uppercase tracking-[0.08em] text-tinta-500",
-                variant === "compact" && "sr-only"
-              )}
-            >
-              Ancho
-            </label>
-            <select
-              id={`ancho-${variant}`}
-              name="ancho"
-              value={ancho === "" ? "" : String(ancho)}
-              onChange={(e) => onAnchoChange(e.target.value)}
-              className={selectClass}
-              required
-            >
-              <option value="">—</option>
-              {anchos.map((a) => (
-                <option key={a} value={a}>
-                  {a}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <span
-            aria-hidden
-            className="pb-2 font-mono text-xl font-bold text-tinta-400 md:pb-0"
-          >
+          <SegmentSelect
+            id={`ancho-${variant}`}
+            label="Ancho"
+            value={ancho}
+            placeholder="175"
+            onChange={onAnchoChange}
+            options={anchos}
+            compact
+          />
+          <span aria-hidden className="font-mono text-base text-tinta-400">
             /
           </span>
-
-          <div className="min-w-0">
-            <label
-              htmlFor={`perfil-${variant}`}
-              className={cn(
-                "mb-1 block text-[11px] font-medium uppercase tracking-[0.08em] text-tinta-500",
-                variant === "compact" && "sr-only"
-              )}
-            >
-              Perfil
-            </label>
-            <select
-              id={`perfil-${variant}`}
-              name="perfil"
-              ref={perfilRef}
-              value={perfil === "" ? "" : String(perfil)}
-              onChange={(e) => onPerfilChange(e.target.value)}
-              className={selectClass}
-              disabled={ancho === ""}
-              required
-            >
-              <option value="">—</option>
-              {perfiles.map((p) => (
-                <option key={p} value={p}>
-                  {p}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <span
-            aria-hidden
-            className="pb-2 font-mono text-xl font-bold text-tinta-400 md:pb-0"
-          >
+          <SegmentSelect
+            id={`perfil-${variant}`}
+            label="Perfil"
+            value={perfil}
+            placeholder="65"
+            disabled={ancho === ""}
+            onChange={onPerfilChange}
+            options={perfiles}
+            selectRef={perfilRef}
+            compact
+          />
+          <span aria-hidden className="font-mono text-base text-tinta-400">
             R
           </span>
-
-          <div className="min-w-0">
-            <label
-              htmlFor={`rodado-${variant}`}
-              className={cn(
-                "mb-1 block text-[11px] font-medium uppercase tracking-[0.08em] text-tinta-500",
-                variant === "compact" && "sr-only"
-              )}
-            >
-              Rodado
-            </label>
-            <select
-              id={`rodado-${variant}`}
-              name="rodado"
-              ref={rodadoRef}
-              value={rodado === "" ? "" : String(rodado)}
-              onChange={(e) => onRodadoChange(e.target.value)}
-              className={selectClass}
-              disabled={perfil === ""}
-              required
-            >
-              <option value="">—</option>
-              {rodados.map((r) => (
-                <option key={r} value={r}>
-                  {r}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
-
-        <motion.button
-          type="submit"
-          disabled={!slugCompleto}
-          whileTap={reduce ? undefined : { scale: 0.97 }}
-          aria-label="Ver precios"
-          className={cn(
-            "inline-flex items-center justify-center rounded-full bg-accion-600 text-white",
-            "transition-colors duration-200 hover:bg-accion-700",
-            "disabled:cursor-not-allowed disabled:opacity-50",
-            "focus-visible:ring-2 focus-visible:ring-accion-600 focus-visible:ring-offset-2",
-            variant === "hero" &&
-              "mt-3 h-12 w-full gap-2 text-sm font-semibold md:mt-0 md:ml-2 md:size-12 md:w-12 md:shrink-0",
-            variant === "compact" && "ml-1 size-9 shrink-0",
-            pulse && "ring-2 ring-ambar-500 ring-offset-2"
-          )}
-        >
-          <Search
-            className={variant === "compact" ? "size-4" : "size-5"}
-            aria-hidden
+          <SegmentSelect
+            id={`rodado-${variant}`}
+            label="Rodado"
+            value={rodado}
+            placeholder="14"
+            disabled={perfil === ""}
+            onChange={onRodadoChange}
+            options={rodados}
+            selectRef={rodadoRef}
+            compact
           />
-          <span className={cn(variant === "hero" ? "md:sr-only" : "sr-only")}>
-            Ver precios
-          </span>
-        </motion.button>
-      </div>
-    </form>
-  );
-
-  if (variant === "compact") {
-    return <div className={className}>{searchForm}</div>;
+          {submitBtn}
+        </div>
+      </form>
+    );
   }
 
   return (
-    <div className={cn("w-full", className)}>
-      <div className="mb-4 flex justify-center gap-2">
+    <div className={cn("w-full text-center", className)}>
+      <div className="mt-8 flex justify-center gap-2">
         <button
           type="button"
           onClick={() => setMode("medida")}
           aria-pressed={mode === "medida"}
           className={cn(
-            "inline-flex min-h-9 items-center rounded-full px-3.5 text-sm font-medium transition-colors",
+            "inline-flex h-9 items-center rounded-full px-4 text-sm font-medium transition-colors",
             mode === "medida"
               ? "bg-tinta-900 text-white dark:bg-superficie dark:text-tinta-900"
-              : "bg-superficie/80 text-tinta-500 ring-1 ring-borde"
+              : "bg-superficie text-tinta-500 ring-1 ring-borde"
           )}
         >
           Por medida
@@ -279,7 +260,7 @@ export function MedidaSearch({
         <span
           aria-disabled="true"
           title="Pronto"
-          className="inline-flex min-h-9 cursor-not-allowed items-center gap-2 rounded-full bg-superficie/60 px-3.5 text-sm font-medium text-tinta-400 ring-1 ring-borde"
+          className="inline-flex h-9 cursor-not-allowed items-center gap-2 rounded-full bg-superficie px-4 text-sm font-medium text-tinta-500 ring-1 ring-borde"
         >
           Por auto
           <span className="rounded-full bg-ambar-100 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-asfalto-950">
@@ -288,25 +269,110 @@ export function MedidaSearch({
         </span>
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:items-start lg:gap-8">
-        <div>{searchForm}</div>
-
-        <div className="rounded-xl bg-asfalto-950 p-5 text-papel shadow-card sm:p-6">
-          <p className="text-[11px] font-medium uppercase tracking-[0.08em] text-tinta-400">
-            Tu medida
-          </p>
-          <MedidaOdometer
-            label={labelPreview}
-            className="mt-2 text-[40px] leading-none text-papel md:text-[56px]"
-          />
-          <div className="mt-4">
-            <SidewallDiagram ancho={ancho} perfil={perfil} rodado={rodado} />
+      <form onSubmit={onSubmit} className="mt-4 w-full">
+        {/* Mobile card */}
+        <div className="rounded-2xl border border-borde-fuerte bg-superficie p-4 shadow-hero sm:hidden">
+          <div
+            className="grid grid-cols-3 gap-2"
+            role="group"
+            aria-label="Medida de cubierta"
+          >
+            <SegmentSelect
+              id={`ancho-${variant}-m`}
+              label="Ancho"
+              value={ancho}
+              placeholder="175"
+              onChange={onAnchoChange}
+              options={anchos}
+              mobileCard
+            />
+            <SegmentSelect
+              id={`perfil-${variant}-m`}
+              label="Perfil"
+              value={perfil}
+              placeholder="65"
+              disabled={ancho === ""}
+              onChange={onPerfilChange}
+              options={perfiles}
+              selectRef={perfilRef}
+              mobileCard
+            />
+            <SegmentSelect
+              id={`rodado-${variant}-m`}
+              label="Rodado"
+              value={rodado}
+              placeholder="14"
+              disabled={perfil === ""}
+              onChange={onRodadoChange}
+              options={rodados}
+              selectRef={rodadoRef}
+              mobileCard
+            />
           </div>
-          <p className="mt-2 text-center text-sm text-tinta-400">
-            ¿Dónde está tu medida?
-          </p>
+          <div className="mt-3">{submitBtn}</div>
         </div>
-      </div>
+
+        {/* Desktop / tablet pill */}
+        <div
+          className="mx-auto hidden h-16 w-full max-w-2xl items-center gap-2 rounded-full border border-borde-fuerte bg-white pl-6 pr-2 shadow-hero focus-within:border-accion-600 focus-within:ring-4 focus-within:ring-accion-600/15 sm:flex md:h-[72px] dark:bg-superficie"
+          role="group"
+          aria-label="Medida de cubierta"
+        >
+          <SegmentSelect
+            id={`ancho-${variant}-d`}
+            label="Ancho"
+            value={ancho}
+            placeholder="175"
+            onChange={onAnchoChange}
+            options={anchos}
+          />
+          <span
+            aria-hidden
+            className="pb-1 font-mono text-xl text-tinta-400 md:text-2xl"
+          >
+            /
+          </span>
+          <div className="border-l border-borde pl-2">
+            <SegmentSelect
+              id={`perfil-${variant}-d`}
+              label="Perfil"
+              value={perfil}
+              placeholder="65"
+              disabled={ancho === ""}
+              onChange={onPerfilChange}
+              options={perfiles}
+              selectRef={perfilRef}
+            />
+          </div>
+          <span
+            aria-hidden
+            className="pb-1 font-mono text-xl text-tinta-400 md:text-2xl"
+          >
+            R
+          </span>
+          <div className="border-l border-borde pl-2">
+            <SegmentSelect
+              id={`rodado-${variant}-d`}
+              label="Rodado"
+              value={rodado}
+              placeholder="14"
+              disabled={perfil === ""}
+              onChange={onRodadoChange}
+              options={rodados}
+              selectRef={rodadoRef}
+            />
+          </div>
+          <div className="ml-auto shrink-0">{submitBtn}</div>
+        </div>
+      </form>
+
+      <p className="mt-3 text-sm text-tinta-500">
+        Ej.:{" "}
+        <span className="font-mono font-semibold text-tinta-700">
+          175/65 R14
+        </span>{" "}
+        — está en el flanco de tu cubierta
+      </p>
     </div>
   );
 }

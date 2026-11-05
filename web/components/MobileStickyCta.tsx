@@ -16,11 +16,19 @@ export function MobileStickyCta({ oferta }: MobileStickyCtaProps) {
     const el = document.getElementById("mas-barato");
     if (!el) return;
 
+    let seen = false;
     const observer = new IntersectionObserver(
       ([entry]) => {
-        setVisible(!entry?.isIntersecting);
+        if (!entry) return;
+        // Primera observación: solo mostrar si ya salió del viewport
+        if (!seen) {
+          seen = true;
+          setVisible(!entry.isIntersecting);
+          return;
+        }
+        setVisible(!entry.isIntersecting);
       },
-      { threshold: 0.15 }
+      { threshold: 0.05, rootMargin: "-8px 0px 0px 0px" }
     );
     observer.observe(el);
     return () => observer.disconnect();

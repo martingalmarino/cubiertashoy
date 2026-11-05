@@ -13,7 +13,7 @@ const Chart = dynamic(
       <section aria-labelledby="historial-heading">
         <h2
           id="historial-heading"
-          className="mb-4 font-display text-xl font-semibold tracking-[-0.02em] text-asfalto-950"
+          className="mb-4 font-sans text-xl font-semibold tracking-[-0.02em] text-tinta-900"
         >
           Historial de precios
         </h2>

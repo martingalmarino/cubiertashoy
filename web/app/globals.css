@@ -75,7 +75,6 @@
   --color-chart-5: var(--chart-5);
 
   --font-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-mono), ui-monospace, monospace;
   --font-heading: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
 
@@ -308,12 +307,6 @@
 @media (min-width: 768px) {
   .container-site {
     padding-inline: 24px;
-  }
-}
-
-@media (min-width: 1280px) {
-  .container-site {
-    padding-inline: 32px;
   }
 }
 

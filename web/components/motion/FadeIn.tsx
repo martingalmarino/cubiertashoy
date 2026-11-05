@@ -11,6 +11,7 @@ type FadeInProps = {
 
 const ease = [0.2, 0.8, 0.2, 1] as const;
 
+/** Visible en SSR; solo un leve translate al entrar en viewport. */
 export function FadeIn({
   children,
   className,
@@ -20,13 +21,18 @@ export function FadeIn({
   const reduce = useReducedMotion();
   const Comp = motion[as];
 
+  if (reduce) {
+    const Tag = as;
+    return <Tag className={className}>{children}</Tag>;
+  }
+
   return (
     <Comp
       className={className}
-      initial={reduce ? false : { opacity: 0, y: 12 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: reduce ? 0 : 0.4, ease, delay }}
+      initial={false}
+      whileInView={{ y: 0 }}
+      viewport={{ once: true, amount: 0.1 }}
+      transition={{ duration: 0.35, ease, delay }}
     >
       {children}
     </Comp>
@@ -40,23 +46,7 @@ export function Stagger({
   children: React.ReactNode;
   className?: string;
 }) {
-  const reduce = useReducedMotion();
-  return (
-    <motion.div
-      className={className}
-      initial={reduce ? false : "hidden"}
-      whileInView="show"
-      viewport={{ once: true, margin: "-80px" }}
-      variants={{
-        hidden: {},
-        show: {
-          transition: { staggerChildren: reduce ? 0 : 0.04 },
-        },
-      }}
-    >
-      {children}
-    </motion.div>
-  );
+  return <div className={className}>{children}</div>;
 }
 
 export function StaggerItem({
@@ -66,20 +56,5 @@ export function StaggerItem({
   children: React.ReactNode;
   className?: string;
 }) {
-  const reduce = useReducedMotion();
-  return (
-    <motion.div
-      className={className}
-      variants={{
-        hidden: reduce ? { opacity: 1 } : { opacity: 0, y: 12 },
-        show: {
-          opacity: 1,
-          y: 0,
-          transition: { duration: reduce ? 0 : 0.4, ease },
-        },
-      }}
-    >
-      {children}
-    </motion.div>
-  );
+  return <div className={className}>{children}</div>;
 }

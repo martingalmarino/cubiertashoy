@@ -20,7 +20,7 @@ const inter = Inter({
 const jetbrainsMono = JetBrains_Mono({
   variable: "--font-mono",
   subsets: ["latin"],
-  weight: ["500", "700"],
+  weight: ["500", "600", "700"],
   display: "swap",
 });
 
@@ -99,14 +99,14 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       suppressHydrationWarning
       className={`${inter.variable} ${jetbrainsMono.variable} h-full`}
     >
-      <body className="flex min-h-full flex-col bg-fondo font-sans text-tinta-900">
+      <body className="flex min-h-full flex-col overflow-x-clip bg-fondo font-sans text-tinta-900">
         <ThemeProvider>
           <JsonLd data={orgLd} />
           <JsonLd data={websiteLd} />
           <TooltipProvider>
             <SkipLink />
             <Header medidas={medidas} />
-            <main id="contenido" className="flex-1">
+            <main id="contenido" className="flex-1 overflow-x-clip">
               {children}
             </main>
             <Footer />

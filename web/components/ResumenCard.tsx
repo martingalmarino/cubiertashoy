@@ -20,12 +20,7 @@ export function ResumenCard({
   const min = resumen.minimo90d;
   const max = maximo90d;
   let thermo = 50;
-  if (
-    precioBarato != null &&
-    min != null &&
-    max != null &&
-    max > min
-  ) {
+  if (precioBarato != null && min != null && max != null && max > min) {
     thermo = Math.min(
       100,
       Math.max(0, ((precioBarato - min) / (max - min)) * 100)
@@ -74,16 +69,16 @@ export function ResumenCard({
           </p>
           <div className="relative h-2 rounded-full bg-fondo">
             <div
-              className="absolute inset-y-0 left-0 rounded-full bg-accion-50"
-              style={{ width: "100%" }}
+              className="absolute inset-y-0 left-0 rounded-full bg-accion-600/35"
+              style={{ width: `${thermo}%` }}
             />
             <span
-              className="absolute top-1/2 size-3 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-ahorro-600 bg-superficie"
+              className="absolute top-1/2 size-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white bg-ahorro-600 shadow-card"
               style={{ left: `${thermo}%` }}
               title={formatARS(precioBarato)}
             />
           </div>
-          <div className="mt-1.5 flex justify-between font-mono text-[11px] tabular-nums text-tinta-400">
+          <div className="mt-1.5 flex justify-between font-mono text-xs tabular-nums text-tinta-500">
             <span>{formatARS(min)}</span>
             <span>{formatARS(max)}</span>
           </div>

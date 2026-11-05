@@ -169,7 +169,7 @@ export default async function MedidaPage({ params }: PageProps) {
       <JsonLd data={faqLd} />
       <ExampleDataBanner />
 
-      <div className="container-site py-8 pb-28 sm:py-10 md:pb-10">
+      <div className="container-site py-8 pb-24 sm:py-10 md:pb-10">
         <Breadcrumbs
           items={[
             { label: "Inicio", href: "/" },
@@ -213,7 +213,12 @@ export default async function MedidaPage({ params }: PageProps) {
           <>
             <div className="mt-8 grid gap-4 lg:grid-cols-5 lg:gap-6">
               <div className="lg:col-span-3">
-                {cheapest && <CheapestCard oferta={cheapest} />}
+                {cheapest && (
+                  <CheapestCard
+                    oferta={cheapest}
+                    actualizadoHaceHoras={resumen.actualizadoHaceHoras}
+                  />
+                )}
               </div>
               <div className="lg:col-span-2">
                 <ResumenCard

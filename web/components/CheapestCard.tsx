@@ -10,9 +10,14 @@ import type { OfertaEnriquecida } from "@/lib/types";
 
 type CheapestCardProps = {
   oferta: OfertaEnriquecida;
+  /** Misma fuente que el encabezado de la página. */
+  actualizadoHaceHoras: number | null;
 };
 
-export function CheapestCard({ oferta }: CheapestCardProps) {
+export function CheapestCard({
+  oferta,
+  actualizadoHaceHoras,
+}: CheapestCardProps) {
   const reduce = useReducedMotion();
   const pctOff =
     oferta.precioAnterior && oferta.precioAnterior > oferta.precioEfectivo
@@ -22,6 +27,8 @@ export function CheapestCard({ oferta }: CheapestCardProps) {
             100
         )
       : null;
+
+  const horas = actualizadoHaceHoras ?? oferta.actualizadoHaceHoras;
 
   return (
     <article
@@ -34,7 +41,7 @@ export function CheapestCard({ oferta }: CheapestCardProps) {
 
       <div className="flex flex-col gap-5 p-5 sm:p-6 lg:flex-row lg:items-start lg:justify-between">
         <div className="min-w-0 flex-1">
-          <h2 className="text-sm font-medium text-tinta-700 line-clamp-2 md:text-base">
+          <h2 className="line-clamp-2 text-sm font-medium text-tinta-700 md:text-base">
             {oferta.marca} {oferta.modelo}{" "}
             <span className="font-mono text-sm font-medium tabular-nums text-tinta-500">
               {oferta.indice}
@@ -45,7 +52,11 @@ export function CheapestCard({ oferta }: CheapestCardProps) {
 
         <div className="lg:text-right">
           <p className="font-mono text-[32px] font-bold leading-none tracking-tight text-tinta-900 md:text-[44px]">
-            <AnimatedPrice value={oferta.precioEfectivo} fromZero durationMs={600} />
+            <AnimatedPrice
+              value={oferta.precioEfectivo}
+              fromZero
+              durationMs={600}
+            />
           </p>
           <div className="mt-2 flex flex-wrap items-center gap-2 lg:justify-end">
             {oferta.precioAnterior != null && (
@@ -101,13 +112,13 @@ export function CheapestCard({ oferta }: CheapestCardProps) {
           target="_blank"
           rel="noopener noreferrer sponsored"
           whileTap={reduce ? undefined : { scale: 0.97 }}
-          className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-accion-600 px-5 text-sm font-semibold text-white transition-colors hover:bg-accion-700 focus-visible:ring-2 focus-visible:ring-accion-600 focus-visible:ring-offset-2 sm:w-auto"
+          className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-accion-600 px-6 text-sm font-semibold text-white transition-colors hover:bg-accion-700 focus-visible:ring-2 focus-visible:ring-accion-600 focus-visible:ring-offset-2 sm:w-auto"
         >
           Ir a {oferta.tiendaNombre}
           <ArrowUpRight className="size-4" aria-hidden />
         </motion.a>
-        <p className="mt-3 text-xs text-tinta-400">
-          Actualizado hace {oferta.actualizadoHaceHoras} h
+        <p className="mt-3 text-xs text-tinta-500">
+          Actualizado hace {horas} h
         </p>
       </div>
     </article>

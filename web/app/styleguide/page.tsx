@@ -36,7 +36,7 @@ function Section({
 }) {
   return (
     <section className="space-y-4 border-t border-niebla-200 pt-10">
-      <h2 className="font-display text-xl font-semibold tracking-[-0.02em] text-asfalto-950 sm:text-2xl">
+      <h2 className="font-sans font-semibold text-xl font-semibold tracking-[-0.02em] text-asfalto-950 sm:text-2xl">
         {title}
       </h2>
       {children}
@@ -49,7 +49,7 @@ export default function StyleguidePage() {
     <div className="container-site space-y-10 py-10 sm:py-14">
       <header className="space-y-3">
         <p className="text-sm font-medium text-asfalto-600">Sistema de diseño</p>
-        <h1 className="font-display text-3xl font-bold tracking-[-0.02em] text-asfalto-950 sm:text-4xl">
+        <h1 className="font-sans font-semibold text-3xl font-bold tracking-[-0.02em] text-asfalto-950 sm:text-4xl">
           Banda de rodadura
         </h1>
         <p className="max-w-2xl text-asfalto-600">
@@ -97,10 +97,10 @@ export default function StyleguidePage() {
             <p className="mb-2 text-xs font-medium uppercase tracking-wider text-asfalto-600">
               Display · Inter Tight
             </p>
-            <p className="font-display text-2xl font-bold tracking-[-0.02em] text-asfalto-950">
+            <p className="font-sans font-semibold text-2xl font-bold tracking-[-0.02em] text-asfalto-950">
               Precio de hoy
             </p>
-            <p className="mt-1 font-display text-lg font-semibold text-asfalto-600">
+            <p className="mt-1 font-sans font-semibold text-lg font-semibold text-asfalto-600">
               600 / 700
             </p>
           </div>

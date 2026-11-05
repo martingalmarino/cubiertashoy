@@ -176,15 +176,16 @@ export function PriceHistoryChart({
                   minTickGap={28}
                 />
                 <YAxis
-                  tick={{ fill: "#98A2B3", fontSize: 12 }}
+                  domain={[
+                    (dataMin: number) => Math.floor(dataMin * 0.95),
+                    (dataMax: number) => Math.ceil(dataMax * 1.05),
+                  ]}
+                  tick={{ fill: "#667085", fontSize: 12, fontFamily: "var(--font-mono)" }}
                   tickLine={false}
                   axisLine={false}
-                  width={64}
+                  width={72}
                   tickFormatter={(v: number) =>
-                    new Intl.NumberFormat("es-AR", {
-                      notation: "compact",
-                      maximumFractionDigits: 0,
-                    }).format(v)
+                    `$ ${Math.round(v / 1000)} k`
                   }
                 />
                 <Tooltip

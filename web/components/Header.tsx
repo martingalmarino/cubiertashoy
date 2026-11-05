@@ -19,15 +19,22 @@ type HeaderProps = {
 
 export function Header({ medidas = [] }: HeaderProps) {
   const [showCompact, setShowCompact] = useState(false);
+  const canShowSearch = medidas.length > 0;
 
   useEffect(() => {
-    const onScroll = () => {
-      setShowCompact(window.scrollY > 420);
-    };
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+    if (!canShowSearch) return;
+    const hero = document.getElementById("hero");
+    if (!hero) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setShowCompact(!entry?.isIntersecting);
+      },
+      { threshold: 0, rootMargin: "-64px 0px 0px 0px" }
+    );
+    observer.observe(hero);
+    return () => observer.disconnect();
+  }, [canShowSearch]);
 
   return (
     <header className="sticky top-0 z-40 border-b border-borde bg-white/80 backdrop-blur-md dark:bg-superficie/80">
@@ -36,13 +43,14 @@ export function Header({ medidas = [] }: HeaderProps) {
 
         <div
           className={cn(
-            "mx-auto hidden min-w-0 flex-1 justify-center px-4 transition-all duration-200 lg:flex",
-            showCompact && medidas.length > 0
+            "mx-auto hidden min-w-0 flex-1 justify-center px-4 transition-opacity duration-300 md:flex",
+            showCompact && canShowSearch
               ? "opacity-100"
               : "pointer-events-none opacity-0"
           )}
+          aria-hidden={!showCompact}
         >
-          {medidas.length > 0 && (
+          {canShowSearch && (
             <MedidaSearch
               medidas={medidas}
               variant="compact"

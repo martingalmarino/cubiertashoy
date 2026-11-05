@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { ArrowRight, Scale, Search, ShieldCheck } from "lucide-react";
-import { FadeIn } from "@/components/motion/FadeIn";
 
 type ValuePastelCardsProps = {
   ofertasConDescuentoReal: number;
@@ -18,7 +17,10 @@ export function ValuePastelCards({
       highlight: (
         <>
           Buscá en{" "}
-          <strong className="font-semibold text-tinta-900">3 pasos</strong>
+          <span className="font-mono text-lg font-semibold text-tinta-900">
+            3
+          </span>{" "}
+          <span className="font-semibold text-tinta-900">pasos</span>
         </>
       ),
       href: "/#medidas",
@@ -31,10 +33,11 @@ export function ValuePastelCards({
       highlight: (
         <>
           Hoy hay{" "}
-          <strong className="font-semibold text-tinta-900">
-            {ofertasConDescuentoReal} ofertas
-          </strong>{" "}
-          con descuento real
+          <span className="font-mono text-lg font-semibold text-tinta-900">
+            {ofertasConDescuentoReal}
+          </span>{" "}
+          <span className="font-semibold text-tinta-900">ofertas</span> con
+          descuento real
         </>
       ),
       href: "/#buscadas",
@@ -47,7 +50,7 @@ export function ValuePastelCards({
       highlight: (
         <>
           Descuento{" "}
-          <strong className="font-semibold text-tinta-900">real o inflado</strong>
+          <span className="font-semibold text-tinta-900">real o inflado</span>
         </>
       ),
       href: "/#tiendas",
@@ -56,30 +59,31 @@ export function ValuePastelCards({
 
   return (
     <div className="grid gap-4 md:grid-cols-3">
-      {cards.map((card, i) => (
-        <FadeIn key={card.title} delay={i * 0.04} as="article">
-          <div
-            className={`${card.bg} flex h-full flex-col rounded-xl p-6 text-tinta-900`}
-          >
-            <span className="inline-flex size-11 items-center justify-center rounded-md bg-superficie text-tinta-900 shadow-card">
-              <card.icon className="size-5" aria-hidden strokeWidth={1.75} />
-            </span>
-            <h3 className="mt-4 text-lg font-semibold tracking-[-0.02em]">
-              {card.title}
-            </h3>
-            <p className="mt-2 text-sm text-tinta-700">{card.body}</p>
-            <div className="mt-4 rounded-lg bg-white/70 px-3 py-2.5 text-sm backdrop-blur-sm dark:bg-superficie/70">
-              {card.highlight}
-            </div>
-            <Link
-              href={card.href}
-              className="mt-5 inline-flex size-11 items-center justify-center rounded-full bg-superficie text-tinta-900 shadow-card transition-transform duration-200 hover:-translate-y-0.5 focus-visible:ring-2 focus-visible:ring-accion-600 focus-visible:ring-offset-2"
-              aria-label={`Ir a ${card.title}`}
-            >
-              <ArrowRight className="size-4" aria-hidden />
-            </Link>
+      {cards.map((card) => (
+        <article
+          key={card.title}
+          className={`${card.bg} flex h-full flex-col rounded-xl p-6 text-tinta-900`}
+        >
+          <span className="inline-flex size-11 items-center justify-center rounded-xl bg-white text-tinta-900 shadow-card">
+            <card.icon className="size-5" aria-hidden strokeWidth={1.75} />
+          </span>
+          <h3 className="mt-4 text-lg font-semibold tracking-[-0.02em]">
+            {card.title}
+          </h3>
+          <p className="mt-2 text-sm text-tinta-700">{card.body}</p>
+          <div className="mt-5 rounded-xl bg-white/80 px-4 py-3 text-sm ring-1 ring-black/5 dark:bg-superficie/80">
+            {card.highlight}
           </div>
-        </FadeIn>
+          <div className="mt-auto pt-5">
+          <Link
+            href={card.href}
+            className="inline-flex size-10 items-center justify-center rounded-full bg-white text-tinta-900 shadow-card transition-transform duration-200 hover:-translate-y-0.5 focus-visible:ring-2 focus-visible:ring-accion-600 focus-visible:ring-offset-2"
+            aria-label={`Ir a ${card.title}`}
+          >
+            <ArrowRight className="size-4" aria-hidden />
+          </Link>
+          </div>
+        </article>
       ))}
     </div>
   );
