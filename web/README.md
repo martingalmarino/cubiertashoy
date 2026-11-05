@@ -1,36 +1,67 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# cubiertas hoy (web)
 
-## Getting Started
+Comparador de precios de cubiertas por medida — Fase 1 con datos de ejemplo.
 
-First, run the development server:
+## Requisitos
+
+- Node.js 20+
+- npm
+
+## Correr en local
 
 ```bash
+cd web
+cp .env.example .env.local   # opcional
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Abrí [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Scripts útiles:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run lint
+npm run build
+npm test
+npm start   # sirve el build de producción
+```
 
-## Learn More
+## Variables de entorno
 
-To learn more about Next.js, take a look at the following resources:
+| Variable | Descripción |
+|---|---|
+| `NEXT_PUBLIC_SITE_URL` | URL canónica (sin slash final). Usada en canonical, sitemap y OG. |
+| `VERCEL_URL` | La setea Vercel sola; si no hay `NEXT_PUBLIC_SITE_URL`, se usa `https://$VERCEL_URL`. |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Ejemplo `.env.local`:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
+```
 
-## Deploy on Vercel
+En producción (Vercel), podés dejar `NEXT_PUBLIC_SITE_URL` vacío hasta tener dominio propio, o setearla a la URL `.vercel.app` / dominio final.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Deploy en Vercel
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Repo: [github.com/martingalmarino/cubiertashoy](https://github.com/martingalmarino/cubiertashoy)
+2. En Vercel → **Add New Project** → importá el repo.
+3. **Root Directory: `web`** (importante: el Next.js vive en esa carpeta).
+4. Framework: Next.js (autodetectado). Build: `npm run build`. Output: default.
+5. Env (opcional): `NEXT_PUBLIC_SITE_URL=https://tu-proyecto.vercel.app`
+6. Deploy.
+
+CLI (desde esta carpeta):
+
+```bash
+cd web
+npx vercel          # preview
+npx vercel --prod   # producción
+```
+
+## Estructura
+
+- `app/` — rutas (App Router)
+- `components/` — UI
+- `lib/` — datos, formato, medida
+- `data/` — JSON de ejemplo (Fase 1)
