@@ -13,7 +13,7 @@ export function ValuePastelCards({
       bg: "bg-pastel-limon",
       icon: Search,
       title: "Elegí tu medida",
-      body: "Ancho, perfil y rodado como en el flanco. Sin cuentas.",
+      body: "Ancho, perfil y rodado como en el costado. Sin cuentas.",
       highlight: (
         <>
           Buscá en{" "}

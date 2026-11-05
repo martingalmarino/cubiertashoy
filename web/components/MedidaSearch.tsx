@@ -538,7 +538,7 @@ export function MedidaSearch({
         <span className="font-mono font-semibold text-tinta-700">
           175/65 R14
         </span>{" "}
-        — está en el flanco de tu cubierta
+        — está en el costado de tu cubierta
       </p>
       </>
       ) : null}

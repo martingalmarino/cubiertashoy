@@ -3,14 +3,15 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
-import { FlancoIllustration } from "@/components/FlancoIllustration";
 import { JsonLd } from "@/components/JsonLd";
 import { LeadForm } from "@/components/LeadForm";
 import { MedidaBadge } from "@/components/MedidaBadge";
 import { MedidaFaq } from "@/components/MedidaFaq";
 import { PriceCard } from "@/components/PriceCard";
 import { PricesSourceBanner } from "@/components/PricesSourceBanner";
+import { SeoCopyArticle } from "@/components/SeoCopyArticle";
 import { AutoVersionPicker } from "@/components/AutoVersionPicker";
+import { getAutoCopy } from "@/content/autos";
 import localidadesJson from "@/data/localidades.json";
 import {
   getOfertas,
@@ -21,6 +22,7 @@ import {
   pickDefaultVehicleSize,
 } from "@/lib/data";
 import { formatARS } from "@/lib/format";
+import { faqPageJsonLd, resolveSeoCopy } from "@/lib/seo-copy";
 import { getSiteUrl, SITE_NAME_SHORT } from "@/lib/site";
 
 type PageProps = {
@@ -39,8 +41,20 @@ export async function generateMetadata({
   const vehicle = getVehicle(slug);
   if (!vehicle) return { title: "Auto no encontrado" };
   const label = `${vehicle.marca} ${vehicle.modelo}`;
-  const title = `Cubiertas para ${label}: medidas y precios hoy | ${SITE_NAME_SHORT}`;
-  const description = `Medida de fábrica y precios de cubiertas para ${label}. Compará tiendas en Argentina.`;
+  const selected = pickDefaultVehicleSize(vehicle, null, null);
+  const desde = await getPrecioDesde(selected.medidaSlug);
+  const rawCopy = getAutoCopy(slug);
+  const resolved = rawCopy
+    ? resolveSeoCopy(rawCopy, {
+        precio_min: desde != null ? formatARS(desde) : null,
+      })
+    : null;
+  const title =
+    resolved?.title ||
+    `Cubiertas para ${label}: medidas y precios hoy | ${SITE_NAME_SHORT}`;
+  const description =
+    resolved?.metaDescription ||
+    `Medida de fábrica y precios de cubiertas para ${label}. Compará tiendas en Argentina.`;
   return {
     title: { absolute: title },
     description,
@@ -78,20 +92,29 @@ export default async function AutoPage({ params, searchParams }: PageProps) {
     ).values(),
   ];
 
-  const faqs = [
-    {
-      q: `¿Cuál es la medida de cubierta del ${label}?`,
-      a: `La medida más habitual es ${selected.medidaLabel}${selected.version ? ` (versión ${selected.version})` : ""}. Siempre confirmá en el flanco de tu cubierta o en el manual.`,
-    },
-    {
-      q: "¿Puedo poner otra medida?",
-      a: "Algunos modelos admiten equivalentes. Si cambiás medida, verificá que entre en el guardabarros y respetá el índice de carga/velocidad.",
-    },
-    {
-      q: "¿Los precios son por unidad?",
-      a: "Sí. Si una tienda publica kit x2 o x4, mostramos el precio dividido por unidad.",
-    },
-  ];
+  const rawCopy = getAutoCopy(slug);
+  const copy = rawCopy
+    ? resolveSeoCopy(rawCopy, {
+        precio_min: desde != null ? formatARS(desde) : null,
+      })
+    : null;
+
+  const faqs = copy?.faqs?.length
+    ? copy.faqs
+    : [
+        {
+          q: `¿Cuál es la medida de cubierta del ${label}?`,
+          a: `La medida más habitual es ${selected.medidaLabel}${selected.version ? ` (versión ${selected.version})` : ""}. Siempre confirmá en el costado de tu cubierta o en el manual.`,
+        },
+        {
+          q: "¿Puedo poner otra medida?",
+          a: "Algunos modelos admiten equivalentes. Si cambiás medida, verificá que entre en el guardabarros y respetá el índice de carga/velocidad.",
+        },
+        {
+          q: "¿Los precios son por unidad?",
+          a: "Sí. Si una tienda publica kit x2 o x4, mostramos el precio dividido por unidad.",
+        },
+      ];
 
   const breadcrumbLd = {
     "@context": "https://schema.org",
@@ -103,15 +126,7 @@ export default async function AutoPage({ params, searchParams }: PageProps) {
     ],
   };
 
-  const faqLd = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: faqs.map((f) => ({
-      "@type": "Question",
-      name: f.q,
-      acceptedAnswer: { "@type": "Answer", text: f.a },
-    })),
-  };
+  const faqLd = faqPageJsonLd(faqs);
 
   return (
     <>
@@ -130,12 +145,14 @@ export default async function AutoPage({ params, searchParams }: PageProps) {
 
         <header className="mt-6 max-w-3xl sm:mt-8">
           <h1 className="text-3xl font-semibold tracking-[-0.02em] text-tinta-900 sm:text-4xl lg:text-[40px] lg:leading-[1.1]">
-            Cubiertas para {label}: medidas y precios hoy
+            {copy?.h1 || `Cubiertas para ${label}: medidas y precios hoy`}
           </h1>
-          <p className="mt-2 text-tinta-500">
-            Elegí versión y año si aplica. Después confirmá la medida en el
-            flanco.
-          </p>
+          {!copy ? (
+            <p className="mt-2 text-tinta-500">
+              Elegí versión y año si aplica. Después confirmá la medida en el
+              costado de tu cubierta.
+            </p>
+          ) : null}
         </header>
 
         <div className="mt-8">
@@ -201,6 +218,8 @@ export default async function AutoPage({ params, searchParams }: PageProps) {
           </p>
         )}
 
+        {copy ? <SeoCopyArticle copy={copy} /> : null}
+
         <div className="mt-10">
           <LeadForm
             medidaSlug={selected.medidaSlug}
@@ -208,25 +227,6 @@ export default async function AutoPage({ params, searchParams }: PageProps) {
             localidades={localidadesJson.localidades}
           />
         </div>
-
-        <section className="mt-12" aria-labelledby="flanco">
-          <h2
-            id="flanco"
-            className="text-xl font-semibold tracking-[-0.02em] text-tinta-900"
-          >
-            Verificá la medida en el flanco de tu cubierta
-          </h2>
-          <p className="mt-2 max-w-xl text-sm text-tinta-500">
-            La medida está grabada en el costado. Si no coincide con{" "}
-            <span className="font-mono font-semibold text-tinta-700">
-              {selected.medidaLabel}
-            </span>
-            , usá la del flanco.
-          </p>
-          <div className="mt-6">
-            <FlancoIllustration medida={selected.medidaLabel} />
-          </div>
-        </section>
 
         {otherSizes.length > 0 ? (
           <section className="mt-12" aria-labelledby="otras">

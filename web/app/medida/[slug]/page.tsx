@@ -13,7 +13,9 @@ import { PriceHistoryChartLazy } from "@/components/PriceHistoryChartLazy";
 import { StoreTable } from "@/components/StoreTable";
 import { MedidaFaq } from "@/components/MedidaFaq";
 import { MobileStickyCta } from "@/components/MobileStickyCta";
+import { SeoCopyArticle } from "@/components/SeoCopyArticle";
 import { JsonLd } from "@/components/JsonLd";
+import { getMedidaCopy } from "@/content/medidas";
 import localidadesJson from "@/data/localidades.json";
 import {
   getAutosPorMedida,
@@ -28,7 +30,33 @@ import {
 } from "@/lib/data";
 import { formatARS } from "@/lib/format";
 import { getMedidaFaqItems } from "@/lib/faq-medida";
+import {
+  faqPageJsonLd,
+  resolveSeoCopy,
+  type SeoCopyVars,
+} from "@/lib/seo-copy";
 import { getSiteUrl, SITE_NAME_SHORT } from "@/lib/site";
+
+function medidaCopyVars(input: {
+  precioMin: number | null | undefined;
+  mediana: number | null | undefined;
+  tiendas: number;
+  ofertas: number;
+  actualizadoHaceHoras: number | null;
+}): SeoCopyVars {
+  return {
+    precio_min:
+      input.precioMin != null ? formatARS(input.precioMin) : null,
+    precio_mediana:
+      input.mediana != null ? formatARS(input.mediana) : null,
+    n_tiendas: String(input.tiendas),
+    n_ofertas: String(input.ofertas),
+    fecha_actualizacion:
+      input.actualizadoHaceHoras != null
+        ? `hace ${input.actualizadoHaceHoras} h`
+        : null,
+  };
+}
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -51,16 +79,31 @@ export async function generateMetadata({
   const ofertas = await getOfertas(slug);
   const desde = ofertas[0]?.precioEfectivo;
   const desdeLabel = desde != null ? formatARS(desde) : null;
+  const rawCopy = getMedidaCopy(slug);
+  const resolvedCopy = rawCopy
+    ? resolveSeoCopy(
+        rawCopy,
+        medidaCopyVars({
+          precioMin: desde ?? null,
+          mediana: resumen.medianaHoy,
+          tiendas: resumen.tiendasCount,
+          ofertas: resumen.ofertasCount,
+          actualizadoHaceHoras: resumen.actualizadoHaceHoras,
+        })
+      )
+    : null;
 
   const title =
-    desdeLabel != null
+    resolvedCopy?.title ||
+    (desdeLabel != null
       ? `Precio cubiertas ${medida.label} hoy | desde ${desdeLabel} | ${SITE_NAME_SHORT}`
-      : `Precio cubiertas ${medida.label} hoy | ${SITE_NAME_SHORT}`;
+      : `Precio cubiertas ${medida.label} hoy | ${SITE_NAME_SHORT}`);
 
   const description =
-    desdeLabel != null
+    resolvedCopy?.metaDescription ||
+    (desdeLabel != null
       ? `Cubiertas ${medida.label}: desde ${desdeLabel} por unidad en ${resumen.tiendasCount} tiendas. Compará efectivo, tarjeta, cuotas e historial.`
-      : `Compará precios de cubiertas ${medida.label} en Argentina. Efectivo, tarjeta, cuotas e historial.`;
+      : `Compará precios de cubiertas ${medida.label} en Argentina. Efectivo, tarjeta, cuotas e historial.`);
 
   return {
     title: { absolute: title },
@@ -94,12 +137,28 @@ export default async function MedidaPage({ params }: PageProps) {
   const autos = getAutosPorMedida(slug);
   const marcas = await getMarcasEnMedida(slug);
   const cheapest = ofertas[0] ?? null;
-  const faqs = getMedidaFaqItems(medida.label);
   const ejemplo = isExampleData(ofertas);
   const pageUrl = `${base}/medida/${medida.slug}`;
   const hist90 = historial.slice(-90);
   const maximo90d =
     hist90.length > 0 ? Math.max(...hist90.map((h) => h.max)) : null;
+
+  const rawCopy = getMedidaCopy(slug);
+  const copy = rawCopy
+    ? resolveSeoCopy(
+        rawCopy,
+        medidaCopyVars({
+          precioMin: cheapest?.precioEfectivo ?? null,
+          mediana: resumen.medianaHoy,
+          tiendas: resumen.tiendasCount,
+          ofertas: resumen.ofertasCount,
+          actualizadoHaceHoras: resumen.actualizadoHaceHoras,
+        })
+      )
+    : null;
+  const faqs = copy?.faqs?.length
+    ? copy.faqs
+    : [...getMedidaFaqItems(medida.label)];
 
   const breadcrumbLd = {
     "@context": "https://schema.org",
@@ -151,18 +210,7 @@ export default async function MedidaPage({ params }: PageProps) {
       : {}),
   };
 
-  const faqLd = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: faqs.map((f) => ({
-      "@type": "Question",
-      name: f.q,
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: f.a,
-      },
-    })),
-  };
+  const faqLd = faqPageJsonLd(faqs);
 
   const actualizado =
     resumen.actualizadoHaceHoras !== null
@@ -188,7 +236,7 @@ export default async function MedidaPage({ params }: PageProps) {
         <header className="mt-6 flex flex-col items-start gap-3 sm:mt-8 sm:gap-4">
           <MedidaBadge label={medida.label} />
           <h1 className="text-[28px] font-semibold leading-tight tracking-[-0.02em] text-tinta-900 sm:text-4xl lg:text-[44px] lg:leading-[1.1]">
-            Precio de cubiertas {medida.label} hoy
+            {copy?.h1 || `Precio de cubiertas ${medida.label} hoy`}
           </h1>
           <p className="flex flex-wrap items-center gap-2 text-tinta-500">
             <span className="relative inline-flex size-2.5" aria-hidden>
@@ -259,6 +307,8 @@ export default async function MedidaPage({ params }: PageProps) {
             </div>
           </>
         )}
+
+        {copy ? <SeoCopyArticle copy={copy} /> : null}
 
         <div className="my-10">
           <AdSlot slot="medida-mid" height={90} />
@@ -361,7 +411,7 @@ export default async function MedidaPage({ params }: PageProps) {
           <h2 className="mb-4 text-xl font-semibold tracking-[-0.02em] text-tinta-900 md:text-2xl">
             Preguntas frecuentes
           </h2>
-          <MedidaFaq medidaLabel={medida.label} />
+          <MedidaFaq medidaLabel={medida.label} items={faqs} />
         </section>
       </div>
 
