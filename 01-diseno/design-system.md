@@ -137,3 +137,15 @@ Otras opciones de medida para el Onix · FAQ
 - **Tire Rack** (EE.UU.): búsqueda por medida o por vehículo, como dos tabs.
 - **Idealo / Trivago**: tabla de tiendas limpia con la mejor fila destacada.
 - **Linear / Stripe**: nivel de pulido tipográfico y espaciado que buscamos.
+
+---
+
+## v2 — Dirección "comparador luminoso" (nov 2026, ver prompt 04b)
+Reemplaza la paleta oscura del hero por un sistema claro inspirado en la estructura de precialo.com.ar (sin copiar marca):
+- Fondo `#F4F5F9`, superficie `#FFFFFF`, borde `#E5E7EB`, tinta `#101828 / #1D2939 / #667085 / #98A2B3`.
+- Acción `#3E6AE1` (hover `#2F55C4`, fondo `#EEF2FD`). Oferta/descuento `#CC0C39` (fondo `#FDECEF`). Ahorro/más barato `#0F8A5F` (fondo `#E7F5EB`). Ámbar `#F5A524` se mantiene como acento de marca ("hoy", cuotas).
+- Pasteles de bloque: lila `#F3E8FF`, rosa `#FCE7F3`, menta `#DCFCE7`, cielo `#E0F2FE`, limón `#FEF9C3`. Gradientes de banda: lila→violeta, cian→verde.
+- Asfalto `#0B0F14` queda para la tarjeta de medida del hero, footer y dark mode.
+- Tipos: Inter (UI), JetBrains Mono (medidas/precios, tabular-nums), display condensada opcional solo para campañas.
+- Radios 8/12/16/24 + pill. Sombras casi nulas (`0 1px 2px rgba(16,24,40,.05)`), hover más marcado.
+- Patrones clave: buscador pill con botón circular, trust-row de 3 ítems, bandas con gradiente con chips blancos, cajas internas grises dentro de cards, chips de precio tachado + % OFF.

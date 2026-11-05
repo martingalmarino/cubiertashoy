@@ -1,24 +1,19 @@
 import type { Metadata } from "next";
-import { Inter, Inter_Tight, JetBrains_Mono } from "next/font/google";
+import { Inter, JetBrains_Mono } from "next/font/google";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { SkipLink } from "@/components/SkipLink";
 import { JsonLd } from "@/components/JsonLd";
+import { ThemeProvider } from "@/components/theme/ThemeProvider";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { getMedidas } from "@/lib/data";
 import { getSiteUrl, SITE_NAME } from "@/lib/site";
 import "./globals.css";
-
-const interTight = Inter_Tight({
-  variable: "--font-display",
-  subsets: ["latin"],
-  weight: ["600", "700"],
-  display: "swap",
-});
 
 const inter = Inter({
   variable: "--font-sans",
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: ["400", "500", "600", "700"],
   display: "swap",
 });
 
@@ -73,6 +68,8 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
+  const medidas = getMedidas();
+
   const orgLd = {
     "@context": "https://schema.org",
     "@type": "Organization",
@@ -99,19 +96,22 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="es-AR"
-      className={`${interTight.variable} ${inter.variable} ${jetbrainsMono.variable} h-full`}
+      suppressHydrationWarning
+      className={`${inter.variable} ${jetbrainsMono.variable} h-full`}
     >
-      <body className="flex min-h-full flex-col bg-papel font-sans text-asfalto-950">
-        <JsonLd data={orgLd} />
-        <JsonLd data={websiteLd} />
-        <TooltipProvider>
-          <SkipLink />
-          <Header />
-          <main id="contenido" className="flex-1">
-            {children}
-          </main>
-          <Footer />
-        </TooltipProvider>
+      <body className="flex min-h-full flex-col bg-fondo font-sans text-tinta-900">
+        <ThemeProvider>
+          <JsonLd data={orgLd} />
+          <JsonLd data={websiteLd} />
+          <TooltipProvider>
+            <SkipLink />
+            <Header medidas={medidas} />
+            <main id="contenido" className="flex-1">
+              {children}
+            </main>
+            <Footer />
+          </TooltipProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

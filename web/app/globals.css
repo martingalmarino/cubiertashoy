@@ -4,22 +4,51 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* Tokens del design system → utilidades Tailwind */
 @theme inline {
-  --color-asfalto-950: var(--asfalto-950);
-  --color-asfalto-800: var(--asfalto-800);
-  --color-asfalto-600: var(--asfalto-600);
-  --color-grafito-400: var(--grafito-400);
-  --color-niebla-200: var(--niebla-200);
-  --color-niebla-100: var(--niebla-100);
-  --color-papel: var(--papel);
+  /* Comparador luminoso */
+  --color-fondo: var(--fondo);
+  --color-superficie: var(--superficie);
+  --color-borde: var(--borde);
+  --color-borde-fuerte: var(--borde-fuerte);
+
+  --color-tinta-900: var(--tinta-900);
+  --color-tinta-700: var(--tinta-700);
+  --color-tinta-500: var(--tinta-500);
+  --color-tinta-400: var(--tinta-400);
+
+  --color-accion-600: var(--accion-600);
+  --color-accion-700: var(--accion-700);
+  --color-accion-50: var(--accion-50);
+
+  --color-oferta-600: var(--oferta-600);
+  --color-oferta-50: var(--oferta-50);
+
+  --color-ahorro-600: var(--ahorro-600);
+  --color-ahorro-50: var(--ahorro-50);
+
   --color-ambar-500: var(--ambar-500);
   --color-ambar-100: var(--ambar-100);
-  --color-verde-600: var(--verde-600);
-  --color-verde-50: var(--verde-50);
-  --color-rojo-600: var(--rojo-600);
-  --color-rojo-50: var(--rojo-50);
-  --color-azul-600: var(--azul-600);
+
+  --color-pastel-lila: var(--pastel-lila);
+  --color-pastel-rosa: var(--pastel-rosa);
+  --color-pastel-menta: var(--pastel-menta);
+  --color-pastel-cielo: var(--pastel-cielo);
+  --color-pastel-limon: var(--pastel-limon);
+
+  --color-asfalto-950: var(--asfalto-950);
+  --color-asfalto-800: var(--asfalto-800);
+
+  /* Alias legacy → nuevos (compat) */
+  --color-papel: var(--fondo);
+  --color-niebla-100: var(--fondo);
+  --color-niebla-200: var(--borde);
+  --color-grafito-400: var(--tinta-400);
+  --color-asfalto-600: var(--tinta-500);
+  --color-azul-600: var(--accion-600);
+  --color-verde-600: var(--ahorro-600);
+  --color-verde-50: var(--ahorro-50);
+  --color-rojo-600: var(--oferta-600);
+  --color-rojo-50: var(--oferta-50);
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -45,10 +74,10 @@
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
 
-  --font-display: var(--font-display), ui-sans-serif, system-ui, sans-serif;
   --font-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-mono), ui-monospace, monospace;
-  --font-heading: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
 
   --radius-sm: 8px;
   --radius-md: 12px;
@@ -56,76 +85,151 @@
   --radius-xl: 24px;
   --radius-full: 9999px;
 
-  --shadow-sm: 0 1px 2px rgba(11, 15, 20, 0.06);
-  --shadow-md: 0 4px 16px -4px rgba(11, 15, 20, 0.1);
-  --shadow-lg: 0 16px 40px -12px rgba(11, 15, 20, 0.18);
+  --shadow-card: 0 1px 2px rgba(16, 24, 40, 0.05);
+  --shadow-card-hover: 0 10px 15px -3px rgba(16, 24, 40, 0.08),
+    0 4px 6px -4px rgba(16, 24, 40, 0.06);
+  --shadow-hero: 0 18px 40px -28px rgba(10, 20, 80, 0.55);
+  --shadow-sm: var(--shadow-card);
+  --shadow-md: var(--shadow-card-hover);
+  --shadow-lg: var(--shadow-hero);
 }
 
 :root {
-  /* Paleta "Banda de rodadura" */
-  --asfalto-950: #0b0f14;
-  --asfalto-800: #1c232c;
-  --asfalto-600: #3a4552;
-  --grafito-400: #8a96a3;
-  --niebla-200: #e3e7eb;
-  --niebla-100: #f1f3f5;
-  --papel: #fafaf7;
+  --fondo: #f4f5f9;
+  --superficie: #ffffff;
+  --borde: #e5e7eb;
+  --borde-fuerte: #d1d5db;
+
+  --tinta-900: #101828;
+  --tinta-700: #1d2939;
+  --tinta-500: #667085;
+  --tinta-400: #98a2b3;
+
+  --accion-600: #3e6ae1;
+  --accion-700: #2f55c4;
+  --accion-50: #eef2fd;
+
+  --oferta-600: #cc0c39;
+  --oferta-50: #fdecef;
+
+  --ahorro-600: #0f8a5f;
+  --ahorro-50: #e7f5eb;
+
   --ambar-500: #f5a524;
   --ambar-100: #fef3dc;
-  --verde-600: #0f8a5f;
-  --verde-50: #e7f6ef;
-  --rojo-600: #d1432f;
-  --rojo-50: #fcece9;
-  --azul-600: #2457d6;
 
-  /* shadcn mapeado a tokens de marca */
-  --background: var(--papel);
-  --foreground: var(--asfalto-950);
-  --card: #ffffff;
-  --card-foreground: var(--asfalto-950);
-  --popover: #ffffff;
-  --popover-foreground: var(--asfalto-950);
-  --primary: var(--azul-600);
+  --pastel-lila: #f3e8ff;
+  --pastel-rosa: #fce7f3;
+  --pastel-menta: #dcfce7;
+  --pastel-cielo: #e0f2fe;
+  --pastel-limon: #fef9c3;
+
+  --asfalto-950: #0b0f14;
+  --asfalto-800: #1c232c;
+
+  --background: var(--fondo);
+  --foreground: var(--tinta-900);
+  --card: var(--superficie);
+  --card-foreground: var(--tinta-900);
+  --popover: var(--superficie);
+  --popover-foreground: var(--tinta-900);
+  --primary: var(--accion-600);
   --primary-foreground: #ffffff;
-  --secondary: var(--niebla-100);
-  --secondary-foreground: var(--asfalto-950);
-  --muted: var(--niebla-100);
-  --muted-foreground: var(--asfalto-600);
-  --accent: var(--ambar-100);
-  --accent-foreground: var(--asfalto-950);
-  --destructive: var(--rojo-600);
-  --border: var(--niebla-200);
-  --input: var(--niebla-200);
-  --ring: var(--azul-600);
-  --chart-1: var(--azul-600);
-  --chart-2: var(--verde-600);
+  --secondary: var(--fondo);
+  --secondary-foreground: var(--tinta-900);
+  --muted: var(--fondo);
+  --muted-foreground: var(--tinta-500);
+  --accent: var(--accion-50);
+  --accent-foreground: var(--tinta-900);
+  --destructive: var(--oferta-600);
+  --border: var(--borde);
+  --input: var(--borde);
+  --ring: var(--accion-600);
+  --chart-1: var(--accion-600);
+  --chart-2: var(--ahorro-600);
   --chart-3: var(--ambar-500);
-  --chart-4: var(--asfalto-600);
-  --chart-5: var(--grafito-400);
+  --chart-4: var(--tinta-500);
+  --chart-5: var(--tinta-400);
   --radius: 12px;
 
   --ease-brand: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --grad-lila: linear-gradient(90deg, #f0abfc 0%, #c4b5fd 100%);
+  --grad-menta: linear-gradient(90deg, #67e8f9 0%, #4ade80 100%);
+  --grad-suave: linear-gradient(180deg, #fdf2f8 0%, #f4f5f9 60%);
 }
 
 .dark {
-  --background: var(--asfalto-950);
-  --foreground: var(--papel);
-  --card: var(--asfalto-800);
-  --card-foreground: var(--papel);
-  --popover: var(--asfalto-800);
-  --popover-foreground: var(--papel);
-  --primary: var(--azul-600);
-  --primary-foreground: #ffffff;
+  --fondo: #0b0f14;
+  --superficie: #121821;
+  --borde: #232b36;
+  --borde-fuerte: #2f3845;
+
+  --tinta-900: #f2f4f7;
+  --tinta-700: #e4e7ec;
+  --tinta-500: #98a2b3;
+  --tinta-400: #667085;
+
+  --accion-600: #6c8df0;
+  --accion-700: #8aa4f4;
+  --accion-50: rgb(108 141 240 / 0.12);
+
+  --oferta-600: #f9708a;
+  --oferta-50: rgb(204 12 57 / 0.16);
+
+  --ahorro-600: #32d583;
+  --ahorro-50: rgb(15 138 95 / 0.16);
+
+  --ambar-500: #f5a524;
+  --ambar-100: rgb(245 165 36 / 0.16);
+
+  --pastel-lila: rgb(243 232 255 / 0.12);
+  --pastel-rosa: rgb(252 231 243 / 0.12);
+  --pastel-menta: rgb(220 252 231 / 0.12);
+  --pastel-cielo: rgb(224 242 254 / 0.12);
+  --pastel-limon: rgb(254 249 195 / 0.12);
+
+  --asfalto-950: #0b0f14;
+  --asfalto-800: #121821;
+
+  --background: var(--fondo);
+  --foreground: var(--tinta-900);
+  --card: var(--superficie);
+  --card-foreground: var(--tinta-900);
+  --popover: var(--superficie);
+  --popover-foreground: var(--tinta-900);
+  --primary: var(--accion-600);
+  --primary-foreground: #0b0f14;
   --secondary: var(--asfalto-800);
-  --secondary-foreground: var(--papel);
+  --secondary-foreground: var(--tinta-900);
   --muted: var(--asfalto-800);
-  --muted-foreground: var(--grafito-400);
-  --accent: var(--asfalto-800);
-  --accent-foreground: var(--papel);
-  --destructive: var(--rojo-600);
-  --border: rgb(255 255 255 / 10%);
-  --input: rgb(255 255 255 / 15%);
-  --ring: var(--azul-600);
+  --muted-foreground: var(--tinta-500);
+  --accent: var(--accion-50);
+  --accent-foreground: var(--tinta-900);
+  --destructive: var(--oferta-600);
+  --border: var(--borde);
+  --input: var(--borde);
+  --ring: var(--accion-600);
+  --chart-1: var(--accion-600);
+  --chart-2: var(--ahorro-600);
+  --chart-3: var(--ambar-500);
+  --chart-4: var(--tinta-500);
+  --chart-5: var(--tinta-400);
+
+  --grad-lila: linear-gradient(
+    90deg,
+    rgb(240 171 252 / 0.25) 0%,
+    rgb(196 181 253 / 0.25) 100%
+  );
+  --grad-menta: linear-gradient(
+    90deg,
+    rgb(103 232 249 / 0.25) 0%,
+    rgb(74 222 128 / 0.25) 100%
+  );
+  --grad-suave: linear-gradient(
+    180deg,
+    rgb(253 242 248 / 0.12) 0%,
+    #0b0f14 60%
+  );
 }
 
 @layer base {
@@ -138,7 +242,7 @@
   }
 
   body {
-    @apply bg-papel text-asfalto-950 antialiased;
+    @apply bg-fondo text-tinta-900 antialiased;
     font-feature-settings: "tnum";
     line-height: 1.55;
   }
@@ -147,13 +251,12 @@
   h2,
   h3,
   h4 {
-    font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
     letter-spacing: -0.02em;
     line-height: 1.1;
   }
 
   :focus-visible {
-    outline: 2px solid var(--azul-600);
+    outline: 2px solid var(--accion-600);
     outline-offset: 2px;
   }
 
@@ -168,11 +271,23 @@
       animation-duration: 0.01ms !important;
       animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
     }
   }
 }
 
-/* Textura banda de rodadura (líneas diagonales ~5%) */
+.grad-suave {
+  background-image: var(--grad-suave);
+}
+
+.grad-lila {
+  background-image: var(--grad-lila);
+}
+
+.grad-menta {
+  background-image: var(--grad-menta);
+}
+
 .tread-texture {
   background-image: repeating-linear-gradient(
     -45deg,
@@ -185,7 +300,7 @@
 
 .container-site {
   width: 100%;
-  max-width: 1120px;
+  max-width: 72rem; /* max-w-6xl */
   margin-inline: auto;
   padding-inline: 16px;
 }
@@ -200,4 +315,28 @@
   .container-site {
     padding-inline: 32px;
   }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeleton-shimmer {
+  background-image: linear-gradient(
+    90deg,
+    var(--fondo) 0%,
+    var(--superficie) 50%,
+    var(--fondo) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+}
+
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
 }

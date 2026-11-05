@@ -5,7 +5,7 @@ const arsFormatter = new Intl.NumberFormat("es-AR", {
   minimumFractionDigits: 0,
 });
 
-/** Precio en pesos argentinos, sin decimales (por unidad). */
+/** Precio en pesos argentinos, sin decimales (por unidad). Espacio fino tras $. */
 export function formatARS(n: number): string {
-  return arsFormatter.format(n);
+  return arsFormatter.format(n).replace(/\$\s?/, "$\u202F");
 }

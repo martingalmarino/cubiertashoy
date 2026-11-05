@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useSyncExternalStore } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { formatARS } from "@/lib/format";
 import { cn } from "@/lib/utils";
 
@@ -8,6 +8,8 @@ type AnimatedPriceProps = {
   value: number;
   className?: string;
   durationMs?: number;
+  /** Si true, cuenta desde 0 (CheapestCard). */
+  fromZero?: boolean;
 };
 
 function usePrefersReducedMotion() {
@@ -22,22 +24,22 @@ function usePrefersReducedMotion() {
   );
 }
 
-/**
- * Microinteracción de precio: primer paint = valor final (bueno para LCP),
- * luego un conteo corto desde ~88% si no hay reduced-motion.
- */
 export function AnimatedPrice({
   value,
   className,
-  durationMs = 300,
+  durationMs = 600,
+  fromZero = false,
 }: AnimatedPriceProps) {
   const reduceMotion = usePrefersReducedMotion();
   const [display, setDisplay] = useState(value);
+  const didRun = useRef(false);
 
   useEffect(() => {
     if (reduceMotion) return;
+    if (fromZero && didRun.current) return;
+    didRun.current = true;
 
-    const from = Math.round(value * 0.88);
+    const from = fromZero ? 0 : Math.round(value * 0.88);
     const start = performance.now();
     let frame = 0;
 
@@ -50,11 +52,11 @@ export function AnimatedPrice({
 
     frame = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(frame);
-  }, [value, durationMs, reduceMotion]);
+  }, [value, durationMs, reduceMotion, fromZero]);
 
   return (
     <span className={cn("font-mono tabular-nums", className)}>
-      {formatARS(display)}
+      {formatARS(reduceMotion ? value : display)}
     </span>
   );
 }

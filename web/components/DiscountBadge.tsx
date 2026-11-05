@@ -18,13 +18,13 @@ const copy = {
   real: {
     label: "Descuento real",
     tip: "El precio “antes” está en línea con el historial (≤ percentil 75 de 90 días).",
-    className: "bg-verde-50 text-verde-600",
+    className: "bg-ahorro-50 text-ahorro-600",
     Icon: Check,
   },
   inflado: {
     label: "Descuento inflado",
     tip: "El precio “antes” supera el percentil 75 del historial de 90 días.",
-    className: "bg-rojo-50 text-rojo-600",
+    className: "bg-ambar-100 text-asfalto-950",
     Icon: AlertTriangle,
   },
 } as const;

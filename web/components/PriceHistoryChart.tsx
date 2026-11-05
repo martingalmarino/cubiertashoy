@@ -30,8 +30,8 @@ type ChartRow = {
   mediana: number;
   min: number;
   max: number;
-  /** max - min, apilado sobre min para banda */
-  spread: number;
+  bandBase: number;
+  bandSpread: number;
 };
 
 function formatShortDate(iso: string): string {
@@ -59,6 +59,7 @@ function usePrefersReducedMotion() {
   );
 }
 
+/** Aproxima p25–p75 como banda entre min y max del día (sin cambiar cálculos). */
 export function PriceHistoryChart({
   historial,
   medidaLabel,
@@ -69,14 +70,20 @@ export function PriceHistoryChart({
 
   const data: ChartRow[] = useMemo(() => {
     const slice = historial.slice(-range);
-    return slice.map((h) => ({
-      fecha: h.fecha,
-      label: formatShortDate(h.fecha),
-      mediana: h.mediana,
-      min: h.min,
-      max: h.max,
-      spread: Math.max(0, h.max - h.min),
-    }));
+    return slice.map((h) => {
+      const span = Math.max(0, h.max - h.min);
+      const bandBase = h.min + span * 0.25;
+      const bandTop = h.min + span * 0.75;
+      return {
+        fecha: h.fecha,
+        label: formatShortDate(h.fecha),
+        mediana: h.mediana,
+        min: h.min,
+        max: h.max,
+        bandBase,
+        bandSpread: Math.max(0, bandTop - bandBase),
+      };
+    });
   }, [historial, range]);
 
   const minimoHistorico = useMemo(() => {
@@ -101,18 +108,21 @@ export function PriceHistoryChart({
   ];
 
   return (
-    <section aria-labelledby="historial-heading">
+    <section
+      aria-labelledby="historial-heading"
+      className="rounded-xl border border-borde bg-superficie p-4 shadow-card sm:p-5"
+    >
       <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
         <h2
           id="historial-heading"
-          className="font-display text-xl font-semibold tracking-[-0.02em] text-asfalto-950"
+          className="text-xl font-semibold tracking-[-0.02em] text-tinta-900"
         >
           Historial de precios
         </h2>
         <div
           role="group"
           aria-label="Rango del historial"
-          className="inline-flex rounded-md border border-niebla-200 bg-niebla-100 p-1"
+          className="inline-flex rounded-full border border-borde bg-fondo p-1"
         >
           {ranges.map((r) => (
             <button
@@ -121,10 +131,10 @@ export function PriceHistoryChart({
               onClick={() => setRange(r.value)}
               aria-pressed={range === r.value}
               className={cn(
-                "min-h-9 rounded-sm px-3 font-mono text-sm font-medium tabular-nums transition-colors duration-200",
+                "min-h-9 rounded-full px-3 font-mono text-sm font-medium tabular-nums transition-colors duration-200",
                 range === r.value
-                  ? "bg-white text-asfalto-950 shadow-sm"
-                  : "text-asfalto-600 hover:text-asfalto-950"
+                  ? "bg-superficie text-tinta-900 shadow-card"
+                  : "text-tinta-500 hover:text-tinta-900"
               )}
             >
               {r.label}
@@ -133,11 +143,11 @@ export function PriceHistoryChart({
         </div>
       </div>
 
-      <div className="rounded-lg border border-niebla-200 bg-white p-3 sm:p-4">
+      <div className="rounded-lg bg-fondo/60 p-1 sm:p-2">
         {!ready ? (
-          <Skeleton className="h-64 w-full rounded-md bg-niebla-100" />
+          <Skeleton className="h-64 w-full rounded-md skeleton-shimmer" />
         ) : data.length === 0 ? (
-          <p className="flex h-64 items-center justify-center text-sm text-asfalto-600">
+          <p className="flex h-64 items-center justify-center text-sm text-tinta-500">
             Sin historial para esta medida todavía.
           </p>
         ) : (
@@ -147,20 +157,26 @@ export function PriceHistoryChart({
                 data={data}
                 margin={{ top: 8, right: 8, left: 0, bottom: 0 }}
               >
+                <defs>
+                  <linearGradient id="medianaFill" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#3E6AE1" stopOpacity={0.2} />
+                    <stop offset="100%" stopColor="#3E6AE1" stopOpacity={0} />
+                  </linearGradient>
+                </defs>
                 <CartesianGrid
-                  stroke="#E3E7EB"
+                  stroke="#E5E7EB"
                   strokeDasharray="3 3"
                   vertical={false}
                 />
                 <XAxis
                   dataKey="label"
-                  tick={{ fill: "#3A4552", fontSize: 11 }}
+                  tick={{ fill: "#98A2B3", fontSize: 12 }}
                   tickLine={false}
-                  axisLine={{ stroke: "#E3E7EB" }}
+                  axisLine={{ stroke: "#E5E7EB" }}
                   minTickGap={28}
                 />
                 <YAxis
-                  tick={{ fill: "#3A4552", fontSize: 11 }}
+                  tick={{ fill: "#98A2B3", fontSize: 12 }}
                   tickLine={false}
                   axisLine={false}
                   width={64}
@@ -172,17 +188,19 @@ export function PriceHistoryChart({
                   }
                 />
                 <Tooltip
-                  cursor={{ stroke: "#8A96A3", strokeDasharray: "4 4" }}
+                  cursor={{ stroke: "#98A2B3", strokeDasharray: "4 4" }}
                   content={({ active, payload }) => {
                     if (!active || !payload?.length) return null;
                     const row = payload[0]?.payload as ChartRow;
                     return (
-                      <div className="rounded-md bg-asfalto-800 px-3 py-2 text-xs text-papel shadow-md">
-                        <p className="mb-1 font-medium">{row.fecha}</p>
-                        <p className="font-mono tabular-nums">
-                          Mediana {formatARS(row.mediana)}
+                      <div className="rounded-lg border border-borde bg-superficie px-3 py-2 text-xs shadow-card-hover">
+                        <p className="mb-1 font-medium text-tinta-500">
+                          {row.fecha}
                         </p>
-                        <p className="font-mono tabular-nums text-grafito-400">
+                        <p className="font-mono text-sm font-bold tabular-nums text-tinta-900">
+                          {formatARS(row.mediana)}
+                        </p>
+                        <p className="font-mono tabular-nums text-tinta-400">
                           {formatARS(row.min)} – {formatARS(row.max)}
                         </p>
                       </div>
@@ -191,8 +209,8 @@ export function PriceHistoryChart({
                 />
                 <Area
                   type="monotone"
-                  dataKey="min"
-                  stackId="band"
+                  dataKey="bandBase"
+                  stackId="pband"
                   stroke="none"
                   fill="transparent"
                   isAnimationActive={!reduceMotion}
@@ -200,18 +218,25 @@ export function PriceHistoryChart({
                 />
                 <Area
                   type="monotone"
-                  dataKey="spread"
-                  stackId="band"
+                  dataKey="bandSpread"
+                  stackId="pband"
                   stroke="none"
-                  fill="#2457D6"
-                  fillOpacity={0.12}
+                  fill="#EEF2FD"
+                  isAnimationActive={!reduceMotion}
+                  animationDuration={200}
+                />
+                <Area
+                  type="monotone"
+                  dataKey="mediana"
+                  stroke="none"
+                  fill="url(#medianaFill)"
                   isAnimationActive={!reduceMotion}
                   animationDuration={200}
                 />
                 <Line
                   type="monotone"
                   dataKey="mediana"
-                  stroke="#2457D6"
+                  stroke="#3E6AE1"
                   strokeWidth={2}
                   dot={false}
                   isAnimationActive={!reduceMotion}
@@ -236,7 +261,7 @@ export function PriceHistoryChart({
         )}
       </div>
 
-      <p className="mt-3 text-sm text-asfalto-600">{resumenTextual}</p>
+      <p className="mt-3 text-sm text-tinta-500">{resumenTextual}</p>
     </section>
   );
 }
