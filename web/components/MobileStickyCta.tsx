@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { ArrowUpRight } from "lucide-react";
+import { StoreLogo } from "@/components/StoreLogo";
 import { trackClickTienda } from "@/lib/analytics";
 import { formatARS } from "@/lib/format";
 import { outboundHref, outboundRel } from "@/lib/outbound";
@@ -22,7 +23,6 @@ export function MobileStickyCta({ oferta }: MobileStickyCtaProps) {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (!entry) return;
-        // Primera observación: solo mostrar si ya salió del viewport
         if (!seen) {
           seen = true;
           setVisible(!entry.isIntersecting);
@@ -39,13 +39,20 @@ export function MobileStickyCta({ oferta }: MobileStickyCtaProps) {
   if (!visible) return null;
 
   return (
-    <div className="fixed inset-x-0 bottom-0 z-50 border-t border-borde bg-superficie/95 pb-safe backdrop-blur md:hidden">
+    <div className="fixed inset-x-0 bottom-0 z-50 border-t border-borde bg-superficie/95 pb-[env(safe-area-inset-bottom)] backdrop-blur md:hidden">
       <div className="flex items-center gap-3 px-4 py-3">
         <div className="min-w-0 flex-1">
-          <p className="truncate text-xs text-tinta-500">
-            {oferta.marca} · {oferta.tiendaNombre}
-          </p>
-          <p className="font-mono text-lg font-bold tabular-nums text-tinta-900">
+          <div className="flex h-5 items-center gap-2">
+            <StoreLogo
+              storeId={oferta.tiendaId}
+              nombre={oferta.tiendaNombre}
+              size="sm"
+            />
+            <span className="truncate text-xs text-tinta-500">
+              {oferta.marca}
+            </span>
+          </div>
+          <p className="mt-0.5 font-mono text-lg font-bold tabular-nums text-tinta-900">
             {formatARS(oferta.precioEfectivo)}
           </p>
         </div>
@@ -54,9 +61,9 @@ export function MobileStickyCta({ oferta }: MobileStickyCtaProps) {
           target="_blank"
           rel={outboundRel(oferta)}
           onClick={() => trackClickTienda(oferta)}
-          className="inline-flex h-12 shrink-0 items-center gap-1.5 rounded-full bg-accion-600 px-4 text-sm font-semibold text-white focus-visible:ring-2 focus-visible:ring-accion-600 focus-visible:ring-offset-2"
+          className="inline-flex h-11 shrink-0 items-center gap-1.5 rounded-full bg-accion-600 px-4 text-sm font-semibold text-white focus-visible:ring-2 focus-visible:ring-accion-600 focus-visible:ring-offset-2"
         >
-          Ir a la tienda
+          Ir
           <ArrowUpRight className="size-4" aria-hidden />
         </a>
       </div>

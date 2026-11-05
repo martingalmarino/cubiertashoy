@@ -71,7 +71,7 @@ export function ValuePastelCards({
             {card.title}
           </h3>
           <p className="mt-2 text-sm text-tinta-700">{card.body}</p>
-          <div className="mt-5 rounded-xl bg-white/80 px-4 py-3 text-sm ring-1 ring-black/5 dark:bg-superficie/80">
+          <div className="mt-5 rounded-xl bg-white/80 px-4 py-3 text-sm ring-1 ring-black/5">
             {card.highlight}
           </div>
           <div className="mt-auto pt-5">

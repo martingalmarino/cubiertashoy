@@ -5,6 +5,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import { AnimatedPrice } from "@/components/AnimatedPrice";
 import { CuotasChip } from "@/components/CuotasChip";
 import { DiscountBadge } from "@/components/DiscountBadge";
+import { StoreLogo } from "@/components/StoreLogo";
 import { trackClickTienda } from "@/lib/analytics";
 import { formatARS } from "@/lib/format";
 import { outboundHref, outboundRel } from "@/lib/outbound";
@@ -49,11 +50,17 @@ export function CheapestCard({
               {oferta.indice}
             </span>
           </h2>
-          <p className="mt-1 text-sm text-tinta-500">{oferta.tiendaNombre}</p>
+          <div className="mt-2 flex h-8 items-center rounded-md bg-white px-2">
+            <StoreLogo
+              storeId={oferta.tiendaId}
+              nombre={oferta.tiendaNombre}
+              size="md"
+            />
+          </div>
         </div>
 
         <div className="lg:text-right">
-          <p className="font-mono text-[32px] font-bold leading-none tracking-tight text-tinta-900 md:text-[44px]">
+          <p className="font-mono text-4xl font-bold leading-none tracking-tight text-tinta-900 md:text-[44px]">
             <AnimatedPrice
               value={oferta.precioEfectivo}
               fromZero
@@ -83,18 +90,18 @@ export function CheapestCard({
 
       <div className="mx-5 mb-5 grid grid-cols-2 gap-2 sm:mx-6">
         <div className="rounded-lg bg-fondo px-3 py-3">
-          <p className="text-[11px] font-medium uppercase tracking-[0.08em] text-tinta-500">
-            Precio en efectivo
+          <p className="text-[10px] font-medium uppercase tracking-[0.08em] text-tinta-500">
+            Efectivo
           </p>
-          <p className="mt-1 font-mono text-base font-bold tabular-nums text-tinta-900">
+          <p className="mt-1 font-mono text-base font-bold tabular-nums whitespace-nowrap text-tinta-900">
             {formatARS(oferta.precioEfectivo)}
           </p>
         </div>
         <div className="rounded-lg bg-fondo px-3 py-3">
-          <p className="text-[11px] font-medium uppercase tracking-[0.08em] text-tinta-500">
-            Precio con tarjeta
+          <p className="text-[10px] font-medium uppercase tracking-[0.08em] text-tinta-500">
+            Tarjeta
           </p>
-          <p className="mt-1 font-mono text-base font-bold tabular-nums text-tinta-900">
+          <p className="mt-1 font-mono text-base font-bold tabular-nums whitespace-nowrap text-tinta-900">
             {formatARS(oferta.precioTarjeta)}
           </p>
         </div>

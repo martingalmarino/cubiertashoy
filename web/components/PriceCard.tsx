@@ -3,6 +3,7 @@
 import { ArrowUpRight } from "lucide-react";
 import { CuotasChip } from "@/components/CuotasChip";
 import { DiscountBadge } from "@/components/DiscountBadge";
+import { StoreLogo } from "@/components/StoreLogo";
 import { trackClickTienda } from "@/lib/analytics";
 import { formatARS } from "@/lib/format";
 import { outboundHref, outboundRel } from "@/lib/outbound";
@@ -15,36 +16,37 @@ type PriceCardProps = {
 };
 
 export function PriceCard({ oferta, destacada }: PriceCardProps) {
-  const iniciales = oferta.tiendaNombre
-    .split(/\s+/)
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((w) => w[0]!.toUpperCase())
-    .join("");
-
   return (
     <article
       className={cn(
-        "flex flex-col gap-3 rounded-xl border bg-superficie p-4 shadow-card",
-        destacada ? "border-ahorro-600 border-l-[3px]" : "border-borde"
+        "flex w-full min-w-0 flex-col gap-3 rounded-xl border bg-superficie p-4 shadow-card",
+        destacada ? "border-l-[3px] border-ahorro-600" : "border-borde"
       )}
     >
-      <div className="flex items-start gap-3">
-        <span
-          aria-hidden
-          className="inline-flex size-11 shrink-0 items-center justify-center rounded-md border border-borde bg-fondo font-mono text-xs font-bold text-tinta-700"
-        >
-          {iniciales}
+      <div className="flex min-w-0 items-center justify-between gap-2">
+        <div className="flex h-8 min-w-0 items-center rounded-md bg-white px-2">
+          <StoreLogo
+            storeId={oferta.tiendaId}
+            nombre={oferta.tiendaNombre}
+            size="sm"
+          />
+        </div>
+        <span className="shrink-0 font-mono text-xs tabular-nums text-tinta-400">
+          {oferta.indice}
         </span>
-        <div className="min-w-0 flex-1">
-          <p className="text-sm font-medium text-tinta-500">
-            {oferta.tiendaNombre}
+      </div>
+
+      <p className="line-clamp-2 text-sm font-medium text-tinta-700">
+        {oferta.marca} {oferta.modelo}
+      </p>
+
+      <div className="flex min-w-0 items-end justify-between gap-3">
+        <div className="min-w-0">
+          <p className="font-mono text-xl font-bold tabular-nums text-tinta-900">
+            {formatARS(oferta.precioEfectivo)}
           </p>
-          <p className="truncate text-sm font-medium text-tinta-700">
-            {oferta.marca} {oferta.modelo}
-          </p>
-          <p className="font-mono text-xs tabular-nums text-tinta-400">
-            {oferta.indice}
+          <p className="mt-0.5 font-mono text-xs tabular-nums text-tinta-500">
+            tarjeta {formatARS(oferta.precioTarjeta)}
           </p>
         </div>
         <a
@@ -59,16 +61,13 @@ export function PriceCard({ oferta, destacada }: PriceCardProps) {
         </a>
       </div>
 
-      <p className="font-mono text-xl font-bold tabular-nums text-tinta-900">
-        {formatARS(oferta.precioEfectivo)}
-      </p>
-
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap gap-1.5">
         <CuotasChip
           cuotas={oferta.cuotas}
           sinInteres={oferta.cuotasSinInteres}
+          compact
         />
-        {oferta.colocacionGratis && <CuotasChip variant="colocacion" />}
+        {oferta.colocacionGratis && <CuotasChip variant="colocacion" compact />}
         {oferta.descuento && <DiscountBadge kind={oferta.descuento} />}
       </div>
     </article>

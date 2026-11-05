@@ -40,3 +40,7 @@ README.md              ← esto
 03-datos/              ← medidas semilla y mapeo autos→medida
 .cursor/rules/         ← reglas que Cursor aplica siempre
 ```
+
+
+## Prompt 05a (ajuste de diseño, logos, mobile)
+`02-prompts/05a-ajuste-diseno-logos.md`: se puede correr en cualquier momento después de 04d (o después de 09, con datos reales). Usa los logos de `03-datos/logos/` (fuentes en `FUENTES.md`) y los copia a `public/logos/`.

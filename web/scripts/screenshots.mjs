@@ -7,19 +7,23 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, "../..");
 const label = process.argv[2];
 
-if (!label || !/^(antes|despues)(-04[cd])?$/.test(label)) {
+if (!label || !/^(antes|despues)(-04[cd]|-05a)?$/.test(label)) {
   console.error(
-    "Uso: node scripts/screenshots.mjs <antes|despues|antes-04c|despues-04c|despues-04d>"
+    "Uso: node scripts/screenshots.mjs <antes|despues|antes-05a|despues-05a|...>"
   );
   process.exit(1);
 }
 
 const baseUrl = process.env.SCREENSHOT_BASE_URL ?? "http://127.0.0.1:3000";
 const outDir = path.join(root, "screenshots", label);
-const scrollFirst = label.startsWith("despues");
+const scrollFirst = true; // prompt 05a: scrollear antes de capturar
 
-const pages =
-  label === "despues-04d"
+const pages = label.includes("05a")
+  ? [
+      { name: "home", path: "/" },
+      { name: "medida", path: "/medida/165-70-r13" },
+    ]
+  : label === "despues-04d"
     ? [
         { name: "home", path: "/" },
         { name: "medida", path: "/medida/165-70-r13" },
@@ -68,6 +72,13 @@ async function shot(browser, pageDef, vp) {
   });
   await page.waitForTimeout(400);
   if (scrollFirst) await scrollPage(page);
+
+  const scrollWidth = await page.evaluate(
+    () => document.documentElement.scrollWidth
+  );
+  console.log(
+    `scrollWidth ${pageDef.name}@${vp.name}: ${scrollWidth} (vp ${vp.width})`
+  );
 
   const file = path.join(outDir, `${pageDef.name}-${vp.name}.png`);
   await page.screenshot({ path: file, fullPage: true });

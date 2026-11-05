@@ -34,6 +34,8 @@ type SegmentProps = {
   selectRef?: React.RefObject<HTMLSelectElement | null>;
   compact?: boolean;
   mobileCard?: boolean;
+  /** Prefijo visual (ej. R en Rodado). No cambia el value. */
+  prefix?: string;
 };
 
 function SegmentSelect({
@@ -47,6 +49,7 @@ function SegmentSelect({
   selectRef,
   compact,
   mobileCard,
+  prefix,
 }: SegmentProps) {
   const empty = value === "";
   return (
@@ -54,42 +57,59 @@ function SegmentSelect({
       className={cn(
         "min-w-0 text-left",
         mobileCard &&
-          "flex h-14 flex-col justify-center rounded-xl bg-fondo px-2 py-1.5",
-        !mobileCard && !compact && "min-w-[88px] md:min-w-[120px]",
-        compact && "min-w-[52px]"
+          "flex h-16 flex-col justify-center rounded-xl bg-fondo px-3 py-1.5",
+        !mobileCard && !compact && "min-w-0 flex-1",
+        compact && "min-w-0"
       )}
     >
       <label
         htmlFor={id}
         className={cn(
-          "mb-0.5 block text-[11px] font-medium uppercase tracking-[0.08em] text-tinta-500",
+          "mb-0.5 block font-medium uppercase tracking-[0.08em] text-tinta-500",
+          mobileCard ? "text-[10px]" : "text-[11px]",
           compact && "sr-only"
         )}
       >
         {label}
       </label>
-      <select
-        id={id}
-        name={id}
-        ref={selectRef}
-        value={empty ? "" : String(value)}
-        onChange={(e) => onChange(e.target.value)}
-        disabled={disabled}
-        required
-        className={cn(
-          "w-full appearance-none bg-transparent font-mono font-semibold tabular-nums",
-          "focus-visible:outline-none disabled:cursor-not-allowed",
-          compact ? "min-h-8 text-sm" : "text-xl leading-none md:text-2xl",
-          empty || disabled ? "text-tinta-400" : "text-tinta-900"
-        )}
-      >
-        <option value="">{placeholder}</option>
-        {options.map((opt) => (
-          <option key={opt} value={opt}>
-            {opt}
-          </option>
-        ))}
-      </select>
+      <div className="flex min-w-0 items-center">
+        {prefix ? (
+          <span
+            aria-hidden
+            className={cn(
+              "font-mono font-semibold text-tinta-400",
+              compact ? "text-sm" : "text-xl md:text-2xl",
+              mobileCard && "text-xl"
+            )}
+          >
+            {prefix}
+          </span>
+        ) : null}
+        <select
+          id={id}
+          name={id}
+          ref={selectRef}
+          value={empty ? "" : String(value)}
+          onChange={(e) => onChange(e.target.value)}
+          disabled={disabled}
+          required
+          className={cn(
+            "min-w-0 flex-1 appearance-none bg-transparent font-mono font-semibold tabular-nums",
+            "focus-visible:outline-none disabled:cursor-not-allowed",
+            prefix && "ml-1",
+            compact ? "min-h-8 text-sm" : "text-xl leading-none md:text-2xl",
+            mobileCard && "text-xl",
+            empty || disabled ? "text-tinta-400" : "text-tinta-900"
+          )}
+        >
+          <option value="">{placeholder}</option>
+          {options.map((opt) => (
+            <option key={opt} value={opt}>
+              {opt}
+            </option>
+          ))}
+        </select>
+      </div>
     </div>
   );
 }
@@ -237,7 +257,7 @@ export function MedidaSearch({
     return (
       <form onSubmit={onSubmit} className={cn("w-full", className)}>
         <div
-          className="flex h-10 max-w-md items-center gap-1 rounded-full border border-borde bg-white pl-3 pr-1 shadow-card focus-within:border-accion-600 dark:bg-superficie"
+          className="flex h-10 max-w-md items-center gap-1 rounded-full border border-borde bg-white pl-3 pr-1 shadow-card focus-within:border-accion-600"
           role="group"
           aria-label="Medida de cubierta"
         >
@@ -264,20 +284,20 @@ export function MedidaSearch({
             selectRef={perfilRef}
             compact
           />
-          <span aria-hidden className="font-mono text-base text-tinta-400">
-            R
-          </span>
-          <SegmentSelect
-            id={`rodado-${variant}`}
-            label="Rodado"
-            value={rodado}
-            placeholder="14"
-            disabled={perfil === ""}
-            onChange={onRodadoChange}
-            options={rodados}
-            selectRef={rodadoRef}
-            compact
-          />
+          <div className="border-l border-borde pl-1">
+            <SegmentSelect
+              id={`rodado-${variant}`}
+              label="Rodado"
+              value={rodado}
+              placeholder="14"
+              disabled={perfil === ""}
+              onChange={onRodadoChange}
+              options={rodados}
+              selectRef={rodadoRef}
+              compact
+              prefix="R"
+            />
+          </div>
           {submitBtn}
         </div>
       </form>
@@ -393,7 +413,7 @@ export function MedidaSearch({
           className={cn(
             "inline-flex h-9 items-center rounded-full px-4 text-sm font-medium transition-colors",
             mode === "medida"
-              ? "bg-tinta-900 text-white dark:bg-superficie dark:text-tinta-900"
+              ? "bg-tinta-900 text-white"
               : "bg-superficie text-tinta-500 ring-1 ring-borde"
           )}
         >
@@ -407,7 +427,7 @@ export function MedidaSearch({
           className={cn(
             "inline-flex h-9 items-center rounded-full px-4 text-sm font-medium transition-colors",
             mode === "auto"
-              ? "bg-tinta-900 text-white dark:bg-superficie dark:text-tinta-900"
+              ? "bg-tinta-900 text-white"
               : "bg-superficie text-tinta-500 ring-1 ring-borde",
             vehicles.length === 0 && "cursor-not-allowed opacity-60"
           )}
@@ -458,6 +478,7 @@ export function MedidaSearch({
               options={rodados}
               selectRef={rodadoRef}
               mobileCard
+              prefix="R"
             />
           </div>
           <div className="mt-3">{submitBtn}</div>
@@ -465,7 +486,7 @@ export function MedidaSearch({
 
         {/* Desktop / tablet pill */}
         <div
-          className="mx-auto hidden h-16 w-full max-w-2xl items-center gap-2 rounded-full border border-borde-fuerte bg-white pl-6 pr-2 shadow-hero focus-within:border-accion-600 focus-within:ring-4 focus-within:ring-accion-600/15 sm:flex md:h-[72px] dark:bg-superficie"
+          className="mx-auto hidden h-16 w-full max-w-2xl items-center gap-0 rounded-full border border-borde-fuerte bg-white pl-6 pr-2 shadow-hero focus-within:border-accion-600 focus-within:ring-4 focus-within:ring-accion-600/15 sm:flex md:h-[72px]"
           role="group"
           aria-label="Medida de cubierta"
         >
@@ -479,11 +500,11 @@ export function MedidaSearch({
           />
           <span
             aria-hidden
-            className="pb-1 font-mono text-xl text-tinta-400 md:text-2xl"
+            className="shrink-0 px-1 pb-1 font-mono text-xl text-tinta-400 md:text-2xl"
           >
             /
           </span>
-          <div className="border-l border-borde pl-2">
+          <div className="min-w-0 flex-1 border-l border-borde pl-3">
             <SegmentSelect
               id={`perfil-${variant}-d`}
               label="Perfil"
@@ -495,13 +516,7 @@ export function MedidaSearch({
               selectRef={perfilRef}
             />
           </div>
-          <span
-            aria-hidden
-            className="pb-1 font-mono text-xl text-tinta-400 md:text-2xl"
-          >
-            R
-          </span>
-          <div className="border-l border-borde pl-2">
+          <div className="min-w-0 flex-1 border-l border-borde pl-3">
             <SegmentSelect
               id={`rodado-${variant}-d`}
               label="Rodado"
@@ -511,9 +526,10 @@ export function MedidaSearch({
               onChange={onRodadoChange}
               options={rodados}
               selectRef={rodadoRef}
+              prefix="R"
             />
           </div>
-          <div className="ml-auto shrink-0">{submitBtn}</div>
+          <div className="ml-auto shrink-0 pl-2">{submitBtn}</div>
         </div>
       </form>
 

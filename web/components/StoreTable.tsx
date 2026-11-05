@@ -5,6 +5,7 @@ import { ArrowUpRight } from "lucide-react";
 import { PriceCard } from "@/components/PriceCard";
 import { CuotasChip } from "@/components/CuotasChip";
 import { DiscountBadge } from "@/components/DiscountBadge";
+import { StoreLogo } from "@/components/StoreLogo";
 import { trackClickTienda } from "@/lib/analytics";
 import { formatARS } from "@/lib/format";
 import { outboundHref, outboundRel } from "@/lib/outbound";
@@ -42,7 +43,7 @@ export function StoreTable({ ofertas }: StoreTableProps) {
   ];
 
   return (
-    <div>
+    <div className="min-w-0">
       <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
         <h2 className="text-xl font-semibold tracking-[-0.02em] text-tinta-900">
           Todas las ofertas
@@ -50,7 +51,7 @@ export function StoreTable({ ofertas }: StoreTableProps) {
         <div
           role="group"
           aria-label="Ordenar ofertas"
-          className="inline-flex rounded-full border border-borde bg-fondo p-1"
+          className="grid h-10 w-full grid-cols-3 rounded-xl border border-borde bg-fondo p-1 sm:inline-flex sm:w-auto sm:rounded-full"
         >
           {sorts.map((s) => (
             <button
@@ -59,7 +60,7 @@ export function StoreTable({ ofertas }: StoreTableProps) {
               onClick={() => setSortKey(s.key)}
               aria-pressed={sortKey === s.key}
               className={cn(
-                "min-h-9 rounded-full px-3 text-sm font-medium transition-colors",
+                "min-h-8 rounded-lg px-3 text-sm font-medium transition-colors sm:rounded-full",
                 sortKey === s.key
                   ? "bg-superficie text-tinta-900 shadow-card"
                   : "text-tinta-500 hover:text-tinta-900"
@@ -71,9 +72,9 @@ export function StoreTable({ ofertas }: StoreTableProps) {
         </div>
       </div>
 
-      <ul className="grid gap-3 md:hidden">
+      <ul className="grid min-w-0 gap-3 md:hidden">
         {sorted.map((o) => (
-          <li key={o.id}>
+          <li key={o.id} className="min-w-0">
             <PriceCard oferta={o} destacada={o.id === cheapestId} />
           </li>
         ))}
@@ -81,16 +82,29 @@ export function StoreTable({ ofertas }: StoreTableProps) {
 
       <div className="hidden overflow-hidden rounded-xl border border-borde bg-superficie shadow-card md:block">
         <div className="max-h-[70vh] overflow-auto">
-          <table className="w-full min-w-[720px] border-collapse text-sm">
-            <thead className="sticky top-0 z-10">
-              <tr className="border-b border-borde bg-fondo text-left text-[11px] uppercase tracking-[0.08em] text-tinta-500">
+          <table className="w-full table-fixed border-collapse text-sm">
+            <colgroup>
+              <col style={{ width: "16%" }} />
+              <col style={{ width: "30%" }} />
+              <col className="hidden lg:table-column" style={{ width: "7%" }} />
+              <col style={{ width: "11%" }} />
+              <col style={{ width: "11%" }} />
+              <col style={{ width: "14%" }} />
+              <col className="hidden lg:table-column" style={{ width: "8%" }} />
+              <col style={{ width: "3%" }} />
+            </colgroup>
+            <thead className="sticky top-14 z-10 md:top-16">
+              <tr className="border-b border-borde bg-fondo/95 text-left text-[11px] uppercase tracking-[0.08em] text-tinta-500 backdrop-blur">
                 <th scope="col" className="px-3 py-3 font-medium">
                   Tienda
                 </th>
                 <th scope="col" className="px-3 py-3 font-medium">
                   Marca / Modelo
                 </th>
-                <th scope="col" className="px-3 py-3 font-medium">
+                <th
+                  scope="col"
+                  className="hidden px-3 py-3 font-medium lg:table-cell"
+                >
                   Índice
                 </th>
                 <th scope="col" className="px-3 py-3 text-right font-medium">
@@ -102,7 +116,10 @@ export function StoreTable({ ofertas }: StoreTableProps) {
                 <th scope="col" className="px-3 py-3 font-medium">
                   Cuotas
                 </th>
-                <th scope="col" className="px-3 py-3 font-medium">
+                <th
+                  scope="col"
+                  className="hidden px-3 py-3 font-medium lg:table-cell"
+                >
                   Coloc.
                 </th>
                 <th scope="col" className="px-3 py-3 font-medium">
@@ -113,49 +130,67 @@ export function StoreTable({ ofertas }: StoreTableProps) {
             <tbody>
               {sorted.map((o) => {
                 const barata = o.id === cheapestId;
+                const cuotasChip = (
+                  <CuotasChip
+                    cuotas={o.cuotas}
+                    sinInteres={o.cuotasSinInteres}
+                    compact
+                  />
+                );
                 return (
                   <tr
                     key={o.id}
                     className={cn(
-                      "group h-16 border-b border-borde transition-colors last:border-0 hover:bg-fondo",
+                      "group h-14 border-b border-borde transition-colors last:border-0 hover:bg-fondo",
                       barata &&
-                        "border-l-[3px] border-l-ahorro-600 bg-ahorro-50/40 hover:bg-ahorro-50/40"
+                        "bg-ahorro-50/50 shadow-[inset_3px_0_0_var(--ahorro-600)] hover:bg-ahorro-50/50"
                     )}
                   >
-                    <td className="px-3 py-3 font-medium text-tinta-900">
-                      {o.tiendaNombre}
-                    </td>
-                    <td className="px-3 py-3 text-tinta-900">
-                      <div className="flex flex-wrap items-center gap-2">
-                        <span>
-                          {o.marca} {o.modelo}
-                        </span>
-                        {o.descuento && <DiscountBadge kind={o.descuento} />}
+                    <td className="px-3 py-2">
+                      <div className="flex h-8 items-center rounded-md bg-white px-1.5">
+                        <StoreLogo
+                          storeId={o.tiendaId}
+                          nombre={o.tiendaNombre}
+                          size="sm"
+                        />
+                        <span className="sr-only">{o.tiendaNombre}</span>
                       </div>
                     </td>
-                    <td className="px-3 py-3 font-mono tabular-nums text-tinta-500">
+                    <td className="min-w-0 px-3 py-2 text-tinta-900">
+                      <p
+                        className="truncate font-medium"
+                        title={`${o.marca} ${o.modelo}`}
+                      >
+                        {o.marca} {o.modelo}
+                      </p>
+                      {o.descuento ? (
+                        <div className="mt-1">
+                          <DiscountBadge kind={o.descuento} />
+                        </div>
+                      ) : null}
+                    </td>
+                    <td className="hidden px-3 py-2 font-mono tabular-nums text-tinta-500 lg:table-cell">
                       {o.indice}
                     </td>
-                    <td className="px-3 py-3 text-right font-mono font-semibold tabular-nums text-tinta-900">
+                    <td className="px-3 py-2 text-right font-mono font-semibold tabular-nums whitespace-nowrap text-tinta-900">
                       {formatARS(o.precioEfectivo)}
                     </td>
-                    <td className="px-3 py-3 text-right font-mono tabular-nums text-tinta-500">
+                    <td className="px-3 py-2 text-right font-mono tabular-nums whitespace-nowrap text-tinta-500">
                       {formatARS(o.precioTarjeta)}
                     </td>
-                    <td className="px-3 py-3">
-                      <CuotasChip
-                        cuotas={o.cuotas}
-                        sinInteres={o.cuotasSinInteres}
-                      />
+                    <td className="px-3 py-2">
+                      {cuotasChip ?? (
+                        <span className="text-tinta-400">—</span>
+                      )}
                     </td>
-                    <td className="px-3 py-3 text-tinta-500">
+                    <td className="hidden px-3 py-2 text-tinta-500 lg:table-cell">
                       {o.colocacionGratis ? (
-                        <CuotasChip variant="colocacion" />
+                        <CuotasChip variant="colocacion" compact />
                       ) : (
                         "—"
                       )}
                     </td>
-                    <td className="px-3 py-3">
+                    <td className="px-3 py-2">
                       <a
                         href={outboundHref(o)}
                         target="_blank"

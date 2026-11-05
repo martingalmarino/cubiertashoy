@@ -15,7 +15,7 @@ export function Footer() {
         <rect width="100%" height="100%" fill="url(#footer-tread)" />
       </svg>
 
-      <div className="container-site relative grid gap-8 py-14 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="container-site relative grid grid-cols-1 gap-8 py-14 pb-28 md:pb-14 sm:grid-cols-2 lg:grid-cols-4">
         <div className="space-y-3 sm:col-span-2 lg:col-span-1">
           <Logo inverse />
           <p className="max-w-xs text-sm text-tinta-400">
@@ -30,7 +30,7 @@ export function Footer() {
             <li>
               <Link
                 href="/medidas"
-                className="inline-flex min-h-11 items-center transition-colors hover:text-papel"
+                className="inline-flex h-10 items-center transition-colors hover:text-papel"
               >
                 Medidas
               </Link>
@@ -38,7 +38,7 @@ export function Footer() {
             <li>
               <Link
                 href="/rodado/15"
-                className="inline-flex min-h-11 items-center transition-colors hover:text-papel"
+                className="inline-flex h-10 items-center transition-colors hover:text-papel"
               >
                 Por rodado
               </Link>
@@ -46,7 +46,7 @@ export function Footer() {
             <li>
               <Link
                 href="/cuotas"
-                className="inline-flex min-h-11 items-center transition-colors hover:text-papel"
+                className="inline-flex h-10 items-center transition-colors hover:text-papel"
               >
                 Cuotas
               </Link>
@@ -54,7 +54,7 @@ export function Footer() {
             <li>
               <Link
                 href="/#tiendas"
-                className="inline-flex min-h-11 items-center transition-colors hover:text-papel"
+                className="inline-flex h-10 items-center transition-colors hover:text-papel"
               >
                 Tiendas
               </Link>
@@ -68,7 +68,7 @@ export function Footer() {
             <li>
               <Link
                 href="/#como"
-                className="inline-flex min-h-11 items-center transition-colors hover:text-papel"
+                className="inline-flex h-10 items-center transition-colors hover:text-papel"
               >
                 Cómo funciona
               </Link>
@@ -76,7 +76,7 @@ export function Footer() {
             <li>
               <Link
                 href="/auto"
-                className="inline-flex min-h-11 items-center transition-colors hover:text-papel"
+                className="inline-flex h-10 items-center transition-colors hover:text-papel"
               >
                 Por auto
               </Link>
@@ -84,7 +84,7 @@ export function Footer() {
             <li>
               <Link
                 href="/marca/fate"
-                className="inline-flex min-h-11 items-center transition-colors hover:text-papel"
+                className="inline-flex h-10 items-center transition-colors hover:text-papel"
               >
                 Marcas
               </Link>
@@ -92,7 +92,7 @@ export function Footer() {
             <li>
               <Link
                 href="/para-gomerias"
-                className="inline-flex min-h-11 items-center transition-colors hover:text-papel"
+                className="inline-flex h-10 items-center transition-colors hover:text-papel"
               >
                 Para gomerías
               </Link>
@@ -102,11 +102,11 @@ export function Footer() {
 
         <div>
           <p className="mb-3 text-sm font-semibold text-papel">Aviso</p>
-          <p className="text-sm text-tinta-400">
+          <p className="text-xs text-tinta-400 sm:text-sm">
             Precios por unidad, tomados de tiendas. Pueden cambiar: verificá en
             la ficha antes de comprar.
           </p>
-          <p className="mt-3 text-sm text-tinta-400">
+          <p className="mt-3 text-xs text-tinta-400 sm:text-sm">
             <Link
               href="/como-ganamos-plata"
               className="underline underline-offset-2 transition-colors hover:text-papel"

@@ -6,7 +6,6 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { SkipLink } from "@/components/SkipLink";
 import { JsonLd } from "@/components/JsonLd";
-import { ThemeProvider } from "@/components/theme/ThemeProvider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { getMedidas, getVehicleSearchIndex } from "@/lib/data";
 import { getSiteUrl, SITE_NAME } from "@/lib/site";
@@ -49,6 +48,9 @@ export const metadata: Metadata = {
     "comparador precios",
   ],
   authors: [{ name: SITE_NAME }],
+  other: {
+    "color-scheme": "light",
+  },
   openGraph: {
     type: "website",
     locale: "es_AR",
@@ -103,23 +105,20 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="es-AR"
-      suppressHydrationWarning
       className={`${inter.variable} ${jetbrainsMono.variable} h-full`}
     >
       <body className="flex min-h-full flex-col overflow-x-clip bg-fondo font-sans text-tinta-900">
-        <ThemeProvider>
-          <JsonLd data={orgLd} />
-          <JsonLd data={websiteLd} />
-          <TooltipProvider>
-            <SkipLink />
-            <Header medidas={medidas} vehicles={vehicles} />
-            <main id="contenido" className="flex-1 overflow-x-clip">
-              {children}
-            </main>
-            <Footer />
-          </TooltipProvider>
-          <Analytics />
-        </ThemeProvider>
+        <JsonLd data={orgLd} />
+        <JsonLd data={websiteLd} />
+        <TooltipProvider>
+          <SkipLink />
+          <Header medidas={medidas} vehicles={vehicles} />
+          <main id="contenido" className="flex-1 overflow-x-clip pb-24 md:pb-0">
+            {children}
+          </main>
+          <Footer />
+        </TooltipProvider>
+        <Analytics />
         {adsenseEnabled ? (
           <Script
             id="adsense"

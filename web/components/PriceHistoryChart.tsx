@@ -107,6 +107,35 @@ export function PriceHistoryChart({
     { value: 180, label: "180d" },
   ];
 
+  const puntosDisponibles = historial.length;
+  const hoy = historial[historial.length - 1];
+
+  if (puntosDisponibles > 0 && puntosDisponibles < 5) {
+    return (
+      <section
+        aria-labelledby="historial-heading"
+        className="rounded-xl border border-borde bg-superficie p-4 shadow-card sm:p-5"
+      >
+        <h2
+          id="historial-heading"
+          className="text-xl font-semibold tracking-[-0.02em] text-tinta-900"
+        >
+          Historial de precios
+        </h2>
+        <div className="mt-4 rounded-xl border border-borde bg-fondo px-4 py-8 text-center">
+          <p className="text-sm text-tinta-500">
+            Estamos juntando historial: volvé en unos días.
+          </p>
+          {hoy ? (
+            <p className="mt-3 font-mono text-lg font-semibold tabular-nums text-tinta-900">
+              Hoy {formatARS(hoy.mediana)}
+            </p>
+          ) : null}
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section
       aria-labelledby="historial-heading"
@@ -145,13 +174,13 @@ export function PriceHistoryChart({
 
       <div className="rounded-lg bg-fondo/60 p-1 sm:p-2">
         {!ready ? (
-          <Skeleton className="h-64 w-full rounded-md skeleton-shimmer" />
+          <Skeleton className="h-56 w-full rounded-md skeleton-shimmer md:h-72" />
         ) : data.length === 0 ? (
-          <p className="flex h-64 items-center justify-center text-sm text-tinta-500">
+          <p className="flex h-56 items-center justify-center text-sm text-tinta-500 md:h-72">
             Sin historial para esta medida todavía.
           </p>
         ) : (
-          <div className="h-64 w-full md:h-72">
+          <div className="h-56 w-full md:h-72">
             <ResponsiveContainer width="100%" height="100%">
               <ComposedChart
                 data={data}
@@ -174,6 +203,7 @@ export function PriceHistoryChart({
                   tickLine={false}
                   axisLine={{ stroke: "#E5E7EB" }}
                   minTickGap={28}
+                  interval="preserveStartEnd"
                 />
                 <YAxis
                   domain={[
@@ -190,7 +220,7 @@ export function PriceHistoryChart({
                   }}
                   tickLine={false}
                   axisLine={false}
-                  width={72}
+                  width={64}
                   tickFormatter={(v: number) => `$ ${Math.round(v / 1000)} k`}
                 />
                 <Tooltip

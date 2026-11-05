@@ -40,7 +40,7 @@ export const metadata: Metadata = {
 export default async function Home() {
   const medidas = getMedidas();
   const vehicles = getVehicleSearchIndex();
-  const populares = getMedidasPopulares(8);
+  const populares = getMedidasPopulares(12);
   const masBuscadas = await getMedidasMasBuscadas(8);
 
   const ofertasBySlug = await Promise.all(
@@ -81,8 +81,8 @@ export default async function Home() {
       <PricesSourceBanner ejemplo={!anyReal} />
 
       <section id="hero" className="grad-suave">
-        <div className="mx-auto max-w-3xl px-4 pb-12 pt-16 text-center md:pb-16 md:pt-24">
-          <h1 className="font-sans text-[40px] font-semibold leading-[1.05] tracking-[-0.03em] text-tinta-900 md:text-[64px]">
+        <div className="mx-auto max-w-3xl px-4 pb-8 pt-10 text-center sm:pb-12 sm:pt-16 md:pb-16 md:pt-24">
+          <h1 className="font-sans text-[34px] font-semibold leading-[1.08] tracking-[-0.03em] text-tinta-900 sm:text-[40px] md:text-[64px] md:leading-[1.05]">
             El mejor precio de tu cubierta, <HoyUnderline />.
           </h1>
           <p className="mt-4 text-base text-tinta-500 md:text-lg">
@@ -97,19 +97,26 @@ export default async function Home() {
             <MedidaSearch medidas={medidas} vehicles={vehicles} />
           </div>
 
-          <div className="mt-10">
+          <div className="mt-6 sm:mt-8">
             <TrustRow tiendas={tiendas.length} />
           </div>
         </div>
       </section>
 
-      <section className="py-10 md:py-14">
+      <section className="py-8 sm:py-12 md:py-16">
         <div className="container-site">
-          <PopularesBand medidas={populares} />
+          <PopularesBand
+            medidas={populares.map((m) => ({
+              slug: m.slug,
+              label: m.label,
+              precioDesde:
+                ofertasMap.get(m.slug)?.[0]?.precioEfectivo ?? null,
+            }))}
+          />
         </div>
       </section>
 
-      <section id="buscadas" className="scroll-mt-24 py-10 md:py-14">
+      <section id="buscadas" className="scroll-mt-24 py-8 sm:py-12 md:py-16">
         <div className="container-site">
           <div className="max-w-2xl">
             <h2 className="text-xl font-semibold tracking-[-0.02em] text-tinta-900 md:text-2xl">
@@ -119,7 +126,7 @@ export default async function Home() {
               Precio desde por unidad, con la variación de la última semana.
             </p>
           </div>
-          <Stagger className="mt-6 grid grid-cols-2 gap-4 md:grid-cols-4">
+          <Stagger className="mt-6 grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4">
             {masBuscadas.map((m) => {
               const spark = (histMap.get(m.slug) ?? [])
                 .slice(-30)
@@ -141,7 +148,7 @@ export default async function Home() {
         </div>
       </section>
 
-      <section id="como" className="scroll-mt-24 py-10 md:py-14">
+      <section id="como" className="scroll-mt-24 py-8 sm:py-12 md:py-16">
         <div className="container-site">
           <div className="max-w-xl">
             <h2 className="text-xl font-semibold tracking-[-0.02em] text-tinta-900 md:text-2xl">
@@ -159,7 +166,7 @@ export default async function Home() {
         </div>
       </section>
 
-      <section id="tiendas" className="scroll-mt-24 py-10 md:py-14">
+      <section id="tiendas" className="scroll-mt-24 py-8 sm:py-12 md:py-16">
         <div className="container-site">
           <div className="max-w-xl">
             <h2 className="text-xl font-semibold tracking-[-0.02em] text-tinta-900 md:text-2xl">
@@ -177,7 +184,7 @@ export default async function Home() {
 
       <section
         id="autos"
-        className="scroll-mt-24 border-t border-borde py-10 md:py-14"
+        className="scroll-mt-24 border-t border-borde py-8 sm:py-12 md:py-16"
       >
         <div className="container-site max-w-3xl">
           <FadeIn>

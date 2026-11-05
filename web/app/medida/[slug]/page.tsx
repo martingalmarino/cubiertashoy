@@ -187,7 +187,7 @@ export default async function MedidaPage({ params }: PageProps) {
 
         <header className="mt-6 flex flex-col items-start gap-3 sm:mt-8 sm:gap-4">
           <MedidaBadge label={medida.label} />
-          <h1 className="text-3xl font-semibold tracking-[-0.02em] text-tinta-900 sm:text-4xl lg:text-[44px] lg:leading-[1.1]">
+          <h1 className="text-[28px] font-semibold leading-tight tracking-[-0.02em] text-tinta-900 sm:text-4xl lg:text-[44px] lg:leading-[1.1]">
             Precio de cubiertas {medida.label} hoy
           </h1>
           <p className="flex flex-wrap items-center gap-2 text-tinta-500">

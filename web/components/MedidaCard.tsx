@@ -35,13 +35,13 @@ export function MedidaCard({
     <motion.div whileHover={reduce ? undefined : { y: -2 }} className="h-full">
       <Link
         href={`/medida/${medida.slug}`}
-        className="group flex h-full flex-col rounded-lg border border-borde bg-superficie p-5 shadow-card transition-shadow duration-200 hover:shadow-card-hover focus-visible:ring-2 focus-visible:ring-accion-600 focus-visible:ring-offset-2"
+        className="group flex h-full min-w-0 flex-col rounded-lg border border-borde bg-superficie p-3 shadow-card transition-shadow duration-200 hover:shadow-card-hover focus-visible:ring-2 focus-visible:ring-accion-600 focus-visible:ring-offset-2 sm:p-5"
       >
-        <div className="flex items-center gap-2">
-          <span className="inline-flex size-8 items-center justify-center rounded-lg bg-fondo text-tinta-700">
+        <div className="flex min-w-0 items-center gap-2">
+          <span className="hidden size-8 shrink-0 items-center justify-center rounded-lg bg-fondo text-tinta-700 sm:inline-flex">
             <TireIcon className="size-4" />
           </span>
-          <p className="font-mono text-base font-semibold tabular-nums tracking-tight text-tinta-900">
+          <p className="min-w-0 font-mono text-sm font-semibold tabular-nums tracking-tight whitespace-nowrap text-tinta-900 sm:text-base">
             {medida.label}
           </p>
         </div>
@@ -49,7 +49,7 @@ export function MedidaCard({
         <p className="mt-3 text-[11px] font-medium uppercase tracking-[0.08em] text-tinta-500">
           Desde
         </p>
-        <p className="font-mono text-xl font-bold tabular-nums text-tinta-900">
+        <p className="font-mono text-lg font-bold tabular-nums text-tinta-900 sm:text-xl">
           {medida.precioDesde !== null ? formatARS(medida.precioDesde) : "—"}
         </p>
 
@@ -75,7 +75,7 @@ export function MedidaCard({
         </div>
 
         {chartData.length > 1 && (
-          <div className="mt-3 h-10 w-full">
+          <div className="mt-3 h-8 w-full sm:h-10">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={chartData}>
                 <defs>
