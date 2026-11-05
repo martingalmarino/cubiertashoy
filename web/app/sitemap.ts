@@ -1,25 +1,20 @@
 import type { MetadataRoute } from "next";
-import { getMedidas } from "@/lib/data";
-import { getSiteUrl } from "@/lib/site";
+import {
+  buildSitemapEntries,
+  SITEMAP_CHUNK_SIZE,
+} from "@/lib/sitemap-entries";
 
-const LAST_MOD = "2026-11-04";
+export async function generateSitemaps() {
+  const entries = await buildSitemapEntries();
+  const chunks = Math.max(1, Math.ceil(entries.length / SITEMAP_CHUNK_SIZE));
+  return Array.from({ length: chunks }, (_, id) => ({ id }));
+}
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const base = getSiteUrl();
-  const medidas = getMedidas();
-
-  return [
-    {
-      url: base,
-      lastModified: LAST_MOD,
-      changeFrequency: "daily",
-      priority: 1,
-    },
-    ...medidas.map((m) => ({
-      url: `${base}/medida/${m.slug}`,
-      lastModified: LAST_MOD,
-      changeFrequency: "daily" as const,
-      priority: 0.9,
-    })),
-  ];
+export default async function sitemap(props: {
+  id: number | Promise<number>;
+}): Promise<MetadataRoute.Sitemap> {
+  const id = await props.id;
+  const entries = await buildSitemapEntries();
+  const start = id * SITEMAP_CHUNK_SIZE;
+  return entries.slice(start, start + SITEMAP_CHUNK_SIZE);
 }

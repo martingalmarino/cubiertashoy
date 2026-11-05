@@ -2,7 +2,7 @@ export function getMedidaFaqItems(medidaLabel: string) {
   return [
     {
       q: `¿Cuánto sale una cubierta ${medidaLabel} hoy?`,
-      a: `En esta página ves el precio más bajo del día por unidad, la mediana y el historial de ${medidaLabel}. Los valores de fase 1 son de ejemplo.`,
+      a: `En esta página ves el precio más bajo del día por unidad, la mediana y el historial de ${medidaLabel}. Los precios vienen de tiendas y pueden cambiar: verificá en la ficha antes de comprar.`,
     },
     {
       q: "¿El precio es por unidad o por kit?",

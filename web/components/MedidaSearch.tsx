@@ -4,12 +4,21 @@ import { useMemo, useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { Search } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
+import { trackBusquedaMedida } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 import { toSlug } from "@/lib/medida";
 import type { Medida } from "@/lib/types";
 
+type VehicleOption = {
+  slug: string;
+  marca: string;
+  modelo: string;
+  label: string;
+};
+
 type MedidaSearchProps = {
   medidas: Medida[];
+  vehicles?: VehicleOption[];
   variant?: "hero" | "compact";
   className?: string;
 };
@@ -87,6 +96,7 @@ function SegmentSelect({
 
 export function MedidaSearch({
   medidas,
+  vehicles = [],
   variant = "hero",
   className,
 }: MedidaSearchProps) {
@@ -101,6 +111,9 @@ export function MedidaSearch({
   const [rodado, setRodado] = useState<number | "">("");
   const [mode, setMode] = useState<"medida" | "auto">("medida");
   const [pulse, setPulse] = useState(false);
+  const [marca, setMarca] = useState("");
+  const [modeloQuery, setModeloQuery] = useState("");
+  const [modeloSlug, setModeloSlug] = useState("");
 
   const anchos = useMemo(
     () => [...new Set(medidas.map((m) => m.ancho))].sort((a, b) => a - b),
@@ -159,8 +172,37 @@ export function MedidaSearch({
   function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!slugCompleto) return;
+    trackBusquedaMedida(slugCompleto, "medida");
     startTransition(() => {
       router.push(`/medida/${slugCompleto}`);
+    });
+  }
+
+  const marcas = useMemo(
+    () => [...new Set(vehicles.map((v) => v.marca))].sort((a, b) => a.localeCompare(b, "es")),
+    [vehicles]
+  );
+
+  const modelosFiltrados = useMemo(() => {
+    let list = vehicles;
+    if (marca) list = list.filter((v) => v.marca === marca);
+    const q = modeloQuery.trim().toLowerCase();
+    if (q) {
+      list = list.filter(
+        (v) =>
+          v.label.toLowerCase().includes(q) ||
+          v.modelo.toLowerCase().includes(q)
+      );
+    }
+    return list.slice(0, 8);
+  }, [vehicles, marca, modeloQuery]);
+
+  function onAutoSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!modeloSlug) return;
+    trackBusquedaMedida(modeloSlug, "auto");
+    startTransition(() => {
+      router.push(`/auto/${modeloSlug}`);
     });
   }
 
@@ -242,6 +284,105 @@ export function MedidaSearch({
     );
   }
 
+  const autoForm = (
+    <form onSubmit={onAutoSubmit} className="mt-4 w-full">
+      <div className="mx-auto flex w-full max-w-2xl flex-col gap-3 rounded-2xl border border-borde-fuerte bg-superficie p-4 text-left shadow-hero sm:rounded-full sm:p-2 sm:pl-4">
+        <div className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)_auto] sm:items-center sm:gap-2">
+          <div>
+            <label
+              htmlFor={`marca-${variant}`}
+              className="mb-1 block text-[11px] font-medium uppercase tracking-[0.08em] text-tinta-500 sm:sr-only"
+            >
+              Marca
+            </label>
+            <select
+              id={`marca-${variant}`}
+              value={marca}
+              onChange={(e) => {
+                setMarca(e.target.value);
+                setModeloSlug("");
+                setModeloQuery("");
+              }}
+              className="min-h-12 w-full appearance-none rounded-xl border border-borde bg-fondo px-3 text-base text-tinta-900 focus-visible:border-accion-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accion-600/20 sm:border-0 sm:bg-transparent sm:px-1"
+            >
+              <option value="">Marca</option>
+              {marcas.map((m) => (
+                <option key={m} value={m}>
+                  {m}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="relative">
+            <label
+              htmlFor={`modelo-${variant}`}
+              className="mb-1 block text-[11px] font-medium uppercase tracking-[0.08em] text-tinta-500 sm:sr-only"
+            >
+              Modelo
+            </label>
+            <input
+              id={`modelo-${variant}`}
+              type="search"
+              role="combobox"
+              aria-expanded={modelosFiltrados.length > 0 && !modeloSlug}
+              aria-controls={`modelo-list-${variant}`}
+              aria-autocomplete="list"
+              placeholder={marca ? "Buscá el modelo" : "Elegí marca o buscá"}
+              value={modeloQuery}
+              onChange={(e) => {
+                setModeloQuery(e.target.value);
+                setModeloSlug("");
+              }}
+              className="min-h-12 w-full rounded-xl border border-borde bg-fondo px-3 text-base text-tinta-900 placeholder:text-tinta-400 focus-visible:border-accion-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accion-600/20 sm:border-0 sm:bg-transparent"
+              autoComplete="off"
+            />
+            {modeloQuery && !modeloSlug && modelosFiltrados.length > 0 ? (
+              <ul
+                id={`modelo-list-${variant}`}
+                role="listbox"
+                className="absolute left-0 right-0 top-full z-20 mt-1 max-h-56 overflow-auto rounded-xl border border-borde bg-superficie py-1 shadow-card"
+              >
+                {modelosFiltrados.map((v) => (
+                  <li key={v.slug} role="option" aria-selected={modeloSlug === v.slug}>
+                    <button
+                      type="button"
+                      className="flex min-h-11 w-full items-center px-3 text-left text-sm text-tinta-900 hover:bg-fondo"
+                      onClick={() => {
+                        setModeloSlug(v.slug);
+                        setModeloQuery(v.label);
+                        setMarca(v.marca);
+                      }}
+                    >
+                      {v.label}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            ) : null}
+          </div>
+          <motion.button
+            type="submit"
+            disabled={!modeloSlug}
+            whileTap={reduce || !modeloSlug ? undefined : { scale: 0.97 }}
+            className={cn(
+              "inline-flex h-12 items-center justify-center gap-2 rounded-full px-5 text-sm font-medium text-white",
+              "focus-visible:ring-2 focus-visible:ring-accion-600 focus-visible:ring-offset-2",
+              modeloSlug
+                ? "bg-accion-600 hover:bg-accion-700"
+                : "cursor-not-allowed bg-accion-600/50"
+            )}
+          >
+            <Search className="size-4" aria-hidden />
+            Ver medidas
+          </motion.button>
+        </div>
+      </div>
+      <p className="mt-3 text-sm text-tinta-500">
+        Ej.: Chevrolet Onix · Volkswagen Gol Trend · Fiat Cronos
+      </p>
+    </form>
+  );
+
   return (
     <div className={cn("w-full text-center", className)}>
       <div className="mt-8 flex justify-center gap-2">
@@ -258,18 +399,27 @@ export function MedidaSearch({
         >
           Por medida
         </button>
-        <span
-          aria-disabled="true"
-          title="Pronto"
-          className="inline-flex h-9 cursor-not-allowed items-center gap-2 rounded-full bg-superficie px-4 text-sm font-medium text-tinta-500 ring-1 ring-borde"
+        <button
+          type="button"
+          onClick={() => setMode("auto")}
+          aria-pressed={mode === "auto"}
+          disabled={vehicles.length === 0}
+          className={cn(
+            "inline-flex h-9 items-center rounded-full px-4 text-sm font-medium transition-colors",
+            mode === "auto"
+              ? "bg-tinta-900 text-white dark:bg-superficie dark:text-tinta-900"
+              : "bg-superficie text-tinta-500 ring-1 ring-borde",
+            vehicles.length === 0 && "cursor-not-allowed opacity-60"
+          )}
         >
           Por auto
-          <span className="rounded-full bg-ambar-100 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-asfalto-950">
-            Pronto
-          </span>
-        </span>
+        </button>
       </div>
 
+      {mode === "auto" ? autoForm : null}
+
+      {mode === "medida" ? (
+      <>
       <form onSubmit={onSubmit} className="mt-4 w-full">
         {/* Mobile card */}
         <div className="rounded-2xl border border-borde-fuerte bg-superficie p-4 shadow-hero sm:hidden">
@@ -374,6 +524,8 @@ export function MedidaSearch({
         </span>{" "}
         — está en el flanco de tu cubierta
       </p>
+      </>
+      ) : null}
     </div>
   );
 }

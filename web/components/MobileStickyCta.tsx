@@ -2,7 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { ArrowUpRight } from "lucide-react";
+import { trackClickTienda } from "@/lib/analytics";
 import { formatARS } from "@/lib/format";
+import { outboundHref, outboundRel } from "@/lib/outbound";
 import type { OfertaEnriquecida } from "@/lib/types";
 
 type MobileStickyCtaProps = {
@@ -48,9 +50,10 @@ export function MobileStickyCta({ oferta }: MobileStickyCtaProps) {
           </p>
         </div>
         <a
-          href={oferta.url}
+          href={outboundHref(oferta)}
           target="_blank"
-          rel="noopener noreferrer sponsored"
+          rel={outboundRel(oferta)}
+          onClick={() => trackClickTienda(oferta)}
           className="inline-flex h-12 shrink-0 items-center gap-1.5 rounded-full bg-accion-600 px-4 text-sm font-semibold text-white focus-visible:ring-2 focus-visible:ring-accion-600 focus-visible:ring-offset-2"
         >
           Ir a la tienda

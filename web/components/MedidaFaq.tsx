@@ -9,12 +9,15 @@ import {
 } from "@/components/ui/accordion";
 import { getMedidaFaqItems } from "@/lib/faq-medida";
 
+type FaqItem = { q: string; a: string };
+
 type MedidaFaqProps = {
   medidaLabel: string;
+  items?: FaqItem[];
 };
 
-export function MedidaFaq({ medidaLabel }: MedidaFaqProps) {
-  const faqs = getMedidaFaqItems(medidaLabel);
+export function MedidaFaq({ medidaLabel, items }: MedidaFaqProps) {
+  const faqs = items ?? getMedidaFaqItems(medidaLabel);
 
   return (
     <Accordion className="divide-y divide-borde rounded-xl border border-borde bg-superficie px-4 shadow-card">

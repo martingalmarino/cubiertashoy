@@ -1,20 +1,24 @@
-marca,modelo,version,anio_desde,anio_hasta,medida,fuente,estado
-Chevrolet,Onix,Joy,,,185/70 R14,"Club Onix Prisma (foro) + ficha Neumáticos Center",verificado_parcial
-Chevrolet,Prisma,,,,185/70 R14,ficha Neumáticos Center (compatibilidad),verificar
-Chevrolet,Cobalt,,,,185/70 R14,ficha Neumáticos Center (compatibilidad),verificar
-Chevrolet,Spin,,,,185/70 R14,ficha Neumáticos Center (compatibilidad),verificar
-Renault,Logan,,,,185/70 R14,ficha Neumáticos Center (compatibilidad),verificar
-Renault,Sandero,,,,185/70 R14,ficha Neumáticos Center (compatibilidad),verificar
-Fiat,Siena,,,,175/65 R14,listado Llantazo (Sportrak "Berlingo Siena"),verificar
-Citroen,Berlingo,,,,175/65 R14,listado Llantazo (Sportrak "Berlingo Siena"),verificar
-Ford,EcoSport,,,,205/65 R15,autocompletado Google ("cubiertas para ecosport 205 65 15"),verificar
-Volkswagen,Gol Trend,,,,TODO (rodado 14 o 15 según versión),autocompletado Google,TODO
-Volkswagen,Gol Power,,,,TODO (rodado 13),autocompletado Google,TODO
-Fiat,Cronos,1.3,,,TODO,,TODO
-Fiat,Cronos,1.8,,,TODO,,TODO
-Peugeot,208,,,,TODO,,TODO
-Toyota,Hilux,,,,TODO,,TODO
-Ford,Ranger,,,,TODO,,TODO
-Volkswagen,Amarok,,,,TODO,,TODO
-Chevrolet,S10,,,,TODO,,TODO
-Chevrolet,Onix,LT/LTZ,,,TODO,,TODO
+marca,modelo,version,anio_desde,anio_hasta,medida,original,fuente,estado
+Chevrolet,Onix,Joy,2019,,185/70 R14,true,"Club Onix Prisma + ficha Neumáticos Center",verificado_parcial
+Chevrolet,Onix,LT,2019,,185/65 R15,true,"ficha Chevrolet AR / compatible tiendas",verificado_parcial
+Chevrolet,Onix,LTZ,2019,,195/55 R16,true,"ficha Chevrolet AR / compatible tiendas",verificado_parcial
+Chevrolet,Prisma,,,2019,185/70 R14,true,ficha Neumáticos Center (compatibilidad),verificado_parcial
+Chevrolet,Cobalt,,,,185/70 R14,true,ficha Neumáticos Center (compatibilidad),verificar
+Chevrolet,Spin,,,,185/70 R14,true,ficha Neumáticos Center (compatibilidad),verificar
+Renault,Logan,,,,185/70 R14,true,ficha Neumáticos Center (compatibilidad),verificar
+Renault,Sandero,,,,185/70 R14,true,ficha Neumáticos Center (compatibilidad),verificar
+Fiat,Siena,,,,175/65 R14,true,"listado Llantazo (Berlingo / Siena)",verificar
+Citroen,Berlingo,,,,175/65 R14,true,"listado Llantazo (Berlingo / Siena)",verificar
+Ford,EcoSport,,,,205/65 R15,true,"compatibilidad tiendas AR (EcoSport)",verificar
+Volkswagen,Gol Trend,,2013,2023,175/70 R14,true,"manual / fichas tiendas Gol Trend rodado 14",verificado_parcial
+Volkswagen,Gol Trend,,2013,2023,185/65 R14,false,"variante habitual en reposición",verificar
+Volkswagen,Gol Power,,2006,2013,175/70 R13,true,"ficha tiendas Gol Power rodado 13",verificado_parcial
+Fiat,Cronos,1.3,2018,,185/65 R15,true,"ficha Fiat Cronos 1.3 Drive",verificado_parcial
+Fiat,Cronos,1.8,2018,,205/55 R16,true,"ficha Fiat Cronos 1.8 Precision",verificado_parcial
+Peugeot,208,Allure,2013,,195/55 R16,true,"ficha Peugeot 208 AR",verificado_parcial
+Peugeot,208,Feline,2013,,195/55 R16,true,"ficha Peugeot 208 AR",verificado_parcial
+Toyota,Hilux,,2005,2015,265/65 R17,true,"ficha Toyota Hilux (llanta 17)",verificado_parcial
+Toyota,Hilux,,2016,,265/65 R17,true,"ficha Toyota Hilux VIII",verificado_parcial
+Ford,Ranger,,2012,,265/65 R17,true,"ficha Ford Ranger T6 AR",verificado_parcial
+Volkswagen,Amarok,,2010,,245/65 R17,true,"ficha VW Amarok AR",verificado_parcial
+Chevrolet,S10,,2012,,245/65 R17,true,"ficha Chevrolet S10 AR",verificado_parcial

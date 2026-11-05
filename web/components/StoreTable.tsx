@@ -5,7 +5,9 @@ import { ArrowUpRight } from "lucide-react";
 import { PriceCard } from "@/components/PriceCard";
 import { CuotasChip } from "@/components/CuotasChip";
 import { DiscountBadge } from "@/components/DiscountBadge";
+import { trackClickTienda } from "@/lib/analytics";
 import { formatARS } from "@/lib/format";
+import { outboundHref, outboundRel } from "@/lib/outbound";
 import { cn } from "@/lib/utils";
 import type { OfertaEnriquecida } from "@/lib/types";
 
@@ -155,9 +157,10 @@ export function StoreTable({ ofertas }: StoreTableProps) {
                     </td>
                     <td className="px-3 py-3">
                       <a
-                        href={o.url}
+                        href={outboundHref(o)}
                         target="_blank"
-                        rel="noopener noreferrer sponsored"
+                        rel={outboundRel(o)}
+                        onClick={() => trackClickTienda(o)}
                         className="inline-flex size-11 items-center justify-center rounded-full text-accion-600 opacity-70 transition-all duration-200 group-hover:opacity-100 hover:bg-accion-50 focus-visible:opacity-100 focus-visible:ring-2 focus-visible:ring-accion-600 focus-visible:ring-offset-2"
                         aria-label={`Ir a ${o.tiendaNombre}`}
                       >

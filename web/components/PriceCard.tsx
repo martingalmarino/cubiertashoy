@@ -1,7 +1,11 @@
+"use client";
+
 import { ArrowUpRight } from "lucide-react";
 import { CuotasChip } from "@/components/CuotasChip";
 import { DiscountBadge } from "@/components/DiscountBadge";
+import { trackClickTienda } from "@/lib/analytics";
 import { formatARS } from "@/lib/format";
+import { outboundHref, outboundRel } from "@/lib/outbound";
 import { cn } from "@/lib/utils";
 import type { OfertaEnriquecida } from "@/lib/types";
 
@@ -44,9 +48,10 @@ export function PriceCard({ oferta, destacada }: PriceCardProps) {
           </p>
         </div>
         <a
-          href={oferta.url}
+          href={outboundHref(oferta)}
           target="_blank"
-          rel="noopener noreferrer sponsored"
+          rel={outboundRel(oferta)}
+          onClick={() => trackClickTienda(oferta)}
           className="inline-flex size-11 shrink-0 items-center justify-center rounded-full bg-accion-600 text-white transition-colors hover:bg-accion-700 focus-visible:ring-2 focus-visible:ring-accion-600 focus-visible:ring-offset-2"
           aria-label={`Ver en ${oferta.tiendaNombre}`}
         >

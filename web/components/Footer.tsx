@@ -29,10 +29,26 @@ export function Footer() {
           <ul className="space-y-1 text-sm text-tinta-400">
             <li>
               <Link
-                href="/#medidas"
+                href="/medidas"
                 className="inline-flex min-h-11 items-center transition-colors hover:text-papel"
               >
                 Medidas
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/rodado/15"
+                className="inline-flex min-h-11 items-center transition-colors hover:text-papel"
+              >
+                Por rodado
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/cuotas"
+                className="inline-flex min-h-11 items-center transition-colors hover:text-papel"
+              >
+                Cuotas
               </Link>
             </li>
             <li>
@@ -58,9 +74,28 @@ export function Footer() {
               </Link>
             </li>
             <li>
-              <span className="inline-flex min-h-11 items-center text-tinta-500">
-                Por auto · pronto
-              </span>
+              <Link
+                href="/auto"
+                className="inline-flex min-h-11 items-center transition-colors hover:text-papel"
+              >
+                Por auto
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/marca/fate"
+                className="inline-flex min-h-11 items-center transition-colors hover:text-papel"
+              >
+                Marcas
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/para-gomerias"
+                className="inline-flex min-h-11 items-center transition-colors hover:text-papel"
+              >
+                Para gomerías
+              </Link>
             </li>
           </ul>
         </div>
@@ -68,8 +103,19 @@ export function Footer() {
         <div>
           <p className="mb-3 text-sm font-semibold text-papel">Aviso</p>
           <p className="text-sm text-tinta-400">
-            Precios por unidad. En fase 1 algunos datos son de ejemplo y el
-            banner ámbar lo indica.
+            Precios por unidad, tomados de tiendas. Pueden cambiar: verificá en
+            la ficha antes de comprar.
+          </p>
+          <p className="mt-3 text-sm text-tinta-400">
+            <Link
+              href="/como-ganamos-plata"
+              className="underline underline-offset-2 transition-colors hover:text-papel"
+            >
+              Cómo ganamos plata
+            </Link>
+            {" · "}
+            algunos links a Mercado Libre son de afiliados (
+            <span className="font-mono text-[11px]">rel=sponsored</span>).
           </p>
         </div>
       </div>

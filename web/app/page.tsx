@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { ExampleDataBanner } from "@/components/ExampleDataBanner";
+import { PricesSourceBanner } from "@/components/PricesSourceBanner";
 import { HomeFaq } from "@/components/HomeFaq";
 import { MedidaCard } from "@/components/MedidaCard";
 import { MedidaSearch } from "@/components/MedidaSearch";
@@ -15,6 +15,8 @@ import {
   getMedidasMasBuscadas,
   getMedidasPopulares,
   getOfertas,
+  getVehicleSearchIndex,
+  isExampleData,
 } from "@/lib/data";
 import { SITE_NAME, SITE_NAME_SHORT } from "@/lib/site";
 
@@ -35,15 +37,30 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Home() {
+export default async function Home() {
   const medidas = getMedidas();
+  const vehicles = getVehicleSearchIndex();
   const populares = getMedidasPopulares(8);
-  const masBuscadas = getMedidasMasBuscadas(8);
+  const masBuscadas = await getMedidasMasBuscadas(8);
+
+  const ofertasBySlug = await Promise.all(
+    medidas.map(async (m) => ({ slug: m.slug, ofertas: await getOfertas(m.slug) }))
+  );
+  const historialBySlug = await Promise.all(
+    masBuscadas.map(async (m) => ({
+      slug: m.slug,
+      hist: await getHistorial(m.slug),
+    }))
+  );
+  const histMap = new Map(historialBySlug.map((h) => [h.slug, h.hist]));
+  const ofertasMap = new Map(ofertasBySlug.map((o) => [o.slug, o.ofertas]));
 
   const tiendaMap = new Map<string, TiendaResumen>();
   let ofertasConDescuentoReal = 0;
-  for (const m of medidas) {
-    for (const o of getOfertas(m.slug)) {
+  let anyReal = false;
+  for (const { ofertas } of ofertasBySlug) {
+    if (!isExampleData(ofertas) && ofertas.length > 0) anyReal = true;
+    for (const o of ofertas) {
       const prev = tiendaMap.get(o.tiendaId);
       if (prev) prev.ofertas += 1;
       else
@@ -61,7 +78,7 @@ export default function Home() {
 
   return (
     <>
-      <ExampleDataBanner />
+      <PricesSourceBanner ejemplo={!anyReal} />
 
       <section id="hero" className="grad-suave">
         <div className="mx-auto max-w-3xl px-4 pb-12 pt-16 text-center md:pb-16 md:pt-24">
@@ -77,7 +94,7 @@ export default function Home() {
           </p>
 
           <div id="medidas" className="scroll-mt-24">
-            <MedidaSearch medidas={medidas} />
+            <MedidaSearch medidas={medidas} vehicles={vehicles} />
           </div>
 
           <div className="mt-10">
@@ -104,11 +121,11 @@ export default function Home() {
           </div>
           <Stagger className="mt-6 grid grid-cols-2 gap-4 md:grid-cols-4">
             {masBuscadas.map((m) => {
-              const spark = getHistorial(m.slug)
+              const spark = (histMap.get(m.slug) ?? [])
                 .slice(-30)
                 .map((h) => h.mediana);
               const tiendasCount = new Set(
-                getOfertas(m.slug).map((o) => o.tiendaId)
+                (ofertasMap.get(m.slug) ?? []).map((o) => o.tiendaId)
               ).size;
               return (
                 <StaggerItem key={m.slug}>

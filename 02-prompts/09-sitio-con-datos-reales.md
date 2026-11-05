@@ -7,6 +7,7 @@ Badge de descuento real/inflado con la regla del percentil 75 de 90 días (si ha
 Quitá el ExampleDataBanner cuando la fuente sea la DB; mostrá "Precios de tiendas, pueden cambiar. Verificá en la tienda antes de comprar." Mantené los JSON como fallback si la DB no responde.
 ```
 ## Checklist
-- [ ] /medida/175-65-r14 muestra precios reales que coinciden con la tienda (chequeá 3 a mano).
-- [ ] Links "Ir a la tienda" abren la ficha correcta.
-- [ ] Sin banner de ejemplo. **Fin de Fase 2.**
+- [x] /medida/175-65-r14 muestra precios reales que coinciden con la tienda (chequeá 3 a mano).
+- [x] Links "Ir a la tienda" abren la ficha correcta.
+- [x] Sin banner de ejemplo. **Fin de Fase 2.**
+

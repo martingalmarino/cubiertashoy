@@ -70,6 +70,7 @@ class OfferRow(BaseModel):
     cuotas_sin_interes: Optional[int] = None
     colocacion_incluida: Optional[bool] = None
     en_stock: Optional[bool] = None
+    affiliate_url: Optional[str] = None
 
 
 @dataclass
@@ -227,14 +228,15 @@ class Scraper:
                     cur.execute(
                         """
                         INSERT INTO products (
-                          store_id, external_id, url, marca, modelo, size_id,
+                          store_id, external_id, url, affiliate_url, marca, modelo, size_id,
                           indice_carga, indice_velocidad, unidades_por_paquete,
                           titulo_original, activo, first_seen, last_seen
                         ) VALUES (
-                          %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, true, now(), now()
+                          %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, true, now(), now()
                         )
                         ON CONFLICT (store_id, external_id) DO UPDATE SET
                           url = EXCLUDED.url,
+                          affiliate_url = COALESCE(EXCLUDED.affiliate_url, products.affiliate_url),
                           marca = EXCLUDED.marca,
                           modelo = EXCLUDED.modelo,
                           size_id = EXCLUDED.size_id,
@@ -250,6 +252,7 @@ class Scraper:
                             store_id,
                             o.external_id,
                             o.url,
+                            o.affiliate_url,
                             o.marca,
                             o.modelo,
                             size_id,

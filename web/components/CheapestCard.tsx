@@ -5,7 +5,9 @@ import { motion, useReducedMotion } from "framer-motion";
 import { AnimatedPrice } from "@/components/AnimatedPrice";
 import { CuotasChip } from "@/components/CuotasChip";
 import { DiscountBadge } from "@/components/DiscountBadge";
+import { trackClickTienda } from "@/lib/analytics";
 import { formatARS } from "@/lib/format";
+import { outboundHref, outboundRel } from "@/lib/outbound";
 import type { OfertaEnriquecida } from "@/lib/types";
 
 type CheapestCardProps = {
@@ -108,9 +110,10 @@ export function CheapestCard({
 
       <div className="mx-5 mb-5 sm:mx-6">
         <motion.a
-          href={oferta.url}
+          href={outboundHref(oferta)}
           target="_blank"
-          rel="noopener noreferrer sponsored"
+          rel={outboundRel(oferta)}
+          onClick={() => trackClickTienda(oferta)}
           whileTap={reduce ? undefined : { scale: 0.97 }}
           className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-accion-600 px-6 text-sm font-semibold text-white transition-colors hover:bg-accion-700 focus-visible:ring-2 focus-visible:ring-accion-600 focus-visible:ring-offset-2 sm:w-auto"
         >

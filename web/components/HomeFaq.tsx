@@ -19,7 +19,7 @@ const faqs = [
   },
   {
     q: "¿De dónde salen los precios?",
-    a: "En esta fase mostramos datos de ejemplo. En la siguiente, scrapers de tiendas argentinas con actualización frecuente.",
+    a: "De tiendas argentinas (Norauto, Naldo, Neumaflores, 360 Neumáticos y más). Los actualizamos varias veces al día; siempre verificá el precio en la ficha de la tienda.",
   },
   {
     q: "¿Puedo buscar por auto?",

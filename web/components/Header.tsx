@@ -9,15 +9,24 @@ import { cn } from "@/lib/utils";
 import type { Medida } from "@/lib/types";
 
 const nav = [
-  { href: "/#medidas", label: "Medidas" },
-  { href: "/#autos", label: "Autos" },
+  { href: "/medidas", label: "Medidas" },
+  { href: "/auto", label: "Autos" },
+  { href: "/cuotas", label: "Cuotas" },
 ] as const;
+
+type VehicleOption = {
+  slug: string;
+  marca: string;
+  modelo: string;
+  label: string;
+};
 
 type HeaderProps = {
   medidas?: Medida[];
+  vehicles?: VehicleOption[];
 };
 
-export function Header({ medidas = [] }: HeaderProps) {
+export function Header({ medidas = [], vehicles = [] }: HeaderProps) {
   const [showCompact, setShowCompact] = useState(false);
   const canShowSearch = medidas.length > 0;
 
@@ -53,6 +62,7 @@ export function Header({ medidas = [] }: HeaderProps) {
           {canShowSearch && (
             <MedidaSearch
               medidas={medidas}
+              vehicles={vehicles}
               variant="compact"
               className="w-full max-w-md"
             />

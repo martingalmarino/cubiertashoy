@@ -1,14 +1,20 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
+import Script from "next/script";
+import { Analytics } from "@/components/Analytics";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { SkipLink } from "@/components/SkipLink";
 import { JsonLd } from "@/components/JsonLd";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { getMedidas } from "@/lib/data";
+import { getMedidas, getVehicleSearchIndex } from "@/lib/data";
 import { getSiteUrl, SITE_NAME } from "@/lib/site";
 import "./globals.css";
+
+const adsenseEnabled =
+  process.env.NEXT_PUBLIC_ADSENSE_ENABLED === "true" &&
+  Boolean(process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID);
 
 const inter = Inter({
   variable: "--font-sans",
@@ -69,6 +75,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   const medidas = getMedidas();
+  const vehicles = getVehicleSearchIndex();
 
   const orgLd = {
     "@context": "https://schema.org",
@@ -105,13 +112,23 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <JsonLd data={websiteLd} />
           <TooltipProvider>
             <SkipLink />
-            <Header medidas={medidas} />
+            <Header medidas={medidas} vehicles={vehicles} />
             <main id="contenido" className="flex-1 overflow-x-clip">
               {children}
             </main>
             <Footer />
           </TooltipProvider>
+          <Analytics />
         </ThemeProvider>
+        {adsenseEnabled ? (
+          <Script
+            id="adsense"
+            async
+            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID}`}
+            crossOrigin="anonymous"
+            strategy="lazyOnload"
+          />
+        ) : null}
       </body>
     </html>
   );

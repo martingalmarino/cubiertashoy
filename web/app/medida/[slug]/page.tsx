@@ -1,28 +1,33 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ExampleDataBanner } from "@/components/ExampleDataBanner";
+import { PricesSourceBanner } from "@/components/PricesSourceBanner";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { MedidaBadge } from "@/components/MedidaBadge";
 import { CheapestCard } from "@/components/CheapestCard";
 import { EmptyMedida } from "@/components/EmptyMedida";
+import { AdSlot } from "@/components/AdSlot";
+import { LeadForm } from "@/components/LeadForm";
 import { ResumenCard } from "@/components/ResumenCard";
 import { PriceHistoryChartLazy } from "@/components/PriceHistoryChartLazy";
 import { StoreTable } from "@/components/StoreTable";
 import { MedidaFaq } from "@/components/MedidaFaq";
 import { MobileStickyCta } from "@/components/MobileStickyCta";
 import { JsonLd } from "@/components/JsonLd";
+import localidadesJson from "@/data/localidades.json";
 import {
   getAutosPorMedida,
   getHistorial,
+  getMarcasEnMedida,
   getMedida,
   getMedidaResumen,
   getMedidas,
   getMedidasParecidas,
   getOfertas,
+  isExampleData,
 } from "@/lib/data";
-import { getMedidaFaqItems } from "@/lib/faq-medida";
 import { formatARS } from "@/lib/format";
+import { getMedidaFaqItems } from "@/lib/faq-medida";
 import { getSiteUrl, SITE_NAME_SHORT } from "@/lib/site";
 
 type PageProps = {
@@ -42,8 +47,8 @@ export async function generateMetadata({
     return { title: "Medida no encontrada" };
   }
 
-  const resumen = getMedidaResumen(slug);
-  const ofertas = getOfertas(slug);
+  const resumen = await getMedidaResumen(slug);
+  const ofertas = await getOfertas(slug);
   const desde = ofertas[0]?.precioEfectivo;
   const desdeLabel = desde != null ? formatARS(desde) : null;
 
@@ -82,13 +87,15 @@ export default async function MedidaPage({ params }: PageProps) {
   if (!medida) notFound();
 
   const base = getSiteUrl();
-  const ofertas = getOfertas(slug);
-  const historial = getHistorial(slug);
-  const resumen = getMedidaResumen(slug);
+  const ofertas = await getOfertas(slug);
+  const historial = await getHistorial(slug);
+  const resumen = await getMedidaResumen(slug);
   const parecidas = getMedidasParecidas(slug);
   const autos = getAutosPorMedida(slug);
+  const marcas = await getMarcasEnMedida(slug);
   const cheapest = ofertas[0] ?? null;
   const faqs = getMedidaFaqItems(medida.label);
+  const ejemplo = isExampleData(ofertas);
   const pageUrl = `${base}/medida/${medida.slug}`;
   const hist90 = historial.slice(-90);
   const maximo90d =
@@ -167,7 +174,7 @@ export default async function MedidaPage({ params }: PageProps) {
       <JsonLd data={breadcrumbLd} />
       <JsonLd data={productLd} />
       <JsonLd data={faqLd} />
-      <ExampleDataBanner />
+      <PricesSourceBanner ejemplo={ejemplo} />
 
       <div className="container-site py-8 pb-24 sm:py-10 md:pb-10">
         <Breadcrumbs
@@ -200,6 +207,20 @@ export default async function MedidaPage({ params }: PageProps) {
               {actualizado}
             </span>
           </p>
+          <div className="flex flex-wrap gap-2">
+            <Link
+              href={`/rodado/${medida.rodado}`}
+              className="inline-flex min-h-11 items-center rounded-full border border-borde bg-superficie px-4 text-sm font-medium text-tinta-700 transition-colors hover:border-accion-600 focus-visible:ring-2 focus-visible:ring-accion-600"
+            >
+              Rodado R{medida.rodado}
+            </Link>
+            <Link
+              href="/cuotas"
+              className="inline-flex min-h-11 items-center rounded-full border border-borde bg-superficie px-4 text-sm font-medium text-tinta-700 transition-colors hover:border-accion-600 focus-visible:ring-2 focus-visible:ring-accion-600"
+            >
+              Cuotas sin interés
+            </Link>
+          </div>
         </header>
 
         {ofertas.length === 0 ? (
@@ -239,20 +260,79 @@ export default async function MedidaPage({ params }: PageProps) {
           </>
         )}
 
+        <div className="my-10">
+          <AdSlot slot="medida-mid" height={90} />
+        </div>
+
+        <div className="my-10">
+          <LeadForm
+            medidaSlug={medida.slug}
+            medidaLabel={medida.label}
+            localidades={localidadesJson.localidades}
+          />
+        </div>
+
+        {marcas.length > 0 && (
+          <section className="my-10" aria-labelledby="marcas-medida">
+            <h2
+              id="marcas-medida"
+              className="text-xl font-semibold tracking-[-0.02em] text-tinta-900 md:text-2xl"
+            >
+              Por marca
+            </h2>
+            <ul className="mt-4 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+              {marcas.map((m) => (
+                <li key={m.slug}>
+                  <Link
+                    href={`/medida/${slug}/${m.slug}`}
+                    className="flex min-h-14 items-center justify-between rounded-xl border border-borde bg-superficie px-4 py-3 shadow-card transition-shadow hover:shadow-card-hover focus-visible:ring-2 focus-visible:ring-accion-600"
+                  >
+                    <span className="text-sm font-medium text-tinta-900">
+                      {m.nombre}
+                      <span className="mt-0.5 block text-xs font-normal text-tinta-500">
+                        <span className="font-mono tabular-nums">{m.count}</span>{" "}
+                        {m.count === 1 ? "oferta" : "ofertas"}
+                      </span>
+                    </span>
+                    <span className="text-sm text-tinta-500">
+                      desde{" "}
+                      <span className="font-mono tabular-nums text-tinta-800">
+                        {formatARS(m.precioDesde)}
+                      </span>
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
         {autos.length > 0 && (
           <section className="my-10">
             <h2 className="text-xl font-semibold tracking-[-0.02em] text-tinta-900 md:text-2xl">
               Autos que usan esta medida
             </h2>
             <ul className="mt-4 flex flex-wrap gap-2">
-              {autos.map((a) => (
-                <li key={`${a.marca}-${a.modelo}-${a.version ?? ""}`}>
-                  <span className="inline-flex min-h-11 items-center rounded-md border border-borde bg-superficie px-3 text-sm font-medium text-tinta-900 shadow-card">
-                    {a.marca} {a.modelo}
-                    {a.version ? ` ${a.version}` : ""}
-                  </span>
-                </li>
-              ))}
+              {autos.map((a) => {
+                const label = `${a.marca} ${a.modelo}${a.version ? ` ${a.version}` : ""}`;
+                const key = `${a.vehicleSlug ?? a.marca}-${a.modelo}-${a.version ?? ""}-${a.medidaSlug}`;
+                return (
+                  <li key={key}>
+                    {a.vehicleSlug ? (
+                      <Link
+                        href={`/auto/${a.vehicleSlug}`}
+                        className="inline-flex min-h-11 items-center rounded-md border border-borde bg-superficie px-3 text-sm font-medium text-tinta-900 shadow-card transition-colors hover:border-accion-600 focus-visible:ring-2 focus-visible:ring-accion-600"
+                      >
+                        {label}
+                      </Link>
+                    ) : (
+                      <span className="inline-flex min-h-11 items-center rounded-md border border-borde bg-superficie px-3 text-sm font-medium text-tinta-900 shadow-card">
+                        {label}
+                      </span>
+                    )}
+                  </li>
+                );
+              })}
             </ul>
           </section>
         )}

@@ -14,7 +14,7 @@ export default async function MedidaOpenGraphImage({ params }: Props) {
   const { slug } = await params;
   const medida = getMedida(slug);
   const label = medida?.label ?? slug;
-  const ofertas = getOfertas(slug);
+  const ofertas = await getOfertas(slug);
   const desde = ofertas[0]?.precioEfectivo;
 
   return new ImageResponse(

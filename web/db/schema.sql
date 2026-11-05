@@ -88,3 +88,23 @@ GROUP BY p.size_id, (ps.captured_at AT TIME ZONE 'America/Argentina/Buenos_Aires
 
 CREATE UNIQUE INDEX size_daily_stats_size_dia_uidx
   ON size_daily_stats (size_id, dia);
+
+-- Autos (Fase 3)
+CREATE TABLE vehicles (
+  id SERIAL PRIMARY KEY,
+  slug TEXT NOT NULL UNIQUE,
+  marca TEXT NOT NULL,
+  modelo TEXT NOT NULL
+);
+
+CREATE TABLE vehicle_sizes (
+  id SERIAL PRIMARY KEY,
+  vehicle_id INT NOT NULL REFERENCES vehicles(id) ON DELETE CASCADE,
+  version TEXT,
+  anio_desde INT,
+  anio_hasta INT,
+  size_id INT NOT NULL REFERENCES sizes(id) ON DELETE RESTRICT,
+  original BOOLEAN NOT NULL DEFAULT TRUE
+);
+
+CREATE INDEX vehicle_sizes_vehicle_idx ON vehicle_sizes (vehicle_id);

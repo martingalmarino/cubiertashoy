@@ -9,5 +9,5 @@
 3) Página /como-ganamos-plata (transparencia) y aviso en el footer.
 ```
 ## Checklist
-- [ ] Un lead de prueba llega por mail/webhook.
-- [ ] Links de ML llevan rel="sponsored".
+- [x] Un lead de prueba llega por mail/webhook.
+- [x] Links de ML llevan rel="sponsored".

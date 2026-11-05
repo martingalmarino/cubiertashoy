@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""CLI: python run.py --store all|norauto|naldo|neumaflores|360-neumaticos [--dry-run] [--medida SLUG]."""
+"""CLI: python run.py --store all|norauto|naldo|neumaflores|360-neumaticos|mercadolibre [--dry-run] [--medida SLUG]."""
 
 from __future__ import annotations
 
@@ -13,6 +13,7 @@ from typing import Type
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from base import Scraper, load_env, load_sizes  # noqa: E402
+from mercadolibre import MercadoLibreScraper  # noqa: E402
 from neumaflores import NeumafloresScraper  # noqa: E402
 from vtex import NaldoScraper, NorautoScraper  # noqa: E402
 from woo import Woo360Scraper  # noqa: E402
@@ -22,6 +23,7 @@ STORES: dict[str, Type[Scraper]] = {
     "naldo": NaldoScraper,
     "neumaflores": NeumafloresScraper,
     "360-neumaticos": Woo360Scraper,
+    "mercadolibre": MercadoLibreScraper,
 }
 
 
@@ -30,7 +32,7 @@ def main() -> int:
     parser.add_argument(
         "--store",
         required=True,
-        help="all | norauto | naldo | neumaflores | 360-neumaticos",
+        help="all | norauto | naldo | neumaflores | 360-neumaticos | mercadolibre",
     )
     parser.add_argument(
         "--dry-run",
@@ -57,7 +59,10 @@ def main() -> int:
 
     store_arg = args.store.lower().strip()
     if store_arg == "all":
-        selected = list(STORES.items())
+        # ML requiere OAuth; no lo incluimos en "all" para no romper el cron.
+        selected = [(k, v) for k, v in STORES.items() if k != "mercadolibre"]
+    elif store_arg in ("ml", "meli"):
+        selected = [("mercadolibre", MercadoLibreScraper)]
     elif store_arg in STORES:
         selected = [(store_arg, STORES[store_arg])]
     elif store_arg in ("360", "360neumaticos"):
