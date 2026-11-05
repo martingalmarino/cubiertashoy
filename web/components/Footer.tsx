@@ -106,24 +106,20 @@ export function Footer() {
             Precios por unidad, tomados de tiendas. Pueden cambiar: verificá en
             la ficha antes de comprar.
           </p>
-          <p className="mt-3 text-xs text-tinta-400 sm:text-sm">
-            <Link
-              href="/como-ganamos-plata"
-              className="underline underline-offset-2 transition-colors hover:text-papel"
-            >
-              Cómo ganamos plata
-            </Link>
-            {" · "}
-            algunos links a Mercado Libre son de afiliados (
-            <span className="font-mono text-[11px]">rel=sponsored</span>).
-          </p>
         </div>
       </div>
 
       <div className="relative border-t border-white/10">
         <div className="container-site flex flex-col gap-2 py-4 text-xs text-tinta-400 sm:flex-row sm:items-center sm:justify-between">
           <p>© 2026 Precio Neumáticos</p>
-          <p>Precios en ARS · Argentina</p>
+          <p>
+            <a
+              href="mailto:m.galmarino@gmail.com"
+              className="transition-colors hover:text-papel focus-visible:ring-2 focus-visible:ring-accion-600"
+            >
+              Desarrollado por Martín Galmarino 🤖
+            </a>
+          </p>
         </div>
       </div>
     </footer>
