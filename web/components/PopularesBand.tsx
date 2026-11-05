@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { formatARS } from "@/lib/format";
+import { formatARS, formatARSCompact, median } from "@/lib/format";
 import { cn } from "@/lib/utils";
 
 export type PopularMedida = {
@@ -12,8 +12,25 @@ type PopularesBandProps = {
   medidas: PopularMedida[];
 };
 
+const OUTLIER_FLOOR = 50_000;
+
+function sanitizePrecios(medidas: PopularMedida[]): PopularMedida[] {
+  const precios = medidas
+    .map((m) => m.precioDesde)
+    .filter((p): p is number => p != null);
+  const med = median(precios);
+  return medidas.map((m) => {
+    if (m.precioDesde == null) return m;
+    const outlier =
+      m.precioDesde < OUTLIER_FLOOR ||
+      (med != null && m.precioDesde < med * 0.5);
+    return outlier ? { ...m, precioDesde: null } : m;
+  });
+}
+
 export function PopularesBand({ medidas }: PopularesBandProps) {
-  const mobile = medidas.slice(0, 9);
+  const clean = sanitizePrecios(medidas);
+  const mobile = clean.slice(0, 9);
 
   return (
     <div className="relative rounded-2xl bg-gradient-to-br from-pastel-rosa via-pastel-lila to-pastel-lila p-5 ring-1 ring-black/5 md:p-7">
@@ -23,7 +40,7 @@ export function PopularesBand({ medidas }: PopularesBandProps) {
             Medidas populares
           </h2>
           <p className="mt-1 text-sm text-tinta-700/80">
-            Las más buscadas esta semana
+            Las medidas más comunes
           </p>
         </div>
         <Link
@@ -37,13 +54,13 @@ export function PopularesBand({ medidas }: PopularesBandProps) {
       <ul className="grid grid-cols-3 gap-2 md:hidden">
         {mobile.map((m) => (
           <li key={m.slug} className="min-w-0">
-            <PopularChip medida={m} />
+            <PopularChip medida={m} compactPrice />
           </li>
         ))}
       </ul>
 
       <ul className="hidden grid-cols-4 gap-2 md:grid lg:grid-cols-6">
-        {medidas.map((m) => (
+        {clean.map((m) => (
           <li key={m.slug} className="min-w-0">
             <PopularChip medida={m} />
           </li>
@@ -60,7 +77,13 @@ export function PopularesBand({ medidas }: PopularesBandProps) {
   );
 }
 
-function PopularChip({ medida }: { medida: PopularMedida }) {
+function PopularChip({
+  medida,
+  compactPrice = false,
+}: {
+  medida: PopularMedida;
+  compactPrice?: boolean;
+}) {
   const hasPrice = medida.precioDesde != null;
   return (
     <Link
@@ -74,8 +97,10 @@ function PopularChip({ medida }: { medida: PopularMedida }) {
         {medida.label}
       </span>
       {hasPrice ? (
-        <span className="mt-0.5 font-mono text-xs tabular-nums text-tinta-500">
-          desde {formatARS(medida.precioDesde!)}
+        <span className="mt-0.5 font-mono text-[11px] tabular-nums text-tinta-500 md:text-xs">
+          {compactPrice
+            ? `desde ${formatARSCompact(medida.precioDesde!)}`
+            : `desde ${formatARS(medida.precioDesde!)}`}
         </span>
       ) : null}
     </Link>

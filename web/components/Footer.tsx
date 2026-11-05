@@ -67,10 +67,10 @@ export function Footer() {
           <ul className="space-y-1 text-sm text-tinta-400">
             <li>
               <Link
-                href="/#como"
+                href="/medidas"
                 className="inline-flex h-10 items-center transition-colors hover:text-papel"
               >
-                Cómo funciona
+                Medidas
               </Link>
             </li>
             <li>

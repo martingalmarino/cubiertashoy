@@ -3,10 +3,10 @@ import { PricesSourceBanner } from "@/components/PricesSourceBanner";
 import { HomeFaq } from "@/components/HomeFaq";
 import { MedidaCard } from "@/components/MedidaCard";
 import { MedidaSearch } from "@/components/MedidaSearch";
+import { OfertasHoyLine } from "@/components/OfertasHoyLine";
 import { PopularesBand } from "@/components/PopularesBand";
 import { TiendasRow, type TiendaResumen } from "@/components/TiendasRow";
 import { TrustRow } from "@/components/TrustRow";
-import { ValuePastelCards } from "@/components/ValuePastelCards";
 import { FadeIn, Stagger, StaggerItem } from "@/components/motion/FadeIn";
 import { HoyUnderline } from "@/components/visual/HoyUnderline";
 import {
@@ -56,10 +56,12 @@ export default async function Home() {
   const ofertasMap = new Map(ofertasBySlug.map((o) => [o.slug, o.ofertas]));
 
   const tiendaMap = new Map<string, TiendaResumen>();
-  let ofertasConDescuentoReal = 0;
+  let nOfertas = 0;
   let anyReal = false;
+  let actualizadoHaceHoras: number | null = null;
   for (const { ofertas } of ofertasBySlug) {
     if (!isExampleData(ofertas) && ofertas.length > 0) anyReal = true;
+    nOfertas += ofertas.length;
     for (const o of ofertas) {
       const prev = tiendaMap.get(o.tiendaId);
       if (prev) prev.ofertas += 1;
@@ -69,7 +71,12 @@ export default async function Home() {
           nombre: o.tiendaNombre,
           ofertas: 1,
         });
-      if (o.descuento === "real") ofertasConDescuentoReal += 1;
+      if (
+        actualizadoHaceHoras == null ||
+        o.actualizadoHaceHoras < actualizadoHaceHoras
+      ) {
+        actualizadoHaceHoras = o.actualizadoHaceHoras;
+      }
     }
   }
   const tiendas = [...tiendaMap.values()].sort((a, b) =>
@@ -95,6 +102,14 @@ export default async function Home() {
 
           <div id="medidas" className="scroll-mt-24">
             <MedidaSearch medidas={medidas} vehicles={vehicles} />
+          </div>
+
+          <div className="mt-4 flex justify-center sm:mt-5">
+            <OfertasHoyLine
+              nOfertas={nOfertas}
+              nTiendas={tiendas.length}
+              actualizadoHaceHoras={actualizadoHaceHoras}
+            />
           </div>
 
           <div className="mt-6 sm:mt-8">
@@ -145,24 +160,6 @@ export default async function Home() {
               );
             })}
           </Stagger>
-        </div>
-      </section>
-
-      <section id="como" className="scroll-mt-24 py-8 sm:py-12 md:py-16">
-        <div className="container-site">
-          <div className="max-w-xl">
-            <h2 className="text-xl font-semibold tracking-[-0.02em] text-tinta-900 md:text-2xl">
-              Cómo funciona
-            </h2>
-            <p className="mt-2 text-tinta-500">
-              Tres pasos. Sin cuentas ni vueltas.
-            </p>
-          </div>
-          <div className="mt-6">
-            <ValuePastelCards
-              ofertasConDescuentoReal={ofertasConDescuentoReal}
-            />
-          </div>
         </div>
       </section>
 
