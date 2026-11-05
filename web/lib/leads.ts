@@ -32,7 +32,7 @@ function databaseUrl(): string | null {
 
 export function hashIp(ip: string | null | undefined): string | null {
   if (!ip) return null;
-  const salt = process.env.LEAD_IP_SALT ?? "cubiertashoy-leads";
+  const salt = process.env.LEAD_IP_SALT ?? "precioneumaticos-leads";
   return createHash("sha256").update(`${salt}:${ip}`).digest("hex").slice(0, 32);
 }
 
@@ -165,7 +165,8 @@ async function notifyLead(payload: {
   try {
     const { Resend } = await import("resend");
     const resend = new Resend(resendKey);
-    const from = process.env.RESEND_FROM ?? "CubiertasHoy <onboarding@resend.dev>";
+    const from =
+      process.env.RESEND_FROM ?? "Precio Neumáticos <onboarding@resend.dev>";
     const gomeriaLine = payload.gomeria
       ? `Gomería: ${payload.gomeria.nombre} (WA ${payload.gomeria.whatsapp})`
       : "Sin gomería activa en esa localidad";

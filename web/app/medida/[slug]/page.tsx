@@ -96,14 +96,14 @@ export async function generateMetadata({
   const title =
     resolvedCopy?.title ||
     (desdeLabel != null
-      ? `Precio cubiertas ${medida.label} hoy | desde ${desdeLabel} | ${SITE_NAME_SHORT}`
-      : `Precio cubiertas ${medida.label} hoy | ${SITE_NAME_SHORT}`);
+      ? `Precio neumáticos ${medida.label} hoy | desde ${desdeLabel} | ${SITE_NAME_SHORT}`
+      : `Precio neumáticos ${medida.label} hoy | ${SITE_NAME_SHORT}`);
 
   const description =
     resolvedCopy?.metaDescription ||
     (desdeLabel != null
-      ? `Cubiertas ${medida.label}: desde ${desdeLabel} por unidad en ${resumen.tiendasCount} tiendas. Compará efectivo, tarjeta, cuotas e historial.`
-      : `Compará precios de cubiertas ${medida.label} en Argentina. Efectivo, tarjeta, cuotas e historial.`);
+      ? `Neumáticos ${medida.label}: desde ${desdeLabel} por unidad en ${resumen.tiendasCount} tiendas. También buscadas como cubiertas ${medida.label}.`
+      : `Compará precios de neumáticos ${medida.label} en Argentina. También buscadas como cubiertas ${medida.label}.`);
 
   return {
     title: { absolute: title },
@@ -236,7 +236,7 @@ export default async function MedidaPage({ params }: PageProps) {
         <header className="mt-6 flex flex-col items-start gap-3 sm:mt-8 sm:gap-4">
           <MedidaBadge label={medida.label} />
           <h1 className="text-[28px] font-semibold leading-tight tracking-[-0.02em] text-tinta-900 sm:text-4xl lg:text-[44px] lg:leading-[1.1]">
-            {copy?.h1 || `Precio de cubiertas ${medida.label} hoy`}
+            {copy?.h1 || `Precio de neumáticos ${medida.label} hoy`}
           </h1>
           <p className="flex flex-wrap items-center gap-2 text-tinta-500">
             <span className="relative inline-flex size-2.5" aria-hidden>

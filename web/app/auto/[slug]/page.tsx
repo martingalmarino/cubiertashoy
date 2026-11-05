@@ -51,10 +51,10 @@ export async function generateMetadata({
     : null;
   const title =
     resolved?.title ||
-    `Cubiertas para ${label}: medidas y precios hoy | ${SITE_NAME_SHORT}`;
+    `Cubiertas para ${label}: medida y precios | ${SITE_NAME_SHORT}`;
   const description =
     resolved?.metaDescription ||
-    `Medida de fábrica y precios de cubiertas para ${label}. Compará tiendas en Argentina.`;
+    `Medida habitual y precios de cubiertas/neumáticos para ${label}. Compará tiendas en Argentina.`;
   return {
     title: { absolute: title },
     description,
@@ -145,7 +145,7 @@ export default async function AutoPage({ params, searchParams }: PageProps) {
 
         <header className="mt-6 max-w-3xl sm:mt-8">
           <h1 className="text-3xl font-semibold tracking-[-0.02em] text-tinta-900 sm:text-4xl lg:text-[40px] lg:leading-[1.1]">
-            {copy?.h1 || `Cubiertas para ${label}: medidas y precios hoy`}
+            {copy?.h1 || `Cubiertas para ${label}`}
           </h1>
           {!copy ? (
             <p className="mt-2 text-tinta-500">

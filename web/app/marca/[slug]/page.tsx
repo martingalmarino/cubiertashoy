@@ -33,8 +33,8 @@ export async function generateMetadata({
   if (!marca) return { title: "Marca no encontrada" };
 
   const thin = marca.ofertasCount < MIN_INDEXABLE_OFFERS;
-  const title = `Cubiertas ${marca.nombre}: precios y medidas | ${SITE_NAME_SHORT}`;
-  const description = `Precios de cubiertas ${marca.nombre} en Argentina. Desde ${formatARS(marca.precioMin)}. Compará medidas y tiendas.`;
+  const title = `Neumáticos ${marca.nombre}: precios y medidas | ${SITE_NAME_SHORT}`;
+  const description = `Precios de neumáticos ${marca.nombre} en Argentina. Desde ${formatARS(marca.precioMin)}. Compará medidas y tiendas.`;
 
   return {
     title: { absolute: title },

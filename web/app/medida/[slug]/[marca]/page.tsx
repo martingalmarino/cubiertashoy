@@ -43,9 +43,9 @@ export async function generateMetadata({
   const desde = ofertas[0]?.precioEfectivo;
   const title =
     desde != null
-      ? `Precio cubiertas ${nombre} ${medida.label} | desde ${formatARS(desde)} | ${SITE_NAME_SHORT}`
-      : `Precio cubiertas ${nombre} ${medida.label} | ${SITE_NAME_SHORT}`;
-  const description = `Compará precios de cubiertas ${nombre} ${medida.label} en Argentina. Efectivo, tarjeta y cuotas.`;
+      ? `Precio neumáticos ${nombre} ${medida.label} | desde ${formatARS(desde)} | ${SITE_NAME_SHORT}`
+      : `Precio neumáticos ${nombre} ${medida.label} | ${SITE_NAME_SHORT}`;
+  const description = `Compará precios de neumáticos ${nombre} ${medida.label} en Argentina. Efectivo, tarjeta y cuotas.`;
 
   return {
     title: { absolute: title },

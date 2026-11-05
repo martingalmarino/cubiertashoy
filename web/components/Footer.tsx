@@ -122,7 +122,7 @@ export function Footer() {
 
       <div className="relative border-t border-white/10">
         <div className="container-site flex flex-col gap-2 py-4 text-xs text-tinta-400 sm:flex-row sm:items-center sm:justify-between">
-          <p>© 2026 cubiertas hoy</p>
+          <p>© 2026 Precio Neumáticos</p>
           <p>Precios en ARS · Argentina</p>
         </div>
       </div>

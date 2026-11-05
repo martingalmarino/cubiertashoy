@@ -10,6 +10,10 @@ import {
 
 const faqs = [
   {
+    q: "¿Cubiertas o neumáticos?",
+    a: "Es lo mismo. En Argentina se dice cubierta; en fichas y marcas suele decirse neumático. Acá comparamos precios de ambos términos.",
+  },
+  {
     q: "¿Los precios son por unidad o por kit?",
     a: "Siempre por unidad. Si una tienda publica kit x2 o x4, dividimos el precio para comparar manzana con manzana.",
   },
@@ -23,7 +27,7 @@ const faqs = [
   },
   {
     q: "¿Puedo buscar por auto?",
-    a: "Todavía no. La búsqueda por auto (marca, modelo, versión y año) llega en una fase posterior.",
+    a: "Sí. Entrá a Cubiertas por auto o usá el buscador con marca y modelo. Siempre confirmá la medida en el flanco de tu cubierta.",
   },
 ] as const;
 

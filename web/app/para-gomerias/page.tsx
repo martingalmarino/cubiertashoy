@@ -112,10 +112,10 @@ export default function ParaGomeriasPage() {
         <p className="mt-10 text-sm text-tinta-500">
           Escribinos a{" "}
           <a
-            href="mailto:hola@cubiertashoy.com"
+            href="mailto:hola@precioneumaticos.com.ar"
             className="font-medium text-accion-600 hover:text-accion-700 focus-visible:ring-2 focus-visible:ring-accion-600"
           >
-            hola@cubiertashoy.com
+            hola@precioneumaticos.com.ar
           </a>{" "}
           con tu gomería, localidad y WhatsApp. También podés leer{" "}
           <Link

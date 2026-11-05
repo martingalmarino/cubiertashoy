@@ -1,6 +1,7 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "cubiertas hoy — compará precios de cubiertas por medida";
+export const alt =
+  "Precio Neumáticos — compará precios de neumáticos y cubiertas por medida";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -28,7 +29,7 @@ export default function OpenGraphImage() {
               letterSpacing: "-0.02em",
             }}
           >
-            cubiertas
+            Precio
           </span>
           <span
             style={{
@@ -41,7 +42,7 @@ export default function OpenGraphImage() {
               fontFamily: "ui-monospace, Menlo, monospace",
             }}
           >
-            hoy
+            Neumáticos
           </span>
         </div>
 
@@ -56,10 +57,10 @@ export default function OpenGraphImage() {
               maxWidth: 900,
             }}
           >
-            El mejor precio de tu cubierta, hoy.
+            Compará el precio de tus neumáticos
           </div>
           <div style={{ fontSize: 28, color: "#8A96A3" }}>
-            Compará tiendas de todo el país por medida exacta.
+            Cubiertas por medida, en las tiendas que monitoreamos.
           </div>
         </div>
 

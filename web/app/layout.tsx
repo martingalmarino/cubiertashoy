@@ -34,16 +34,16 @@ const siteUrl = getSiteUrl();
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: `${SITE_NAME} — precio de cubiertas por medida`,
+    default: `Precio neumáticos Argentina | compará cubiertas por medida`,
     template: `%s · ${SITE_NAME}`,
   },
   description:
-    "Compará precios de cubiertas por medida en Argentina. El mejor precio de hoy y si el descuento es real.",
+    "Compará precios de neumáticos y cubiertas en tiendas de Argentina. Por medida o por auto, actualizado a diario.",
   applicationName: SITE_NAME,
   keywords: [
-    "precio cubiertas",
-    "cubiertas Argentina",
-    "neumáticos",
+    "precio neumáticos",
+    "neumáticos Argentina",
+    "cubiertas",
     "175/65 R14",
     "comparador precios",
   ],
@@ -57,14 +57,14 @@ export const metadata: Metadata = {
     siteName: SITE_NAME,
     title: SITE_NAME,
     description:
-      "El mejor precio de tu cubierta, hoy. Compará tiendas de todo el país.",
+      "Compará precios de neumáticos y cubiertas en tiendas de Argentina. Por medida o por auto.",
     url: siteUrl,
   },
   twitter: {
     card: "summary_large_image",
     title: SITE_NAME,
     description:
-      "El mejor precio de tu cubierta, hoy. Compará tiendas de todo el país.",
+      "Compará precios de neumáticos y cubiertas en tiendas de Argentina. Por medida o por auto.",
   },
   robots: {
     index: true,
@@ -86,7 +86,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     url: siteUrl,
     logo: `${siteUrl}/icon`,
     description:
-      "Comparador de precios de cubiertas por medida en Argentina.",
+      "Comparador de precios de neumáticos y cubiertas por medida en Argentina.",
   };
 
   const websiteLd = {

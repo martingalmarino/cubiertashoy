@@ -6,5 +6,6 @@ export function getSiteUrl(): string {
   return "http://localhost:3000";
 }
 
-export const SITE_NAME = "cubiertas hoy";
-export const SITE_NAME_SHORT = "cubiertashoy";
+export const SITE_NAME = "Precio Neumáticos";
+/** Alias usado en titles cortos; misma marca visible. */
+export const SITE_NAME_SHORT = SITE_NAME;

@@ -9,7 +9,6 @@ import { PopularesBand } from "@/components/PopularesBand";
 import { TiendasRow, type TiendaResumen } from "@/components/TiendasRow";
 import { TrustRow } from "@/components/TrustRow";
 import { FadeIn, Stagger, StaggerItem } from "@/components/motion/FadeIn";
-import { HoyUnderline } from "@/components/visual/HoyUnderline";
 import {
   getAutosPopulares,
   getHistorial,
@@ -21,19 +20,19 @@ import {
   getVehicleSearchIndex,
   isExampleData,
 } from "@/lib/data";
-import { SITE_NAME, SITE_NAME_SHORT } from "@/lib/site";
+import { SITE_NAME } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: {
-    absolute: `Compará precios de cubiertas por medida | ${SITE_NAME_SHORT}`,
+    absolute: "Precio neumáticos Argentina | compará cubiertas por medida",
   },
   description:
-    "El mejor precio de tu cubierta, hoy. Compará tiendas de todo el país por medida exacta. Efectivo, tarjeta, cuotas e historial.",
+    "Compará precios de neumáticos y cubiertas en tiendas de Argentina. Por medida o por auto, actualizado a diario.",
   alternates: { canonical: "/" },
   openGraph: {
     title: SITE_NAME,
     description:
-      "El mejor precio de tu cubierta, hoy. Compará tiendas de todo el país.",
+      "Compará precios de neumáticos y cubiertas en tiendas de Argentina. Por medida o por auto.",
     locale: "es_AR",
     type: "website",
     url: "/",
@@ -100,14 +99,14 @@ export default async function Home() {
       <section id="hero" className="grad-suave">
         <div className="mx-auto max-w-3xl px-4 pb-8 pt-10 text-center sm:pb-12 sm:pt-16 md:pb-16 md:pt-24">
           <h1 className="font-sans text-[34px] font-semibold leading-[1.08] tracking-[-0.03em] text-tinta-900 sm:text-[40px] md:text-[64px] md:leading-[1.05]">
-            El mejor precio de tu cubierta, <HoyUnderline />.
+            Compará el precio de tus neumáticos
           </h1>
           <p className="mt-4 text-base text-tinta-500 md:text-lg">
-            Comparamos{" "}
+            Cubiertas por medida, en las{" "}
             <strong className="font-semibold text-tinta-900">
               {tiendas.length}
             </strong>{" "}
-            tiendas de Argentina. Elegí tu medida y listo.
+            tiendas que monitoreamos.
           </p>
 
           <div id="medidas" className="scroll-mt-24">
