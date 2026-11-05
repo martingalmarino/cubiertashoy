@@ -1,12 +1,12 @@
 "use client";
 
 import { useMemo, useRef, useState, useTransition } from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Search } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
 import { trackBusquedaMedida } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
-import { toSlug } from "@/lib/medida";
+import { parseMedida, toSlug } from "@/lib/medida";
 import type { Medida } from "@/lib/types";
 
 type VehicleOption = {
@@ -99,12 +99,16 @@ function SegmentSelect({
             prefix && "ml-1",
             compact ? "min-h-8 text-sm" : "text-xl leading-none md:text-2xl",
             mobileCard && "text-xl",
-            empty || disabled ? "text-tinta-400" : "text-tinta-900"
+            empty || disabled
+              ? "text-tinta-400 opacity-60"
+              : "text-tinta-900 opacity-100"
           )}
         >
-          <option value="">{placeholder}</option>
+          <option value="" disabled={false} className="text-tinta-400">
+            {placeholder}
+          </option>
           {options.map((opt) => (
-            <option key={opt} value={opt}>
+            <option key={opt} value={opt} className="text-tinta-900">
               {opt}
             </option>
           ))}
@@ -121,16 +125,28 @@ export function MedidaSearch({
   className,
 }: MedidaSearchProps) {
   const router = useRouter();
+  const pathname = usePathname();
   const [, startTransition] = useTransition();
   const reduce = useReducedMotion();
   const perfilRef = useRef<HTMLSelectElement>(null);
   const rodadoRef = useRef<HTMLSelectElement>(null);
 
-  const [ancho, setAncho] = useState<number | "">("");
-  const [perfil, setPerfil] = useState<number | "">("");
-  const [rodado, setRodado] = useState<number | "">("");
+  const pathMedida = useMemo(() => {
+    const match = pathname?.match(/^\/medida\/([^/]+)/);
+    if (!match?.[1]) return null;
+    const parsed = parseMedida(match[1]);
+    if (!parsed) return null;
+    const known = medidas.some((m) => m.slug === parsed.slug);
+    return known ? parsed : null;
+  }, [pathname, medidas]);
+
+  // En compact, Header remonta con key=pathname para precargar /medida/[slug].
+  const [ancho, setAncho] = useState<number | "">(pathMedida?.ancho ?? "");
+  const [perfil, setPerfil] = useState<number | "">(pathMedida?.perfil ?? "");
+  const [rodado, setRodado] = useState<number | "">(pathMedida?.rodado ?? "");
   const [mode, setMode] = useState<"medida" | "auto">("medida");
   const [pulse, setPulse] = useState(false);
+  const [hintIncomplete, setHintIncomplete] = useState(false);
   const [marca, setMarca] = useState("");
   const [modeloQuery, setModeloQuery] = useState("");
   const [modeloSlug, setModeloSlug] = useState("");
@@ -165,11 +181,20 @@ export function MedidaSearch({
       ? toSlug(ancho, perfil, rodado)
       : null;
 
+  function goToMedida(slug: string) {
+    if (pathname === `/medida/${slug}`) return;
+    trackBusquedaMedida(slug, "medida");
+    startTransition(() => {
+      router.push(`/medida/${slug}`);
+    });
+  }
+
   function onAnchoChange(value: string) {
     const next = value === "" ? "" : Number(value);
     setAncho(next);
     setPerfil("");
     setRodado("");
+    setHintIncomplete(false);
     if (next !== "") requestAnimationFrame(() => perfilRef.current?.focus());
   }
 
@@ -177,25 +202,32 @@ export function MedidaSearch({
     const next = value === "" ? "" : Number(value);
     setPerfil(next);
     setRodado("");
+    setHintIncomplete(false);
     if (next !== "") requestAnimationFrame(() => rodadoRef.current?.focus());
   }
 
   function onRodadoChange(value: string) {
     const next = value === "" ? "" : Number(value);
     setRodado(next);
-    if (next !== "") {
-      setPulse(true);
-      window.setTimeout(() => setPulse(false), 400);
+    setHintIncomplete(false);
+    if (next === "" || ancho === "" || perfil === "") return;
+    setPulse(true);
+    window.setTimeout(() => setPulse(false), 400);
+    if (variant === "compact") {
+      goToMedida(toSlug(ancho, perfil, next));
     }
   }
 
+  const isCompact = variant === "compact";
+  const isHero = variant === "hero";
+
   function onSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!slugCompleto) return;
-    trackBusquedaMedida(slugCompleto, "medida");
-    startTransition(() => {
-      router.push(`/medida/${slugCompleto}`);
-    });
+    if (!slugCompleto) {
+      if (isCompact) setHintIncomplete(true);
+      return;
+    }
+    goToMedida(slugCompleto);
   }
 
   const marcas = useMemo(
@@ -226,13 +258,10 @@ export function MedidaSearch({
     });
   }
 
-  const isCompact = variant === "compact";
-  const isHero = variant === "hero";
-
   const submitBtn = (
     <motion.button
       type="submit"
-      disabled={!slugCompleto}
+      aria-disabled={!slugCompleto}
       whileTap={reduce || !slugCompleto ? undefined : { scale: 0.97 }}
       title={!slugCompleto ? "Elegí ancho, perfil y rodado" : "Ver precios"}
       aria-label={!slugCompleto ? "Elegí ancho, perfil y rodado" : "Ver precios"}
@@ -255,7 +284,7 @@ export function MedidaSearch({
 
   if (isCompact) {
     return (
-      <form onSubmit={onSubmit} className={cn("w-full", className)}>
+      <form onSubmit={onSubmit} className={cn("relative w-full", className)}>
         <div
           className="flex h-10 max-w-md items-center gap-1 rounded-full border border-borde bg-white pl-3 pr-1 shadow-card focus-within:border-accion-600"
           role="group"
@@ -270,7 +299,7 @@ export function MedidaSearch({
             options={anchos}
             compact
           />
-          <span aria-hidden className="font-mono text-base text-tinta-400">
+          <span aria-hidden className="font-mono text-base text-tinta-400 opacity-60">
             /
           </span>
           <SegmentSelect
@@ -300,6 +329,11 @@ export function MedidaSearch({
           </div>
           {submitBtn}
         </div>
+        {hintIncomplete ? (
+          <p className="absolute left-0 top-full mt-1 text-xs text-tinta-500">
+            Elegí ancho, perfil y rodado
+          </p>
+        ) : null}
       </form>
     );
   }

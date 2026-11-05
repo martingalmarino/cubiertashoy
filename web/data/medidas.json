@@ -1,5 +1,5 @@
 {
-  "_nota": "Medidas detectadas en autocompletado de Google gl=ar (nov 2026). 'prioridad' = orden aproximado de aparición, no volumen verificado.",
+  "_nota": "Medidas seed + descubiertas en catálogos scrapeados (360/Norauto/Naldo, nov 2026). 'prioridad' 1–24 = orden histórico; ≥25 = ampliación desde ofertas en stock.",
   "medidas": [
     {
       "label": "175/65 R14",
@@ -216,6 +216,492 @@
       "rodado": 15,
       "prioridad": 24,
       "tipo": "auto"
+    },
+    {
+      "label": "215/55 R17",
+      "slug": "215-55-r17",
+      "ancho": 215,
+      "perfil": 55,
+      "rodado": 17,
+      "prioridad": 25,
+      "tipo": "camioneta"
+    },
+    {
+      "label": "195/60 R16",
+      "slug": "195-60-r16",
+      "ancho": 195,
+      "perfil": 60,
+      "rodado": 16,
+      "prioridad": 26,
+      "tipo": "auto"
+    },
+    {
+      "label": "225/45 R17",
+      "slug": "225-45-r17",
+      "ancho": 225,
+      "perfil": 45,
+      "rodado": 17,
+      "prioridad": 27,
+      "tipo": "camioneta"
+    },
+    {
+      "label": "185/55 R16",
+      "slug": "185-55-r16",
+      "ancho": 185,
+      "perfil": 55,
+      "rodado": 16,
+      "prioridad": 28,
+      "tipo": "auto"
+    },
+    {
+      "label": "205/50 R17",
+      "slug": "205-50-r17",
+      "ancho": 205,
+      "perfil": 50,
+      "rodado": 17,
+      "prioridad": 29,
+      "tipo": "auto"
+    },
+    {
+      "label": "205/45 R17",
+      "slug": "205-45-r17",
+      "ancho": 205,
+      "perfil": 45,
+      "rodado": 17,
+      "prioridad": 30,
+      "tipo": "auto"
+    },
+    {
+      "label": "215/50 R17",
+      "slug": "215-50-r17",
+      "ancho": 215,
+      "perfil": 50,
+      "rodado": 17,
+      "prioridad": 31,
+      "tipo": "camioneta"
+    },
+    {
+      "label": "235/70 R16",
+      "slug": "235-70-r16",
+      "ancho": 235,
+      "perfil": 70,
+      "rodado": 16,
+      "prioridad": 32,
+      "tipo": "camioneta"
+    },
+    {
+      "label": "245/70 R16",
+      "slug": "245-70-r16",
+      "ancho": 245,
+      "perfil": 70,
+      "rodado": 16,
+      "prioridad": 33,
+      "tipo": "camioneta"
+    },
+    {
+      "label": "195/50 R16",
+      "slug": "195-50-r16",
+      "ancho": 195,
+      "perfil": 50,
+      "rodado": 16,
+      "prioridad": 34,
+      "tipo": "auto"
+    },
+    {
+      "label": "195/75 R16",
+      "slug": "195-75-r16",
+      "ancho": 195,
+      "perfil": 75,
+      "rodado": 16,
+      "prioridad": 35,
+      "tipo": "auto"
+    },
+    {
+      "label": "205/40 R17",
+      "slug": "205-40-r17",
+      "ancho": 205,
+      "perfil": 40,
+      "rodado": 17,
+      "prioridad": 36,
+      "tipo": "auto"
+    },
+    {
+      "label": "215/45 R17",
+      "slug": "215-45-r17",
+      "ancho": 215,
+      "perfil": 45,
+      "rodado": 17,
+      "prioridad": 37,
+      "tipo": "camioneta"
+    },
+    {
+      "label": "215/60 R17",
+      "slug": "215-60-r17",
+      "ancho": 215,
+      "perfil": 60,
+      "rodado": 17,
+      "prioridad": 38,
+      "tipo": "camioneta"
+    },
+    {
+      "label": "225/40 R18",
+      "slug": "225-40-r18",
+      "ancho": 225,
+      "perfil": 40,
+      "rodado": 18,
+      "prioridad": 39,
+      "tipo": "camioneta"
+    },
+    {
+      "label": "225/45 R18",
+      "slug": "225-45-r18",
+      "ancho": 225,
+      "perfil": 45,
+      "rodado": 18,
+      "prioridad": 40,
+      "tipo": "camioneta"
+    },
+    {
+      "label": "205/60 R15",
+      "slug": "205-60-r15",
+      "ancho": 205,
+      "perfil": 60,
+      "rodado": 15,
+      "prioridad": 41,
+      "tipo": "auto"
+    },
+    {
+      "label": "205/70 R15",
+      "slug": "205-70-r15",
+      "ancho": 205,
+      "perfil": 70,
+      "rodado": 15,
+      "prioridad": 42,
+      "tipo": "auto"
+    },
+    {
+      "label": "225/50 R17",
+      "slug": "225-50-r17",
+      "ancho": 225,
+      "perfil": 50,
+      "rodado": 17,
+      "prioridad": 43,
+      "tipo": "camioneta"
+    },
+    {
+      "label": "225/55 R18",
+      "slug": "225-55-r18",
+      "ancho": 225,
+      "perfil": 55,
+      "rodado": 18,
+      "prioridad": 44,
+      "tipo": "camioneta"
+    },
+    {
+      "label": "235/45 R17",
+      "slug": "235-45-r17",
+      "ancho": 235,
+      "perfil": 45,
+      "rodado": 17,
+      "prioridad": 45,
+      "tipo": "camioneta"
+    },
+    {
+      "label": "235/45 R19",
+      "slug": "235-45-r19",
+      "ancho": 235,
+      "perfil": 45,
+      "rodado": 19,
+      "prioridad": 46,
+      "tipo": "camioneta"
+    },
+    {
+      "label": "235/50 R19",
+      "slug": "235-50-r19",
+      "ancho": 235,
+      "perfil": 50,
+      "rodado": 19,
+      "prioridad": 47,
+      "tipo": "camioneta"
+    },
+    {
+      "label": "245/50 R18",
+      "slug": "245-50-r18",
+      "ancho": 245,
+      "perfil": 50,
+      "rodado": 18,
+      "prioridad": 48,
+      "tipo": "camioneta"
+    },
+    {
+      "label": "245/50 R19",
+      "slug": "245-50-r19",
+      "ancho": 245,
+      "perfil": 50,
+      "rodado": 19,
+      "prioridad": 49,
+      "tipo": "camioneta"
+    },
+    {
+      "label": "165/70 R14",
+      "slug": "165-70-r14",
+      "ancho": 165,
+      "perfil": 70,
+      "rodado": 14,
+      "prioridad": 50,
+      "tipo": "auto"
+    },
+    {
+      "label": "185/70 R13",
+      "slug": "185-70-r13",
+      "ancho": 185,
+      "perfil": 70,
+      "rodado": 13,
+      "prioridad": 51,
+      "tipo": "auto"
+    },
+    {
+      "label": "195/45 R16",
+      "slug": "195-45-r16",
+      "ancho": 195,
+      "perfil": 45,
+      "rodado": 16,
+      "prioridad": 52,
+      "tipo": "auto"
+    },
+    {
+      "label": "205/75 R16",
+      "slug": "205-75-r16",
+      "ancho": 205,
+      "perfil": 75,
+      "rodado": 16,
+      "prioridad": 53,
+      "tipo": "auto"
+    },
+    {
+      "label": "215/55 R18",
+      "slug": "215-55-r18",
+      "ancho": 215,
+      "perfil": 55,
+      "rodado": 18,
+      "prioridad": 54,
+      "tipo": "camioneta"
+    },
+    {
+      "label": "215/60 R16",
+      "slug": "215-60-r16",
+      "ancho": 215,
+      "perfil": 60,
+      "rodado": 16,
+      "prioridad": 55,
+      "tipo": "auto"
+    },
+    {
+      "label": "215/65 R17",
+      "slug": "215-65-r17",
+      "ancho": 215,
+      "perfil": 65,
+      "rodado": 17,
+      "prioridad": 56,
+      "tipo": "camioneta"
+    },
+    {
+      "label": "215/80 R16",
+      "slug": "215-80-r16",
+      "ancho": 215,
+      "perfil": 80,
+      "rodado": 16,
+      "prioridad": 57,
+      "tipo": "auto"
+    },
+    {
+      "label": "225/55 R19",
+      "slug": "225-55-r19",
+      "ancho": 225,
+      "perfil": 55,
+      "rodado": 19,
+      "prioridad": 58,
+      "tipo": "camioneta"
+    },
+    {
+      "label": "225/60 R17",
+      "slug": "225-60-r17",
+      "ancho": 225,
+      "perfil": 60,
+      "rodado": 17,
+      "prioridad": 59,
+      "tipo": "camioneta"
+    },
+    {
+      "label": "225/60 R18",
+      "slug": "225-60-r18",
+      "ancho": 225,
+      "perfil": 60,
+      "rodado": 18,
+      "prioridad": 60,
+      "tipo": "camioneta"
+    },
+    {
+      "label": "225/70 R17",
+      "slug": "225-70-r17",
+      "ancho": 225,
+      "perfil": 70,
+      "rodado": 17,
+      "prioridad": 61,
+      "tipo": "camioneta"
+    },
+    {
+      "label": "225/75 R15",
+      "slug": "225-75-r15",
+      "ancho": 225,
+      "perfil": 75,
+      "rodado": 15,
+      "prioridad": 62,
+      "tipo": "auto"
+    },
+    {
+      "label": "235/35 R19",
+      "slug": "235-35-r19",
+      "ancho": 235,
+      "perfil": 35,
+      "rodado": 19,
+      "prioridad": 63,
+      "tipo": "camioneta"
+    },
+    {
+      "label": "235/40 R18",
+      "slug": "235-40-r18",
+      "ancho": 235,
+      "perfil": 40,
+      "rodado": 18,
+      "prioridad": 64,
+      "tipo": "camioneta"
+    },
+    {
+      "label": "235/45 R18",
+      "slug": "235-45-r18",
+      "ancho": 235,
+      "perfil": 45,
+      "rodado": 18,
+      "prioridad": 65,
+      "tipo": "camioneta"
+    },
+    {
+      "label": "235/45 R21",
+      "slug": "235-45-r21",
+      "ancho": 235,
+      "perfil": 45,
+      "rodado": 21,
+      "prioridad": 66,
+      "tipo": "camioneta"
+    },
+    {
+      "label": "235/50 R18",
+      "slug": "235-50-r18",
+      "ancho": 235,
+      "perfil": 50,
+      "rodado": 18,
+      "prioridad": 67,
+      "tipo": "camioneta"
+    },
+    {
+      "label": "235/55 R18",
+      "slug": "235-55-r18",
+      "ancho": 235,
+      "perfil": 55,
+      "rodado": 18,
+      "prioridad": 68,
+      "tipo": "camioneta"
+    },
+    {
+      "label": "235/55 R19",
+      "slug": "235-55-r19",
+      "ancho": 235,
+      "perfil": 55,
+      "rodado": 19,
+      "prioridad": 69,
+      "tipo": "camioneta"
+    },
+    {
+      "label": "235/60 R18",
+      "slug": "235-60-r18",
+      "ancho": 235,
+      "perfil": 60,
+      "rodado": 18,
+      "prioridad": 70,
+      "tipo": "camioneta"
+    },
+    {
+      "label": "235/65 R17",
+      "slug": "235-65-r17",
+      "ancho": 235,
+      "perfil": 65,
+      "rodado": 17,
+      "prioridad": 71,
+      "tipo": "camioneta"
+    },
+    {
+      "label": "245/40 R17",
+      "slug": "245-40-r17",
+      "ancho": 245,
+      "perfil": 40,
+      "rodado": 17,
+      "prioridad": 72,
+      "tipo": "camioneta"
+    },
+    {
+      "label": "245/40 R18",
+      "slug": "245-40-r18",
+      "ancho": 245,
+      "perfil": 40,
+      "rodado": 18,
+      "prioridad": 73,
+      "tipo": "camioneta"
+    },
+    {
+      "label": "245/40 R19",
+      "slug": "245-40-r19",
+      "ancho": 245,
+      "perfil": 40,
+      "rodado": 19,
+      "prioridad": 74,
+      "tipo": "camioneta"
+    },
+    {
+      "label": "245/75 R16",
+      "slug": "245-75-r16",
+      "ancho": 245,
+      "perfil": 75,
+      "rodado": 16,
+      "prioridad": 75,
+      "tipo": "camioneta"
+    },
+    {
+      "label": "265/50 R20",
+      "slug": "265-50-r20",
+      "ancho": 265,
+      "perfil": 50,
+      "rodado": 20,
+      "prioridad": 76,
+      "tipo": "camioneta"
+    },
+    {
+      "label": "265/70 R16",
+      "slug": "265-70-r16",
+      "ancho": 265,
+      "perfil": 70,
+      "rodado": 16,
+      "prioridad": 77,
+      "tipo": "camioneta"
+    },
+    {
+      "label": "265/75 R16",
+      "slug": "265-75-r16",
+      "ancho": 265,
+      "perfil": 75,
+      "rodado": 16,
+      "prioridad": 78,
+      "tipo": "camioneta"
     }
   ]
 }

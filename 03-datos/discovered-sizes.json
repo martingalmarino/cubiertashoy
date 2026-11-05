@@ -1,0 +1,626 @@
+[
+  {
+    "slug": "165-70-r13",
+    "ancho": 165,
+    "perfil": 70,
+    "rodado": 13,
+    "label": "165/70 R13",
+    "ofertas": 12
+  },
+  {
+    "slug": "165-70-r14",
+    "ancho": 165,
+    "perfil": 70,
+    "rodado": 14,
+    "label": "165/70 R14",
+    "ofertas": 1
+  },
+  {
+    "slug": "175-65-r14",
+    "ancho": 175,
+    "perfil": 65,
+    "rodado": 14,
+    "label": "175/65 R14",
+    "ofertas": 31
+  },
+  {
+    "slug": "175-70-r13",
+    "ancho": 175,
+    "perfil": 70,
+    "rodado": 13,
+    "label": "175/70 R13",
+    "ofertas": 13
+  },
+  {
+    "slug": "175-70-r14",
+    "ancho": 175,
+    "perfil": 70,
+    "rodado": 14,
+    "label": "175/70 R14",
+    "ofertas": 25
+  },
+  {
+    "slug": "185-55-r15",
+    "ancho": 185,
+    "perfil": 55,
+    "rodado": 15,
+    "label": "185/55 R15",
+    "ofertas": 3
+  },
+  {
+    "slug": "185-55-r16",
+    "ancho": 185,
+    "perfil": 55,
+    "rodado": 16,
+    "label": "185/55 R16",
+    "ofertas": 5
+  },
+  {
+    "slug": "185-60-r14",
+    "ancho": 185,
+    "perfil": 60,
+    "rodado": 14,
+    "label": "185/60 R14",
+    "ofertas": 14
+  },
+  {
+    "slug": "185-60-r15",
+    "ancho": 185,
+    "perfil": 60,
+    "rodado": 15,
+    "label": "185/60 R15",
+    "ofertas": 14
+  },
+  {
+    "slug": "185-65-r14",
+    "ancho": 185,
+    "perfil": 65,
+    "rodado": 14,
+    "label": "185/65 R14",
+    "ofertas": 26
+  },
+  {
+    "slug": "185-65-r15",
+    "ancho": 185,
+    "perfil": 65,
+    "rodado": 15,
+    "label": "185/65 R15",
+    "ofertas": 12
+  },
+  {
+    "slug": "185-70-r13",
+    "ancho": 185,
+    "perfil": 70,
+    "rodado": 13,
+    "label": "185/70 R13",
+    "ofertas": 1
+  },
+  {
+    "slug": "185-70-r14",
+    "ancho": 185,
+    "perfil": 70,
+    "rodado": 14,
+    "label": "185/70 R14",
+    "ofertas": 13
+  },
+  {
+    "slug": "195-45-r16",
+    "ancho": 195,
+    "perfil": 45,
+    "rodado": 16,
+    "label": "195/45 R16",
+    "ofertas": 1
+  },
+  {
+    "slug": "195-50-r16",
+    "ancho": 195,
+    "perfil": 50,
+    "rodado": 16,
+    "label": "195/50 R16",
+    "ofertas": 3
+  },
+  {
+    "slug": "195-55-r15",
+    "ancho": 195,
+    "perfil": 55,
+    "rodado": 15,
+    "label": "195/55 R15",
+    "ofertas": 5
+  },
+  {
+    "slug": "195-55-r16",
+    "ancho": 195,
+    "perfil": 55,
+    "rodado": 16,
+    "label": "195/55 R16",
+    "ofertas": 5
+  },
+  {
+    "slug": "195-60-r15",
+    "ancho": 195,
+    "perfil": 60,
+    "rodado": 15,
+    "label": "195/60 R15",
+    "ofertas": 4
+  },
+  {
+    "slug": "195-60-r16",
+    "ancho": 195,
+    "perfil": 60,
+    "rodado": 16,
+    "label": "195/60 R16",
+    "ofertas": 6
+  },
+  {
+    "slug": "195-65-r15",
+    "ancho": 195,
+    "perfil": 65,
+    "rodado": 15,
+    "label": "195/65 R15",
+    "ofertas": 11
+  },
+  {
+    "slug": "195-75-r16",
+    "ancho": 195,
+    "perfil": 75,
+    "rodado": 16,
+    "label": "195/75 R16",
+    "ofertas": 3
+  },
+  {
+    "slug": "205-40-r17",
+    "ancho": 205,
+    "perfil": 40,
+    "rodado": 17,
+    "label": "205/40 R17",
+    "ofertas": 3
+  },
+  {
+    "slug": "205-45-r17",
+    "ancho": 205,
+    "perfil": 45,
+    "rodado": 17,
+    "label": "205/45 R17",
+    "ofertas": 4
+  },
+  {
+    "slug": "205-50-r17",
+    "ancho": 205,
+    "perfil": 50,
+    "rodado": 17,
+    "label": "205/50 R17",
+    "ofertas": 5
+  },
+  {
+    "slug": "205-55-r16",
+    "ancho": 205,
+    "perfil": 55,
+    "rodado": 16,
+    "label": "205/55 R16",
+    "ofertas": 17
+  },
+  {
+    "slug": "205-55-r17",
+    "ancho": 205,
+    "perfil": 55,
+    "rodado": 17,
+    "label": "205/55 R17",
+    "ofertas": 1
+  },
+  {
+    "slug": "205-60-r15",
+    "ancho": 205,
+    "perfil": 60,
+    "rodado": 15,
+    "label": "205/60 R15",
+    "ofertas": 2
+  },
+  {
+    "slug": "205-60-r16",
+    "ancho": 205,
+    "perfil": 60,
+    "rodado": 16,
+    "label": "205/60 R16",
+    "ofertas": 6
+  },
+  {
+    "slug": "205-65-r15",
+    "ancho": 205,
+    "perfil": 65,
+    "rodado": 15,
+    "label": "205/65 R15",
+    "ofertas": 8
+  },
+  {
+    "slug": "205-70-r15",
+    "ancho": 205,
+    "perfil": 70,
+    "rodado": 15,
+    "label": "205/70 R15",
+    "ofertas": 2
+  },
+  {
+    "slug": "205-75-r16",
+    "ancho": 205,
+    "perfil": 75,
+    "rodado": 16,
+    "label": "205/75 R16",
+    "ofertas": 1
+  },
+  {
+    "slug": "215-45-r17",
+    "ancho": 215,
+    "perfil": 45,
+    "rodado": 17,
+    "label": "215/45 R17",
+    "ofertas": 3
+  },
+  {
+    "slug": "215-50-r17",
+    "ancho": 215,
+    "perfil": 50,
+    "rodado": 17,
+    "label": "215/50 R17",
+    "ofertas": 4
+  },
+  {
+    "slug": "215-55-r17",
+    "ancho": 215,
+    "perfil": 55,
+    "rodado": 17,
+    "label": "215/55 R17",
+    "ofertas": 7
+  },
+  {
+    "slug": "215-55-r18",
+    "ancho": 215,
+    "perfil": 55,
+    "rodado": 18,
+    "label": "215/55 R18",
+    "ofertas": 1
+  },
+  {
+    "slug": "215-60-r16",
+    "ancho": 215,
+    "perfil": 60,
+    "rodado": 16,
+    "label": "215/60 R16",
+    "ofertas": 1
+  },
+  {
+    "slug": "215-60-r17",
+    "ancho": 215,
+    "perfil": 60,
+    "rodado": 17,
+    "label": "215/60 R17",
+    "ofertas": 3
+  },
+  {
+    "slug": "215-65-r16",
+    "ancho": 215,
+    "perfil": 65,
+    "rodado": 16,
+    "label": "215/65 R16",
+    "ofertas": 4
+  },
+  {
+    "slug": "215-65-r17",
+    "ancho": 215,
+    "perfil": 65,
+    "rodado": 17,
+    "label": "215/65 R17",
+    "ofertas": 1
+  },
+  {
+    "slug": "215-80-r16",
+    "ancho": 215,
+    "perfil": 80,
+    "rodado": 16,
+    "label": "215/80 R16",
+    "ofertas": 1
+  },
+  {
+    "slug": "225-40-r18",
+    "ancho": 225,
+    "perfil": 40,
+    "rodado": 18,
+    "label": "225/40 R18",
+    "ofertas": 3
+  },
+  {
+    "slug": "225-45-r17",
+    "ancho": 225,
+    "perfil": 45,
+    "rodado": 17,
+    "label": "225/45 R17",
+    "ofertas": 6
+  },
+  {
+    "slug": "225-45-r18",
+    "ancho": 225,
+    "perfil": 45,
+    "rodado": 18,
+    "label": "225/45 R18",
+    "ofertas": 3
+  },
+  {
+    "slug": "225-50-r17",
+    "ancho": 225,
+    "perfil": 50,
+    "rodado": 17,
+    "label": "225/50 R17",
+    "ofertas": 2
+  },
+  {
+    "slug": "225-55-r18",
+    "ancho": 225,
+    "perfil": 55,
+    "rodado": 18,
+    "label": "225/55 R18",
+    "ofertas": 2
+  },
+  {
+    "slug": "225-55-r19",
+    "ancho": 225,
+    "perfil": 55,
+    "rodado": 19,
+    "label": "225/55 R19",
+    "ofertas": 1
+  },
+  {
+    "slug": "225-60-r17",
+    "ancho": 225,
+    "perfil": 60,
+    "rodado": 17,
+    "label": "225/60 R17",
+    "ofertas": 1
+  },
+  {
+    "slug": "225-60-r18",
+    "ancho": 225,
+    "perfil": 60,
+    "rodado": 18,
+    "label": "225/60 R18",
+    "ofertas": 1
+  },
+  {
+    "slug": "225-65-r17",
+    "ancho": 225,
+    "perfil": 65,
+    "rodado": 17,
+    "label": "225/65 R17",
+    "ofertas": 2
+  },
+  {
+    "slug": "225-70-r17",
+    "ancho": 225,
+    "perfil": 70,
+    "rodado": 17,
+    "label": "225/70 R17",
+    "ofertas": 1
+  },
+  {
+    "slug": "225-75-r15",
+    "ancho": 225,
+    "perfil": 75,
+    "rodado": 15,
+    "label": "225/75 R15",
+    "ofertas": 1
+  },
+  {
+    "slug": "235-35-r19",
+    "ancho": 235,
+    "perfil": 35,
+    "rodado": 19,
+    "label": "235/35 R19",
+    "ofertas": 1
+  },
+  {
+    "slug": "235-40-r18",
+    "ancho": 235,
+    "perfil": 40,
+    "rodado": 18,
+    "label": "235/40 R18",
+    "ofertas": 1
+  },
+  {
+    "slug": "235-45-r17",
+    "ancho": 235,
+    "perfil": 45,
+    "rodado": 17,
+    "label": "235/45 R17",
+    "ofertas": 2
+  },
+  {
+    "slug": "235-45-r18",
+    "ancho": 235,
+    "perfil": 45,
+    "rodado": 18,
+    "label": "235/45 R18",
+    "ofertas": 1
+  },
+  {
+    "slug": "235-45-r19",
+    "ancho": 235,
+    "perfil": 45,
+    "rodado": 19,
+    "label": "235/45 R19",
+    "ofertas": 2
+  },
+  {
+    "slug": "235-45-r21",
+    "ancho": 235,
+    "perfil": 45,
+    "rodado": 21,
+    "label": "235/45 R21",
+    "ofertas": 1
+  },
+  {
+    "slug": "235-50-r18",
+    "ancho": 235,
+    "perfil": 50,
+    "rodado": 18,
+    "label": "235/50 R18",
+    "ofertas": 1
+  },
+  {
+    "slug": "235-50-r19",
+    "ancho": 235,
+    "perfil": 50,
+    "rodado": 19,
+    "label": "235/50 R19",
+    "ofertas": 2
+  },
+  {
+    "slug": "235-55-r18",
+    "ancho": 235,
+    "perfil": 55,
+    "rodado": 18,
+    "label": "235/55 R18",
+    "ofertas": 1
+  },
+  {
+    "slug": "235-55-r19",
+    "ancho": 235,
+    "perfil": 55,
+    "rodado": 19,
+    "label": "235/55 R19",
+    "ofertas": 1
+  },
+  {
+    "slug": "235-60-r18",
+    "ancho": 235,
+    "perfil": 60,
+    "rodado": 18,
+    "label": "235/60 R18",
+    "ofertas": 1
+  },
+  {
+    "slug": "235-65-r17",
+    "ancho": 235,
+    "perfil": 65,
+    "rodado": 17,
+    "label": "235/65 R17",
+    "ofertas": 1
+  },
+  {
+    "slug": "235-70-r16",
+    "ancho": 235,
+    "perfil": 70,
+    "rodado": 16,
+    "label": "235/70 R16",
+    "ofertas": 4
+  },
+  {
+    "slug": "235-75-r15",
+    "ancho": 235,
+    "perfil": 75,
+    "rodado": 15,
+    "label": "235/75 R15",
+    "ofertas": 4
+  },
+  {
+    "slug": "245-40-r17",
+    "ancho": 245,
+    "perfil": 40,
+    "rodado": 17,
+    "label": "245/40 R17",
+    "ofertas": 1
+  },
+  {
+    "slug": "245-40-r18",
+    "ancho": 245,
+    "perfil": 40,
+    "rodado": 18,
+    "label": "245/40 R18",
+    "ofertas": 1
+  },
+  {
+    "slug": "245-40-r19",
+    "ancho": 245,
+    "perfil": 40,
+    "rodado": 19,
+    "label": "245/40 R19",
+    "ofertas": 1
+  },
+  {
+    "slug": "245-50-r18",
+    "ancho": 245,
+    "perfil": 50,
+    "rodado": 18,
+    "label": "245/50 R18",
+    "ofertas": 2
+  },
+  {
+    "slug": "245-50-r19",
+    "ancho": 245,
+    "perfil": 50,
+    "rodado": 19,
+    "label": "245/50 R19",
+    "ofertas": 2
+  },
+  {
+    "slug": "245-65-r17",
+    "ancho": 245,
+    "perfil": 65,
+    "rodado": 17,
+    "label": "245/65 R17",
+    "ofertas": 1
+  },
+  {
+    "slug": "245-70-r16",
+    "ancho": 245,
+    "perfil": 70,
+    "rodado": 16,
+    "label": "245/70 R16",
+    "ofertas": 4
+  },
+  {
+    "slug": "245-75-r16",
+    "ancho": 245,
+    "perfil": 75,
+    "rodado": 16,
+    "label": "245/75 R16",
+    "ofertas": 1
+  },
+  {
+    "slug": "265-50-r20",
+    "ancho": 265,
+    "perfil": 50,
+    "rodado": 20,
+    "label": "265/50 R20",
+    "ofertas": 1
+  },
+  {
+    "slug": "265-60-r18",
+    "ancho": 265,
+    "perfil": 60,
+    "rodado": 18,
+    "label": "265/60 R18",
+    "ofertas": 4
+  },
+  {
+    "slug": "265-65-r17",
+    "ancho": 265,
+    "perfil": 65,
+    "rodado": 17,
+    "label": "265/65 R17",
+    "ofertas": 5
+  },
+  {
+    "slug": "265-70-r16",
+    "ancho": 265,
+    "perfil": 70,
+    "rodado": 16,
+    "label": "265/70 R16",
+    "ofertas": 1
+  },
+  {
+    "slug": "265-75-r16",
+    "ancho": 265,
+    "perfil": 75,
+    "rodado": 16,
+    "label": "265/75 R16",
+    "ofertas": 1
+  }
+]

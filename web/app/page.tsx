@@ -3,6 +3,7 @@ import { PricesSourceBanner } from "@/components/PricesSourceBanner";
 import { HomeFaq } from "@/components/HomeFaq";
 import { MedidaCard } from "@/components/MedidaCard";
 import { MedidaSearch } from "@/components/MedidaSearch";
+import { AutosPopulares } from "@/components/AutosPopulares";
 import { OfertasHoyLine } from "@/components/OfertasHoyLine";
 import { PopularesBand } from "@/components/PopularesBand";
 import { TiendasRow, type TiendaResumen } from "@/components/TiendasRow";
@@ -10,11 +11,13 @@ import { TrustRow } from "@/components/TrustRow";
 import { FadeIn, Stagger, StaggerItem } from "@/components/motion/FadeIn";
 import { HoyUnderline } from "@/components/visual/HoyUnderline";
 import {
+  getAutosPopulares,
   getHistorial,
   getMedidas,
   getMedidasMasBuscadas,
   getMedidasPopulares,
   getOfertas,
+  getPrecioDesde,
   getVehicleSearchIndex,
   isExampleData,
 } from "@/lib/data";
@@ -42,6 +45,13 @@ export default async function Home() {
   const vehicles = getVehicleSearchIndex();
   const populares = getMedidasPopulares(12);
   const masBuscadas = await getMedidasMasBuscadas(8);
+  const autosPopularesBase = getAutosPopulares(12);
+  const autosPopulares = await Promise.all(
+    autosPopularesBase.map(async (a) => ({
+      ...a,
+      precioDesde: await getPrecioDesde(a.medidaSlug),
+    }))
+  );
 
   const ofertasBySlug = await Promise.all(
     medidas.map(async (m) => ({ slug: m.slug, ofertas: await getOfertas(m.slug) }))
@@ -128,6 +138,15 @@ export default async function Home() {
                 ofertasMap.get(m.slug)?.[0]?.precioEfectivo ?? null,
             }))}
           />
+        </div>
+      </section>
+
+      <section
+        id="autos-populares"
+        className="scroll-mt-24 py-8 sm:py-12 md:py-16"
+      >
+        <div className="container-site">
+          <AutosPopulares autos={autosPopulares} />
         </div>
       </section>
 

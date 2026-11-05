@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { Logo } from "@/components/Logo";
 import { MedidaSearch } from "@/components/MedidaSearch";
@@ -28,24 +29,28 @@ type HeaderProps = {
 };
 
 export function Header({ medidas = [], vehicles = [] }: HeaderProps) {
-  const [showCompact, setShowCompact] = useState(false);
+  const pathname = usePathname();
+  const isHome = pathname === "/";
+  const [heroOutOfView, setHeroOutOfView] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const canShowSearch = medidas.length > 0;
+  // En páginas sin hero: siempre. En home: al scrollear el hero.
+  const showCompact = canShowSearch && (!isHome || heroOutOfView);
 
   useEffect(() => {
-    if (!canShowSearch) return;
+    if (!canShowSearch || !isHome) return;
     const hero = document.getElementById("hero");
     if (!hero) return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        setShowCompact(!entry?.isIntersecting);
+        setHeroOutOfView(!entry?.isIntersecting);
       },
       { threshold: 0, rootMargin: "-56px 0px 0px 0px" }
     );
     observer.observe(hero);
     return () => observer.disconnect();
-  }, [canShowSearch]);
+  }, [canShowSearch, isHome]);
 
   useEffect(() => {
     if (!menuOpen) return;
@@ -125,10 +130,11 @@ export function Header({ medidas = [], vehicles = [] }: HeaderProps) {
                 ? "opacity-100"
                 : "pointer-events-none opacity-0"
             )}
-            aria-hidden={!showCompact}
+            aria-hidden={!(showCompact && canShowSearch)}
           >
             {canShowSearch && (
               <MedidaSearch
+                key={pathname}
                 medidas={medidas}
                 vehicles={vehicles}
                 variant="compact"

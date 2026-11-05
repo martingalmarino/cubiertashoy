@@ -385,6 +385,50 @@ export function getVehicle(slug: string): Vehicle | undefined {
   return vehiclesList.find((v) => v.slug === slug);
 }
 
+/** Orden editorial de modelos frecuentes en AR (solo si existen en vehicles.json). */
+const AUTOS_POPULARES_SLUGS = [
+  "chevrolet-onix",
+  "fiat-cronos",
+  "volkswagen-gol-trend",
+  "toyota-hilux",
+  "volkswagen-amarok",
+  "ford-ecosport",
+  "renault-sandero",
+  "peugeot-208",
+  "chevrolet-s10",
+  "ford-ranger",
+  "chevrolet-prisma",
+  "renault-logan",
+] as const;
+
+export type AutoPopular = {
+  slug: string;
+  marca: string;
+  modelo: string;
+  medidaSlug: string;
+  medidaLabel: string;
+};
+
+/** 8–12 autos del seed, con su medida original/habitual. */
+export function getAutosPopulares(limit = 12): AutoPopular[] {
+  const bySlug = new Map(vehiclesList.map((v) => [v.slug, v]));
+  const out: AutoPopular[] = [];
+  for (const slug of AUTOS_POPULARES_SLUGS) {
+    if (out.length >= limit) break;
+    const v = bySlug.get(slug);
+    if (!v || v.sizes.length === 0) continue;
+    const size = pickDefaultVehicleSize(v, null, null);
+    out.push({
+      slug: v.slug,
+      marca: v.marca,
+      modelo: v.modelo,
+      medidaSlug: size.medidaSlug,
+      medidaLabel: size.medidaLabel,
+    });
+  }
+  return out;
+}
+
 export function getVehiclesByMarca(): { marca: string; vehicles: Vehicle[] }[] {
   const map = new Map<string, Vehicle[]>();
   for (const v of getVehicles()) {
