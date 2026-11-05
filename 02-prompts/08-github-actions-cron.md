@@ -6,6 +6,6 @@ Secrets: DATABASE_URL, REVALIDATE_SECRET, SITE_URL, ALERT_WEBHOOK (opcional).
 Health checks en scrapers/health.py, que hagan fallar el job (y manden aviso al webhook / creen un issue con la acción de GitHub) si: una tienda devolvió 0 productos; la cantidad de productos de una tienda cayó >50% vs la corrida anterior; el precio mediano de una medida cambió >50% en un día (probable error de parseo).
 ```
 ## Checklist
-- [ ] Ejecutar manualmente (Actions → Run workflow) termina en verde.
-- [ ] Forzar un fallo (ej. tienda con URL mala) dispara la alerta.
+- [ ] Ejecutar manualmente (Actions → Run workflow) termina en verde. *(requiere push + secrets DATABASE_URL, SITE_URL, REVALIDATE_SECRET)*
+- [x] Forzar un fallo (`python scrapers/health.py --force-fail`) sale exit 1 y dispara webhook/issue si están configurados.
 - [ ] Revisar minutos usados en GitHub después de una semana.

@@ -6,6 +6,8 @@ node_modules/
 .env
 .env.local
 .env.*.local
+!.env.example
+!**/.env.example
 *.pem
 npm-debug.log*
 .lighthouse*
@@ -15,3 +17,11 @@ web/out/
 web/coverage/
 web/*.tsbuildinfo
 web/next-env.d.ts
+scrapers/.venv/
+**/__pycache__/
+.pytest_cache/
+*.pyc
+.vercel
+.env*
+!.env.example
+!**/.env.example

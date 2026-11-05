@@ -207,6 +207,15 @@
       "rodado": 18,
       "prioridad": 23,
       "tipo": "camioneta"
+    },
+    {
+      "label": "185/55 R15",
+      "slug": "185-55-r15",
+      "ancho": 185,
+      "perfil": 55,
+      "rodado": 15,
+      "prioridad": 24,
+      "tipo": "auto"
     }
   ]
 }

@@ -19,7 +19,7 @@ Creá /scrapers (Python 3.11, uv o venv, requirements: scrapling, psycopg[binary
 - run.py --store all|norauto|... --dry-run (imprime en vez de guardar). Registra scrape_runs.
 ```
 ## Checklist
-- [ ] `python run.py --store norauto --dry-run` lista productos solo de la medida pedida.
-- [ ] Tests del parser pasan (incluye kits x2/x4).
-- [ ] Una corrida real llena price_snapshots para las 4 tiendas.
-- [ ] Ninguna tienda recibe más de 1 request cada 2 s.
+- [x] `python run.py --store norauto --dry-run` lista productos solo de la medida pedida.
+- [x] Tests del parser pasan (incluye kits x2/x4).
+- [x] Una corrida real llena price_snapshots para las 4 tiendas.
+- [x] Ninguna tienda recibe más de 1 request cada 2 s.
