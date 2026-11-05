@@ -70,6 +70,9 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+  verification: {
+    google: "eYAZlI-Pv-X8oi7ngu3LXMjbClUSG6npQUO0xZoXbAw",
+  },
   alternates: {
     canonical: "/",
   },
