@@ -7,9 +7,9 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, "../..");
 const label = process.argv[2];
 
-if (!label || !/^(antes|despues)(-04c)?$/.test(label)) {
+if (!label || !/^(antes|despues)(-04[cd])?$/.test(label)) {
   console.error(
-    "Uso: node scripts/screenshots.mjs <antes|despues|antes-04c|despues-04c>"
+    "Uso: node scripts/screenshots.mjs <antes|despues|antes-04c|despues-04c|despues-04d>"
   );
   process.exit(1);
 }
@@ -18,10 +18,16 @@ const baseUrl = process.env.SCREENSHOT_BASE_URL ?? "http://127.0.0.1:3000";
 const outDir = path.join(root, "screenshots", label);
 const scrollFirst = label.startsWith("despues");
 
-const pages = [
-  { name: "home", path: "/" },
-  { name: "medida", path: "/medida/175-65-r14" },
-];
+const pages =
+  label === "despues-04d"
+    ? [
+        { name: "home", path: "/" },
+        { name: "medida", path: "/medida/165-70-r13" },
+      ]
+    : [
+        { name: "home", path: "/" },
+        { name: "medida", path: "/medida/175-65-r14" },
+      ];
 
 const viewports = [
   { name: "1440", width: 1440, height: 900, isMobile: false },
@@ -44,7 +50,7 @@ async function scrollPage(page) {
   await page.waitForTimeout(200);
 }
 
-async function shot(browser, pageDef, vp, suffix = "") {
+async function shot(browser, pageDef, vp) {
   const context = await browser.newContext({
     viewport: { width: vp.width, height: vp.height },
     deviceScaleFactor: vp.deviceScaleFactor ?? 1,
@@ -63,29 +69,9 @@ async function shot(browser, pageDef, vp, suffix = "") {
   await page.waitForTimeout(400);
   if (scrollFirst) await scrollPage(page);
 
-  const file = path.join(
-    outDir,
-    `${pageDef.name}-${vp.name}${suffix}.png`
-  );
+  const file = path.join(outDir, `${pageDef.name}-${vp.name}.png`);
   await page.screenshot({ path: file, fullPage: true });
   console.log("ok", path.relative(root, file));
-
-  if (label.startsWith("despues") && pageDef.name === "home" && vp.name === "1440") {
-    const hero = await page.locator("h1").first().boundingBox();
-    if (hero) {
-      await page.screenshot({
-        path: path.join(outDir, "crop-hero-1440.png"),
-        clip: {
-          x: 0,
-          y: Math.max(0, hero.y - 80),
-          width: vp.width,
-          height: Math.min(520, vp.height),
-        },
-      });
-      console.log("ok", "screenshots/" + label + "/crop-hero-1440.png");
-    }
-  }
-
   await context.close();
 }
 

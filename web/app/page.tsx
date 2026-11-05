@@ -64,7 +64,7 @@ export default function Home() {
       <ExampleDataBanner />
 
       <section id="hero" className="grad-suave">
-        <div className="mx-auto max-w-3xl px-4 pb-14 pt-16 text-center md:pb-20 md:pt-24">
+        <div className="mx-auto max-w-3xl px-4 pb-12 pt-16 text-center md:pb-16 md:pt-24">
           <h1 className="font-sans text-[40px] font-semibold leading-[1.05] tracking-[-0.03em] text-tinta-900 md:text-[64px]">
             El mejor precio de tu cubierta, <HoyUnderline />.
           </h1>
@@ -86,13 +86,13 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="py-12 md:py-16">
+      <section className="py-10 md:py-14">
         <div className="container-site">
           <PopularesBand medidas={populares} />
         </div>
       </section>
 
-      <section id="buscadas" className="scroll-mt-24 py-12 md:py-16">
+      <section id="buscadas" className="scroll-mt-24 py-10 md:py-14">
         <div className="container-site">
           <div className="max-w-2xl">
             <h2 className="text-xl font-semibold tracking-[-0.02em] text-tinta-900 md:text-2xl">
@@ -124,7 +124,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="como" className="scroll-mt-24 py-12 md:py-16">
+      <section id="como" className="scroll-mt-24 py-10 md:py-14">
         <div className="container-site">
           <div className="max-w-xl">
             <h2 className="text-xl font-semibold tracking-[-0.02em] text-tinta-900 md:text-2xl">
@@ -142,7 +142,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="tiendas" className="scroll-mt-24 py-12 md:py-16">
+      <section id="tiendas" className="scroll-mt-24 py-10 md:py-14">
         <div className="container-site">
           <div className="max-w-xl">
             <h2 className="text-xl font-semibold tracking-[-0.02em] text-tinta-900 md:text-2xl">
@@ -160,7 +160,7 @@ export default function Home() {
 
       <section
         id="autos"
-        className="scroll-mt-24 border-t border-borde py-12 md:py-16"
+        className="scroll-mt-24 border-t border-borde py-10 md:py-14"
       >
         <div className="container-site max-w-3xl">
           <FadeIn>

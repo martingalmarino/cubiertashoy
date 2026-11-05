@@ -178,16 +178,13 @@ export default async function MedidaPage({ params }: PageProps) {
           ]}
         />
 
-        <header className="mt-6 flex flex-col gap-3 sm:mt-8 sm:gap-4">
+        <header className="mt-6 flex flex-col items-start gap-3 sm:mt-8 sm:gap-4">
           <MedidaBadge label={medida.label} />
           <h1 className="text-3xl font-semibold tracking-[-0.02em] text-tinta-900 sm:text-4xl lg:text-[44px] lg:leading-[1.1]">
             Precio de cubiertas {medida.label} hoy
           </h1>
           <p className="flex flex-wrap items-center gap-2 text-tinta-500">
-            <span
-              className="relative inline-flex size-2.5"
-              aria-hidden
-            >
+            <span className="relative inline-flex size-2.5" aria-hidden>
               <span className="absolute inset-0 animate-ping rounded-full bg-ahorro-600/40" />
               <span className="relative inline-flex size-2.5 rounded-full bg-ahorro-600" />
             </span>
@@ -229,24 +226,24 @@ export default async function MedidaPage({ params }: PageProps) {
               </div>
             </div>
 
-            <div className="mt-10 sm:mt-12">
+            <div className="my-10">
               <PriceHistoryChartLazy
                 historial={historial}
                 medidaLabel={medida.label}
               />
             </div>
 
-            <div className="mt-10 sm:mt-12">
+            <div className="my-10">
               <StoreTable ofertas={ofertas} />
             </div>
           </>
         )}
 
-        <section className="mt-10 border-t border-borde pt-10 sm:mt-12">
-          <h2 className="text-xl font-semibold tracking-[-0.02em] text-tinta-900 md:text-2xl">
-            Autos que usan esta medida
-          </h2>
-          {autos.length > 0 ? (
+        {autos.length > 0 && (
+          <section className="my-10">
+            <h2 className="text-xl font-semibold tracking-[-0.02em] text-tinta-900 md:text-2xl">
+              Autos que usan esta medida
+            </h2>
             <ul className="mt-4 flex flex-wrap gap-2">
               {autos.map((a) => (
                 <li key={`${a.marca}-${a.modelo}-${a.version ?? ""}`}>
@@ -257,16 +254,11 @@ export default async function MedidaPage({ params }: PageProps) {
                 </li>
               ))}
             </ul>
-          ) : (
-            <p className="mt-3 text-sm text-tinta-500">
-              Todavía no tenemos autos mapeados a {medida.label}. La búsqueda
-              por auto llega pronto.
-            </p>
-          )}
-        </section>
+          </section>
+        )}
 
-        {parecidas.length > 0 && (
-          <section className="mt-10 border-t border-borde pt-10">
+        {parecidas.length >= 2 && (
+          <section className="my-10">
             <h2 className="text-xl font-semibold tracking-[-0.02em] text-tinta-900 md:text-2xl">
               Medidas parecidas
             </h2>
@@ -285,7 +277,7 @@ export default async function MedidaPage({ params }: PageProps) {
           </section>
         )}
 
-        <section className="mt-10 border-t border-borde pt-10 sm:mt-12">
+        <section className="my-10">
           <h2 className="mb-4 text-xl font-semibold tracking-[-0.02em] text-tinta-900 md:text-2xl">
             Preguntas frecuentes
           </h2>

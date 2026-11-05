@@ -175,10 +175,11 @@ export function MedidaSearch({
       title={!slugCompleto ? "Elegí ancho, perfil y rodado" : "Ver precios"}
       aria-label={!slugCompleto ? "Elegí ancho, perfil y rodado" : "Ver precios"}
       className={cn(
-        "inline-flex items-center justify-center gap-2 rounded-full bg-accion-600 font-medium text-white",
-        "transition-colors duration-200 hover:bg-accion-700",
-        "focus-visible:ring-2 focus-visible:ring-accion-600 focus-visible:ring-offset-2",
-        !slugCompleto && "cursor-not-allowed opacity-60",
+        "inline-flex items-center justify-center gap-2 rounded-full font-medium text-white shadow-sm",
+        "transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-accion-600 focus-visible:ring-offset-2",
+        slugCompleto
+          ? "bg-accion-600 hover:bg-accion-700"
+          : "cursor-not-allowed bg-accion-600/50",
         isHero &&
           "h-12 w-full px-5 text-sm sm:ml-2 sm:h-12 sm:w-auto md:h-14 md:px-6",
         isCompact && "ml-1 h-8 shrink-0 gap-1 px-2.5 text-xs",

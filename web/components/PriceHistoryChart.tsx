@@ -151,7 +151,7 @@ export function PriceHistoryChart({
             Sin historial para esta medida todavía.
           </p>
         ) : (
-          <div className="h-64 w-full sm:h-72">
+          <div className="h-64 w-full md:h-72">
             <ResponsiveContainer width="100%" height="100%">
               <ComposedChart
                 data={data}
@@ -177,16 +177,21 @@ export function PriceHistoryChart({
                 />
                 <YAxis
                   domain={[
-                    (dataMin: number) => Math.floor(dataMin * 0.95),
-                    (dataMax: number) => Math.ceil(dataMax * 1.05),
+                    (dataMin: number) =>
+                      Math.floor((dataMin * 0.92) / 1000) * 1000,
+                    (dataMax: number) =>
+                      Math.ceil((dataMax * 1.05) / 1000) * 1000,
                   ]}
-                  tick={{ fill: "#667085", fontSize: 12, fontFamily: "var(--font-mono)" }}
+                  tickCount={4}
+                  tick={{
+                    fill: "#667085",
+                    fontSize: 12,
+                    fontFamily: "var(--font-mono)",
+                  }}
                   tickLine={false}
                   axisLine={false}
                   width={72}
-                  tickFormatter={(v: number) =>
-                    `$ ${Math.round(v / 1000)} k`
-                  }
+                  tickFormatter={(v: number) => `$ ${Math.round(v / 1000)} k`}
                 />
                 <Tooltip
                   cursor={{ stroke: "#98A2B3", strokeDasharray: "4 4" }}
@@ -231,6 +236,7 @@ export function PriceHistoryChart({
                   dataKey="mediana"
                   stroke="none"
                   fill="url(#medianaFill)"
+                  baseValue="dataMin"
                   isAnimationActive={!reduceMotion}
                   animationDuration={200}
                 />

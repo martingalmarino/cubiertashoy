@@ -116,7 +116,8 @@ export function StoreTable({ ofertas }: StoreTableProps) {
                     key={o.id}
                     className={cn(
                       "group h-16 border-b border-borde transition-colors last:border-0 hover:bg-fondo",
-                      barata && "border-l-[3px] border-l-ahorro-600"
+                      barata &&
+                        "border-l-[3px] border-l-ahorro-600 bg-ahorro-50/40 hover:bg-ahorro-50/40"
                     )}
                   >
                     <td className="px-3 py-3 font-medium text-tinta-900">

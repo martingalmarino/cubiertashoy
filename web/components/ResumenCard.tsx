@@ -69,12 +69,12 @@ export function ResumenCard({
           </p>
           <div className="relative h-2 rounded-full bg-fondo">
             <div
-              className="absolute inset-y-0 left-0 rounded-full bg-accion-600/35"
-              style={{ width: `${thermo}%` }}
+              className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-ahorro-600/40 to-oferta-600/30"
+              style={{ width: `${Math.max(thermo, 4)}%` }}
             />
             <span
-              className="absolute top-1/2 size-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white bg-ahorro-600 shadow-card"
-              style={{ left: `${thermo}%` }}
+              className="absolute top-1/2 size-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-ahorro-600 shadow ring-2 ring-white"
+              style={{ left: `${Math.max(thermo, 2)}%` }}
               title={formatARS(precioBarato)}
             />
           </div>
