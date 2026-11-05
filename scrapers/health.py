@@ -24,6 +24,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import psycopg
 
 from base import database_url, load_env
+from stores import ACTIVE_STORE_SLUGS
 
 log = logging.getLogger("scrapers.health")
 
@@ -74,9 +75,8 @@ def check_store_runs(cur) -> list[Finding]:
             (rn, productos, estado, run_id, started_at)
         )
 
-    # Tiendas activas sin ninguna corrida
-    cur.execute("SELECT slug FROM stores WHERE activo = TRUE ORDER BY slug")
-    for (slug,) in cur.fetchall():
+    # Solo tiendas del cron (ACTIVE_STORE_SLUGS). ML no entra hasta tener OAuth.
+    for slug in ACTIVE_STORE_SLUGS:
         runs = by_store.get(slug, [])
         if not runs:
             findings.append(

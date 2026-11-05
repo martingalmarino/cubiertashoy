@@ -15,6 +15,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from base import Scraper, load_env, load_sizes  # noqa: E402
 from mercadolibre import MercadoLibreScraper  # noqa: E402
 from neumaflores import NeumafloresScraper  # noqa: E402
+from stores import ACTIVE_STORE_SLUGS  # noqa: E402
 from vtex import NaldoScraper, NorautoScraper  # noqa: E402
 from woo import Woo360Scraper  # noqa: E402
 
@@ -24,6 +25,11 @@ STORES: dict[str, Type[Scraper]] = {
     "neumaflores": NeumafloresScraper,
     "360-neumaticos": Woo360Scraper,
     "mercadolibre": MercadoLibreScraper,
+}
+
+# Subconjunto del cron (compartido con health.py vía ACTIVE_STORE_SLUGS).
+ACTIVE_STORES: dict[str, Type[Scraper]] = {
+    slug: STORES[slug] for slug in ACTIVE_STORE_SLUGS if slug in STORES
 }
 
 
@@ -59,8 +65,7 @@ def main() -> int:
 
     store_arg = args.store.lower().strip()
     if store_arg == "all":
-        # ML requiere OAuth; no lo incluimos en "all" para no romper el cron.
-        selected = [(k, v) for k, v in STORES.items() if k != "mercadolibre"]
+        selected = list(ACTIVE_STORES.items())
     elif store_arg in ("ml", "meli"):
         selected = [("mercadolibre", MercadoLibreScraper)]
     elif store_arg in STORES:
