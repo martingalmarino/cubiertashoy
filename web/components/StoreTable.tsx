@@ -80,50 +80,62 @@ export function StoreTable({ ofertas }: StoreTableProps) {
         ))}
       </ul>
 
-      <div className="hidden overflow-hidden rounded-xl border border-borde bg-superficie shadow-card md:block">
-        <div className="max-h-[70vh] overflow-auto">
+      <div className="hidden rounded-xl border border-borde bg-superficie shadow-card md:block">
+        <div className="max-h-[70vh] overflow-auto rounded-xl">
           <table className="w-full table-fixed border-collapse text-sm">
             <colgroup>
-              <col style={{ width: "16%" }} />
-              <col style={{ width: "30%" }} />
-              <col className="hidden lg:table-column" style={{ width: "7%" }} />
-              <col style={{ width: "11%" }} />
-              <col style={{ width: "11%" }} />
-              <col style={{ width: "14%" }} />
-              <col className="hidden lg:table-column" style={{ width: "8%" }} />
-              <col style={{ width: "3%" }} />
+              <col style={{ width: "7.5rem" }} />
+              <col />
+              <col className="hidden lg:table-column" style={{ width: "4rem" }} />
+              <col style={{ width: "6.75rem" }} />
+              <col style={{ width: "6.75rem" }} />
+              <col style={{ width: "7.25rem" }} />
+              <col
+                className="hidden lg:table-column"
+                style={{ width: "5.75rem" }}
+              />
+              <col style={{ width: "9.75rem" }} />
             </colgroup>
-            <thead className="sticky top-14 z-10 md:top-16">
+            <thead className="sticky top-0 z-20">
               <tr className="border-b border-borde bg-fondo/95 text-left text-[11px] uppercase tracking-[0.08em] text-tinta-500 backdrop-blur">
-                <th scope="col" className="px-3 py-3 font-medium">
+                <th scope="col" className="px-3 py-3 align-middle font-medium">
                   Tienda
                 </th>
-                <th scope="col" className="px-3 py-3 font-medium">
+                <th scope="col" className="px-3 py-3 align-middle font-medium">
                   Marca / Modelo
                 </th>
                 <th
                   scope="col"
-                  className="hidden px-3 py-3 font-medium lg:table-cell"
+                  className="hidden px-3 py-3 align-middle font-medium lg:table-cell"
                 >
                   Índice
                 </th>
-                <th scope="col" className="px-3 py-3 text-right font-medium">
+                <th
+                  scope="col"
+                  className="px-3 py-3 text-right align-middle font-medium"
+                >
                   Efectivo
                 </th>
-                <th scope="col" className="px-3 py-3 text-right font-medium">
+                <th
+                  scope="col"
+                  className="px-3 py-3 text-right align-middle font-medium"
+                >
                   Tarjeta
                 </th>
-                <th scope="col" className="px-3 py-3 font-medium">
+                <th scope="col" className="px-3 py-3 align-middle font-medium">
                   Cuotas
                 </th>
                 <th
                   scope="col"
-                  className="hidden px-3 py-3 font-medium lg:table-cell"
+                  className="hidden px-3 py-3 align-middle font-medium lg:table-cell"
                 >
                   Coloc.
                 </th>
-                <th scope="col" className="px-3 py-3 font-medium">
-                  <span className="sr-only">Ir a la tienda</span>
+                <th
+                  scope="col"
+                  className="sticky right-0 z-30 bg-fondo/95 px-3 py-3 text-right align-middle font-medium backdrop-blur"
+                >
+                  <span className="sr-only">Ver oferta</span>
                 </th>
               </tr>
             </thead>
@@ -141,12 +153,12 @@ export function StoreTable({ ofertas }: StoreTableProps) {
                   <tr
                     key={o.id}
                     className={cn(
-                      "group h-14 border-b border-borde transition-colors last:border-0 hover:bg-fondo",
+                      "group border-b border-borde transition-colors last:border-0 hover:bg-fondo",
                       barata &&
                         "bg-ahorro-50/50 shadow-[inset_3px_0_0_var(--ahorro-600)] hover:bg-ahorro-50/50"
                     )}
                   >
-                    <td className="px-3 py-2">
+                    <td className="px-3 py-2.5 align-middle">
                       <div className="flex h-8 items-center rounded-md bg-white px-1.5">
                         <StoreLogo
                           storeId={o.tiendaId}
@@ -156,7 +168,7 @@ export function StoreTable({ ofertas }: StoreTableProps) {
                         <span className="sr-only">{o.tiendaNombre}</span>
                       </div>
                     </td>
-                    <td className="min-w-0 px-3 py-2 text-tinta-900">
+                    <td className="min-w-0 px-3 py-2.5 align-middle text-tinta-900">
                       <p
                         className="truncate font-medium"
                         title={`${o.marca} ${o.modelo}`}
@@ -169,37 +181,45 @@ export function StoreTable({ ofertas }: StoreTableProps) {
                         </div>
                       ) : null}
                     </td>
-                    <td className="hidden px-3 py-2 font-mono tabular-nums text-tinta-500 lg:table-cell">
+                    <td className="hidden px-3 py-2.5 align-middle font-mono tabular-nums text-tinta-500 lg:table-cell">
                       {o.indice}
                     </td>
-                    <td className="px-3 py-2 text-right font-mono font-semibold tabular-nums whitespace-nowrap text-tinta-900">
+                    <td className="px-3 py-2.5 text-right align-middle font-mono font-semibold tabular-nums whitespace-nowrap text-tinta-900">
                       {formatARS(o.precioEfectivo)}
                     </td>
-                    <td className="px-3 py-2 text-right font-mono tabular-nums whitespace-nowrap text-tinta-500">
+                    <td className="px-3 py-2.5 text-right align-middle font-mono tabular-nums whitespace-nowrap text-tinta-500">
                       {formatARS(o.precioTarjeta)}
                     </td>
-                    <td className="px-3 py-2">
+                    <td className="px-3 py-2.5 align-middle">
                       {cuotasChip ?? (
                         <span className="text-tinta-400">—</span>
                       )}
                     </td>
-                    <td className="hidden px-3 py-2 text-tinta-500 lg:table-cell">
+                    <td className="hidden px-3 py-2.5 align-middle text-tinta-500 lg:table-cell">
                       {o.colocacionGratis ? (
                         <CuotasChip variant="colocacion" compact />
                       ) : (
                         "—"
                       )}
                     </td>
-                    <td className="px-3 py-2">
+                    <td
+                      className={cn(
+                        "sticky right-0 z-10 px-3 py-2.5 text-right align-middle",
+                        barata
+                          ? "bg-ahorro-50/50 group-hover:bg-ahorro-50/50"
+                          : "bg-superficie group-hover:bg-fondo"
+                      )}
+                    >
                       <a
                         href={outboundHref(o)}
                         target="_blank"
                         rel={outboundRel(o)}
                         onClick={() => trackClickTienda(o)}
-                        className="inline-flex size-11 items-center justify-center rounded-full text-accion-600 opacity-70 transition-all duration-200 group-hover:opacity-100 hover:bg-accion-50 focus-visible:opacity-100 focus-visible:ring-2 focus-visible:ring-accion-600 focus-visible:ring-offset-2"
-                        aria-label={`Ir a ${o.tiendaNombre}`}
+                        aria-label={`Ver oferta en ${o.tiendaNombre}`}
+                        className="inline-flex h-11 w-full max-w-[9rem] items-center justify-center gap-1.5 rounded-lg bg-accion-600 px-3 text-sm font-semibold text-white transition-colors hover:bg-accion-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accion-600 focus-visible:ring-offset-2"
                       >
-                        <ArrowUpRight className="size-4" aria-hidden />
+                        Ver oferta
+                        <ArrowUpRight className="size-4 shrink-0" aria-hidden />
                       </a>
                     </td>
                   </tr>
