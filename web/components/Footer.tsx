@@ -15,7 +15,7 @@ export function Footer() {
         <rect width="100%" height="100%" fill="url(#footer-tread)" />
       </svg>
 
-      <div className="container-site relative grid grid-cols-1 gap-8 py-14 pb-28 md:pb-14 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="container-site relative grid grid-cols-1 gap-8 py-14 pb-28 md:pb-14 sm:grid-cols-2 lg:grid-cols-5">
         <div className="space-y-3 sm:col-span-2 lg:col-span-1">
           <Logo inverse />
           <p className="max-w-xs text-sm text-tinta-400">
@@ -96,6 +96,42 @@ export function Footer() {
               >
                 Para gomerías
               </Link>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <p className="mb-3 text-sm font-semibold text-papel">Enlaces útiles</p>
+          <ul className="space-y-1 text-sm text-tinta-400">
+            <li>
+              <a
+                href="https://www.motoguia.com.ar/motos/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex h-10 items-center transition-colors hover:text-papel focus-visible:ring-2 focus-visible:ring-accion-600"
+              >
+                Motos en Argentina
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://www.calculadorapatentes.ar/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex h-10 items-center transition-colors hover:text-papel focus-visible:ring-2 focus-visible:ring-accion-600"
+              >
+                Calculadora de Patentes
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://www.autoschinos.ar/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex h-10 items-center transition-colors hover:text-papel focus-visible:ring-2 focus-visible:ring-accion-600"
+              >
+                Autos Chinos
+              </a>
             </li>
           </ul>
         </div>
